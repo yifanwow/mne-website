@@ -1,6 +1,6 @@
 # Mne website
 
-Mne 的公开介绍页：暗色 / 梦幻紫、克制留白、磨砂玻璃、滚动动画、中英双语。原生 HTML、CSS、JavaScript，无框架、无第三方运行时依赖。产品本体是 iPhone App，网页支持手机、平板和桌面。
+Mne 的公开介绍页：暗色 / 梦幻紫、克制留白、磨砂玻璃、中英双语。记忆盒线绘动画、滚动驱动的浏览演示、成就卡的 3D 滚动 / 触控联动、App 原始几何统计与数字入场，以及星空和缓慢变化的背景光。摄影作品均来自作者授权的原图。原生 HTML、CSS、JavaScript，无框架、无第三方运行时依赖。产品本体是 iPhone App，网页支持手机、平板和桌面。
 
 The public bilingual website for Mne, a native iPhone app for thoughtful photo curation. Built with HTML, CSS and vanilla JavaScript. No framework, dependencies, analytics, API calls, or build step.
 
@@ -33,11 +33,18 @@ HOST=0.0.0.0 npm run dev
 - `dist/index.html`：页面、元信息与语义结构。
 - `dist/styles.css`：主题、手机 ≤600px / 平板 ≤850px / 桌面布局、动画和系统无障碍偏好。
 - `dist/app.js`：`copy` 中英文文案、`journal` 开发时间线、布局和图表演示。
-- `dist/assets/`：仅公开品牌素材和演示照片，来源见 `docs/asset-credits.md`。
+- `dist/motion.js`：滚动演示、触控卡牌、图谱、入场数字与背景星空。
+- `dist/motion.css`：滚动场景和手机 / 平板 / 桌面适配。
+- `dist/motion-copy.js`：新增场景的双语文案。
+- `dist/app-art.js`：App 原始 Logo 与天体统计几何的 SVG 实现。
+- `dist/fragments-data.js`：可继续扩展的卡面名称与 App 原文描述。
+- `dist/assets/`：公开品牌素材与作者授权摄影的网页导出，来源见 `docs/asset-credits.md`。
 
-编辑文案需要同步两种语言。时间线取自 Mne 本地 README，核对日期 2026-10-12。0.8.3 (24) 是源码版本，0.8.2 (23) 是已进入私人 TestFlight 的构建。更新时核实状态，不能把源码更新称为已发布版本。网站没有公开下载链接或邀请码。
+编辑文案需要同步两种语言。时间线取自 Mne 本地 README，核对日期 2026-10-13。0.8.8 (29) 是当前源码版本，0.8.2 (23) 是已确认进入私人 TestFlight 的构建；不把源码更新称为已发布版本。网站没有公开下载链接或邀请码。
 
-界面、图片与图表数据明确标为示意，不使用个人照片、账号资料或真实用户统计。切换语言会在本机 localStorage 保存偏好；不发送到服务器。Logo 和成就卡面版权归 Mne 所有；第三方照片依来源许可使用。
+界面与图表数字明确标为示意，使用作者明确授权的摄影作品，不使用账号资料或真实用户统计。切换语言会在本机 localStorage 保存偏好；不发送到服务器。照片、Logo 和成就卡面版权归各自作者所有。
+
+滚动由浏览器原生处理，不拦截滚轮、不锁定页面。卡牌横向触控保留上下滑动；背景 Canvas 限制为 24fps，页面隐藏时暂停。支持系统减少动态效果：改为静态演示和完整卡面网格。右下角可暂停背景与自动演示。
 
 ## 检查 / Validation
 

@@ -1,13 +1,15 @@
 {
   "name": "mne-website",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "The bilingual public website for Mne, a considered way to curate your photo library.",
   "type": "module",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
-    "check": "node --check dist/app.js && node scripts/check.mjs"
+    "check": "node --check dist/app.js && node --check dist/motion.js && node --check dist/app-art.js && node scripts/check.mjs"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

@@ -1,34 +1,41 @@
+import { motionCopy } from './motion-copy.js';
+import { initMotion } from './motion.js';
+
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
   zh: {
     skip:'跳到内容',navExperience:'体验',navFragments:'记忆碎片',navJournal:'开发手记',navStatus:'探索 Mne',
     heroEyebrow:'一个安静的，记忆整理空间',heroLine1:'留住记忆。',heroLine2:'留一点空白。',heroDescription:'照片是记忆的载体。Mne 帮你轻轻整理，<br>让值得留下的瞬间，再一次闪耀。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 私人内测中',phoneCount:'1,284 份回忆',floatingTitle:'少一点杂乱，多一点珍贵。',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
     storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。我们相信，整理不是抹去过去，而是为真正重要的瞬间，留出空间。没有替你做决定的 AI，只有照片、直觉，和你。',
-    experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',demoTitle:'你的回忆，以你的节奏',demoHint:'试着切换视角 ↗',demoLabel:'交互示意',
+    experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'一划之间，做个决定。',featureGestureDescription:'左右重温，上滑暂存回收站。长按预览，横向扫选，把喜欢的瞬间加入 Mne Archive。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
-    fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'一点点整理。',fragmentLine2:'一点点，拼回自己。',fragmentDescription:'每一次认真整理，都会留下印记。<br>七张成就碎片，跟随你的真实进度，慢慢解锁。',keeperName:'静藏者',keeperCondition:'确认删除 100 项',foolName:'愚者',foolCondition:'第一次，轻轻放下',moonName:'月相',moonCondition:'累计整理 30 天',fragmentNote:'App 原版卡面 · 成就按实际进度解锁',
-    atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'回忆图谱，把照片的拍摄日期织成时间的轮廓。按周、月或年，重看那些平静的日常，和格外丰盛的季节。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',atlasPanelTitle:'日常的光',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已删除',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
+    fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'翻过一张张照片，也像重新读过往的自己。<br>那些曾让你停留的片段，慢慢成为新的印记。',
+    atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'照片与视频，把时间织成了记忆的轮廓。按周、月或年，重看那些平静的日常，和格外丰盛的季节。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已删除',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
     privacyTitle:'照片，留在你的照片库。',privacyDescription:'照片和视频不上传到 Mne 服务器。不登录，也可以离线整理。私人内测登录只备份资料与本机整理元数据。',themeTitle:'让界面，顺应你的心情。',themeDescription:'明亮、暗夜、梦幻紫、青灰与 OLED nerd。五种主题，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:'为 iPhone 打造。真实的系统材质、轻柔的触觉与克制的动效。支持系统减少动态效果，让节奏由你掌握。',
     journalIndex:'持续生长，慢慢打磨',journalEyebrow:'一个关于记忆的 App，也有自己的记忆。',journalTitle:'Mne 的开发手记。',sourceLabel:'当前源码',journalMore:'回看更早的故事',journalLess:'收起早期手记',
-    accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在私人内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'素材鸣谢',creditsTitle:'素材与鸣谢',creditsDescription:'Logo 与成就卡面来自 Mne 原项目。官网演示照片来自 Unsplash，仅用于界面展示，不代表真实用户图库。',backTop:'回到顶部 ↑'
+    accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在私人内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'素材鸣谢',creditsTitle:'素材与鸣谢',backTop:'回到顶部 ↑'
   },
   en: {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
-    heroEyebrow:'A QUIET SPACE FOR YOUR MEMORIES',heroLine1:'Keep the memories.',heroLine2:'Leave a little space.',heroDescription:'Photos hold our memories. Mne helps you gently<br>make room for the moments that still matter.',discover:'Discover Mne',whyMne:'The idea behind Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'1,284 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
+    heroEyebrow:'A QUIET SPACE FOR YOUR MEMORIES',heroLine1:'Keep the memories.',heroLine2:'Leave a little space.',heroDescription:'Photos hold our memories. Mne helps you gently<br>make room for the moments that still matter.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'1,284 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
     storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Named after Mnemosyne, the goddess of memory, Mne is built on a simple belief: curating is a way to make room for what matters. No AI making the decisions for you. Just your photos, your intuition, and you.',
-    experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',demoTitle:'Your memories. Your pace.',demoHint:'Try another perspective ↗',demoLabel:'Interactive illustration',
+    experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'A small gesture. A clear choice.',featureGestureDescription:'Swipe to revisit. Swipe up to set a photo aside. Long press to preview, sweep to select, and add meaningful moments to Mne Archive.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
-    fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'A little more space.',fragmentLine2:'A little more you.',fragmentDescription:'Every thoughtful session leaves a small mark.<br>Seven achievement fragments, unlocked by your real progress.',keeperName:'Quiet Keeper',keeperCondition:'100 confirmed deletions',foolName:'The Fool',foolCondition:'Your first small farewell',moonName:'Moon Cycle',moonCondition:'30 days of curating',fragmentNote:'Original app artwork · Unlocked by real progress',
-    atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Memory Atlas traces the dates of your photos through time. Look back by week, month, or year, at the quiet everyday moments and the seasons full of life.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'MEMORY ATLAS',atlasPanelTitle:'Everyday light',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Removed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
+    fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Looking through your photos is another way of reading who you were.<br>The moments you pause for become new pieces of your story.',
+    atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Your photos and videos trace the shape of time. Look back by week, month, or year, at the quiet everyday moments and the seasons full of life.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Removed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
     privacyTitle:'Your photos stay in your library.',privacyDescription:'Your photos and videos are never uploaded to Mne servers. Curate offline without signing in. Private beta accounts back up profile and device activity metadata only.',themeTitle:'A space that feels like you.',themeDescription:'Light, Dark, Dream Purple, Sage, and OLED nerd. Five themes. Chinese and English. One familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:'Made for iPhone, with system materials, subtle haptics, and considered motion. Respects Reduce Motion, so the pace always feels right.',
     journalIndex:'GROWING, ONE DETAIL AT A TIME',journalEyebrow:'AN APP ABOUT MEMORIES HAS MEMORIES OF ITS OWN.',journalTitle:'The Mne journal.',sourceLabel:'Latest source',journalMore:'Look back a little further',journalLess:'Show fewer entries',
-    accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in private beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Credits',creditsTitle:'Artwork & credits',creditsDescription:'Logo and achievement artwork are from the Mne app. Demo photography is from Unsplash and illustrates the interface; it is not a real user library.',backTop:'Back to top ↑'
+    accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in private beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Credits',creditsTitle:'Artwork & credits',backTop:'Back to top ↑'
   }
 };
 
-// Curated from the local Mne README, 2026-10-12. A source version is not a release.
+Object.assign(copy.zh, motionCopy.zh);
+Object.assign(copy.en, motionCopy.en);
+
+// Curated from the local Mne README, 2026-10-13. A source version is not a release.
 const journal = [
-  { date:'2026-10-12', version:'0.8.3 (24)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'让浏览更流畅，让去留更从容。',en:'A calmer way to browse and decide.'}, body:{zh:'快速日期轨、年 / 月跳转、横向扫选与相册筛选。全相册胶片条按需加载，回收站增加分页和设备倾斜。回忆图谱完善日期边界与资源大小说明。当前为源码更新，尚未上传新测试构建。',en:'A draggable date rail, year/month navigation, sweep selection, and album filters. An on-demand filmstrip, paginated Trash with device tilt, and clearer Atlas date boundaries and size estimates. This source update has not yet been uploaded as a test build.'}},
+  { date:'2026-10-13', version:'0.8.8 (29)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'记忆，也有自己的面孔。',en:'A face for your memories.'}, body:{zh:'接入三款已确认的碎片女神头像，保留游客的选择；完善视频播放、成就翻卡、系统背景材质与浏览手势。回忆图谱统一按照片与视频计数。当前为源码更新，尚未构建或上传。',en:'Three approved fragment-goddess avatars with persistent guest preferences. Refined video playback, achievement-card flips, system background materials, and browsing gestures. Memory Atlas now counts photos and videos together. This source update has not been built or uploaded.'}},
+  { date:'2026-10-12', version:'0.8.3 (24)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'让浏览更流畅，让去留更从容。',en:'A calmer way to browse and decide.'}, body:{zh:'快速日期轨、年 / 月跳转、横向扫选与相册筛选。全相册胶片条按需加载，回收站增加分页和设备倾斜。回忆图谱完善日期边界与资源大小说明。浏览与整理体验继续在真实设备上打磨。',en:'A draggable date rail, year/month navigation, sweep selection, and album filters. An on-demand filmstrip, paginated Trash with device tilt, and clearer Atlas date boundaries and size estimates. Browsing and curation continue to be refined on real devices.'}},
   { date:'2026-10-12', version:'0.8.2 (23)', tag:{zh:'私人内测',en:'Private beta'}, title:{zh:'从原型，走到你的 iPhone。',en:'From a prototype to your iPhone.'}, body:{zh:'构建 23 进入邀请制 TestFlight 内部测试。针对大图库优化单图加载和预览手势，完善真实账号与元数据备份；照片和视频留在系统图库。',en:'Build 23 entered invite-only internal TestFlight testing. Photo loading and preview gestures were refined for large libraries, alongside account access and metadata backups. Photos and videos remain in the system library.'}},
   { date:'2026-10-12', version:'0.5 — 0.8', tag:{zh:'设计打磨',en:'Design refinements'}, title:{zh:'碎片、星轨，以及恰好的留白。',en:'Fragments, constellations, and room to breathe.'}, body:{zh:'确认七张疏朗成就卡面，接入真实进度解锁与主题外光。完善玻璃记忆盒图标、星轨统计、完整等比照片容器，以及五秒 Mnemosyne 品牌开屏。',en:'Seven sparse achievement artworks, real progress-based unlocks, and a subtle theme glow. Glass memory-box icons, celestial statistics, aspect-fit photo containers, and a five-second Mnemosyne launch sequence.'}},
   { date:'2026-10-11', version:'0.2 — 0.5', tag:{zh:'交互与身份',en:'Interaction & identity'}, title:{zh:'回忆开始有了自己的形状。',en:'Memories begin to take shape.'}, body:{zh:'重建连续缩放与焦点补偿，增加照片 / 视频整理、You 身份舞台、真实整理统计、回忆图谱与五种主题。回收站重新设计拖动与物理交互。',en:'Continuous zoom with focal anchoring, photo/video curation, the You identity stage, activity statistics, Memory Atlas, and five themes. Trash drag gestures and physics were rebuilt.'}},
@@ -39,6 +46,7 @@ const journal = [
   { date:'2026-08-19 — 20', version:'', tag:{zh:'故事起点',en:'The beginning'}, title:{zh:'精简照片，让记忆更闪耀。',en:'Less in your library. More in your memories.'}, body:{zh:'建立 1 / 4 / 9、单列瀑布流、缩放焦点与长按预览。完成临时回收站、恢复、系统确认删除、Mne Archive 和基础统计。',en:'The first browsing layouts, masonry flow, anchored zoom, and long-press previews. Temporary Trash, recovery, system-confirmed deletion, Mne Archive, and initial statistics.'}}
 ];
 
+let sceneMotion = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -92,12 +100,10 @@ function applyLanguage() {
   document.querySelector('.site-header nav').setAttribute('aria-label', zh ? '主导航' : 'Main navigation');
   document.querySelector('.brand').setAttribute('aria-label', zh ? 'Mne 首页' : 'Mne home');
   document.querySelector('.hero-stage').setAttribute('aria-label', zh ? 'Mne 界面示意' : 'Mne interface illustration');
-  document.querySelector('.density-controls').setAttribute('aria-label', zh ? '图库布局' : 'Gallery layout');
-  document.querySelectorAll('[data-density]').forEach(el => el.setAttribute('aria-label', (zh ? {'1':'单列布局','2':'四格布局','3':'九格布局'} : {'1':'Single column','2':'Four tile layout','3':'Nine tile layout'})[el.dataset.density]));
-  document.querySelector('.chart-controls').setAttribute('aria-label', zh ? '图表类型' : 'Chart type');
   document.querySelector('#memory-chart').setAttribute('aria-label', zh ? '照片分布示例，非真实用户数据' : 'Illustrative photo distribution, not real user data');
   document.querySelector('#credits-close').setAttribute('aria-label', zh ? '关闭' : 'Close');
   renderTimeline();
+  sceneMotion?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -121,44 +127,6 @@ document.querySelector('#language-toggle').addEventListener('click', () => {
   applyLanguage();
 });
 timelineButton.addEventListener('click', () => { expanded = !expanded; renderTimeline(); });
-
-document.querySelectorAll('[data-density]').forEach(button => button.addEventListener('click', () => {
-  const grid = document.querySelector('#demo-grid');
-  // FLIP makes the illustrative density change spatially legible; the app itself uses native pinch gestures.
-  const figures = [...grid.children];
-  const before = figures.map(el => el.getBoundingClientRect());
-  grid.dataset.columns = button.dataset.density;
-  grid.scrollTop = 0;
-  document.querySelectorAll('[data-density]').forEach(el => {
-    const selected = el === button;
-    el.classList.toggle('active', selected);
-    el.setAttribute('aria-pressed', String(selected));
-  });
-  if (!reducedMotion.matches && typeof figures[0].animate === 'function') figures.forEach((el, i) => {
-    el.getAnimations().forEach(animation => animation.cancel());
-    const after = el.getBoundingClientRect();
-    el.animate([
-      {transform:`translate(${before[i].left - after.left}px, ${before[i].top - after.top}px) scale(${before[i].width / after.width}, ${before[i].height / after.height})`,transformOrigin:'top left'},
-      {transform:'none',transformOrigin:'top left'}
-    ], {duration:600,easing:'cubic-bezier(.22,1,.36,1)'});
-  });
-}));
-
-const values = [38,52,44,89,66,72,136,108,84,116,74,55];
-function renderChart(type = 'trend') {
-  const points = values.map((v, i) => [12 + i * 48.5, 180 - v]);
-  const group = document.querySelector('#chart-shape');
-  if (type === 'bars') {
-    group.innerHTML = points.map(([x, y]) => `<rect class="bar" x="${x - 9}" y="${y}" width="18" height="${180 - y}" rx="2"/>`).join('');
-  } else {
-    const line = points.map(([x,y], i) => `${i ? 'L' : 'M'}${x},${y}`).join(' ');
-    group.innerHTML = `<path d="${line} L545.5,180 L12,180 Z" fill="url(#chartFill)" stroke="none"/><path class="trend-line" d="${line}"/><circle cx="303" cy="44" r="4" fill="#cdb3f9" stroke="#221a2e" stroke-width="3"/>`;
-  }
-}
-document.querySelectorAll('[data-chart]').forEach(button => button.addEventListener('click', () => {
-  document.querySelectorAll('[data-chart]').forEach(el => { el.classList.toggle('active', el === button); el.setAttribute('aria-pressed', String(el === button)); });
-  renderChart(button.dataset.chart);
-}));
 
 const header = document.querySelector('.site-header');
 const progress = document.querySelector('.scroll-progress');
@@ -193,6 +161,6 @@ dialog.addEventListener('click', event => {
   if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
 });
 
+sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
 applyLanguage();
-renderChart();
 updateScroll();
