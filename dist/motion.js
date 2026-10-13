@@ -1,5 +1,5 @@
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js';
-import { fragments } from './fragments-data.js';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.3.1';
+import { fragments } from './fragments-data.js?v=1.3.1';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -15,26 +15,36 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   let measuredWidth=innerWidth,measuredHeight=innerHeight;
   const logo = document.querySelector('#logo-art');
   logo.innerHTML = memoryBoxSVG();
-  document.querySelector('#box-study-art').innerHTML = memoryBoxSVG('boxStudyInk');
+  const study=document.querySelector('#box-study-art');
+  study.innerHTML = memoryBoxSVG('boxStudyInk');
   const replay = document.querySelector('#logo-replay');
-  function playLogo() {
-    const paths=[...logo.querySelectorAll('[data-logo-stroke]')];
+  const studyReplay=document.querySelector('#box-study-replay');
+  function drawLogo(art,button) {
+    const paths=[...art.querySelectorAll('[data-logo-stroke]')];
     const total=logoLengths.reduce((a,b)=>a+b,0);
     let delay=0;
     paths.forEach((path,i)=>{
       path.getAnimations().forEach(a=>a.cancel());
       path.style.strokeDashoffset='0';
-      if(reducedMotion.matches || paused) { path.style.strokeDashoffset='0'; return; }
+      if(reducedMotion.matches || paused || typeof path.animate!=='function') { path.style.strokeDashoffset='0'; return; }
       path.style.strokeDasharray='1';
       const duration=2100*logoLengths[i]/total;
       const animation=path.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
       animation.onfinish=()=>{path.style.strokeDashoffset='0';animation.cancel();};
       delay+=duration;
     });
-    replay.classList.remove('playing');
-    if(!reducedMotion.matches && !paused) { requestAnimationFrame(()=>replay.classList.add('playing')); }
+    button.classList.remove('playing');
+    if(!reducedMotion.matches && !paused) { requestAnimationFrame(()=>button.classList.add('playing')); }
   }
+  const playLogo=()=>drawLogo(logo,replay);
+  const playStudy=()=>drawLogo(study,studyReplay);
   replay.addEventListener('click',playLogo);
+  studyReplay.addEventListener('click',playStudy);
+  studyReplay.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')playStudy();});
+  const studyObserver=new IntersectionObserver(entries=>{
+    if(entries.some(entry=>entry.isIntersecting)) {playStudy();studyObserver.disconnect();}
+  },{threshold:.45});
+  studyObserver.observe(studyReplay);
   playLogo();
 
   // Scroll owns the demonstration. No wheel interception, scroll lock or required input.
@@ -193,11 +203,18 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   counterObserver.observe(document.querySelector('.app-profile-preview'));
 
   // Fixed illustrative captures, grouped by the chosen calendar unit. Photo/video counts add to 1,284.
-  const weights=[38,52,44,89,66,72,136,108,84,116,74,55];
+  const seasonal=[38,52,44,89,66,72,136,108,84,116,74,55];
+  const yearWeights=[.48,.7,.9,1.05,1.2];
+  // Five calendar years, through the fixed illustration date 2026-10-13; no future captures.
+  const weights=Array.from({length:58},(_,i)=>seasonal[i%12]*yearWeights[Math.floor(i/12)]);
   const weightTotal=weights.reduce((a,b)=>a+b,0);
   const monthCounts=weights.map(v=>Math.round(v/weightTotal*1284));
-  monthCounts[11]+=1284-monthCounts.reduce((a,b)=>a+b,0);
-  const captures=monthCounts.flatMap((count,month)=>Array.from({length:count},(_,i)=>new Date(Date.UTC(2026,month,1+Math.floor(i/count*new Date(Date.UTC(2026,month+1,0)).getUTCDate())))));
+  monthCounts[57]+=1284-monthCounts.reduce((a,b)=>a+b,0);
+  const captures=monthCounts.flatMap((count,index)=>{
+    const year=2022+Math.floor(index/12),month=index%12;
+    const days=index===57?13:new Date(Date.UTC(year,month+1,0)).getUTCDate();
+    return Array.from({length:count},(_,i)=>new Date(Date.UTC(year,month,1+Math.floor(i/count*days))));
+  });
   let period='month',chartType='trend',buckets=[];
   let selectedBucket=null;
   const chart=document.querySelector('#memory-chart');
@@ -218,7 +235,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     const d=bucket.date;
     if(period==='year')return String(d.getUTCFullYear());
     if(period==='week')return `${d.getUTCFullYear()}/${d.getUTCMonth()+1}/${d.getUTCDate()}`;
-    return compact?`${d.getUTCMonth()+1}`:`${d.getUTCFullYear()}/${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+    return `${d.getUTCFullYear()}/${String(d.getUTCMonth()+1).padStart(2,'0')}`;
   }
   function renderChart() {
     groupCaptures();selectedBucket=null;
@@ -388,12 +405,12 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     paused=!paused;document.body.classList.toggle('motion-paused',paused);
     pauseButton.setAttribute('aria-pressed',String(paused));pauseButton.querySelector('span').textContent=paused?'▷':'Ⅱ';
     pauseButton.setAttribute('aria-label',text(paused?'motionResume':'motionPause'));
-    logo.querySelectorAll('path').forEach(el=>el.getAnimations().forEach(a=>paused?a.pause():a.play()));
+    [logo,study].forEach(art=>art.querySelectorAll('path').forEach(el=>el.getAnimations().forEach(a=>paused?a.pause():a.play())));
     if(paused){cancelAnimationFrame(frame);frame=0;if(countStart){countElements.forEach(el=>countValue(el,1));countFinished=true;}drawSky();}else start();
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;}else start();});
   reducedMotion.addEventListener('change',()=>{
-    playLogo();countElements.forEach(el=>countValue(el,1));countFinished=true;
+    playLogo();playStudy();countElements.forEach(el=>countValue(el,1));countFinished=true;
     if(reducedMotion.matches){cancelAnimationFrame(frame);frame=0;paintDemo(0);drawSky();}else start();
     measure();
   });
@@ -409,6 +426,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     viewport.setAttribute('aria-label',text('fragmentGalleryLabel'));
     previous.setAttribute('aria-label',text('fragmentsPrevious'));next.setAttribute('aria-label',text('fragmentsNext'));
     replay.setAttribute('aria-label',text('logoReplay'));
+    studyReplay.setAttribute('aria-label',text('logoReplay'));
     pauseButton.setAttribute('aria-label',text(paused?'motionResume':'motionPause'));
     document.querySelector('.atlas-period').setAttribute('aria-label',text('atlasPeriod'));
     document.querySelector('.production-chart-controls').setAttribute('aria-label',getLanguage()==='zh'?'图表类型':'Chart type');

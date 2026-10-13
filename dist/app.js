@@ -1,7 +1,7 @@
-import { motionCopy } from './motion-copy.js';
-import { initMotion } from './motion.js';
-import { setupContacts } from './contacts.js';
-import { setupDetails } from './details.js';
+import { motionCopy } from './motion-copy.js?v=1.3.1';
+import { initMotion } from './motion.js?v=1.3.1';
+import { setupContacts } from './contacts.js?v=1.3.1';
+import { setupDetails } from './details.js?v=1.3.1';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -36,6 +36,9 @@ Object.assign(copy.en, motionCopy.en);
 
 // Curated from the local Mne README, 2026-10-13. A source version is not a release.
 const journal = [
+  { date:'2026-10-13', version:'0.9.7 (38)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'常用的动作，就在手边。',en:'Keep familiar actions close.'}, body:{zh:'单图长按菜单跟随触点，保留五个最近成功添加的相册；上滑时预载的下一张自然接棒。成就详情轻触旋转，深下拉带来更完整的历险感，白昼主题也更清晰柔和。当前为源码进展，构建与上传待自行完成。',en:'A press-anchored photo menu with five recently used albums, and a preloaded next photo that takes over as you swipe. Tap to spin achievement details, explore deeper pull gestures, and enjoy a calmer, clearer Daylight theme. This is source progress; building and uploading remain pending.'}},
+  { date:'2026-10-13', version:'0.9.4 — 0.9.6', tag:{zh:'设计打磨',en:'Design refinements'}, title:{zh:'让记忆盒，像一束柔和的光。',en:'A softer light for the memory box.'}, body:{zh:'逐步调整桌面图标的尺寸、位置与线宽，让盒子的轮廓更清楚；为线条加入磨砂玻璃、内部柔光与细微颗粒。五套主题图标同步打磨，保留记忆盒最初的辨识度。',en:'Refined the app icon’s scale, placement, and stroke weight for a clearer silhouette. Frosted glass, soft inner light, and fine grain add depth to the lines. All five theme icons share the same considered memory-box identity.'}},
+  { date:'2026-10-13', version:'0.8.9 — 0.9.3', tag:{zh:'交互打磨',en:'Interaction refinements'}, title:{zh:'回望过去，也发现新的乐趣。',en:'Look back, and find something new.'}, body:{zh:'诗句随着下拉浮现，卡片在旋转与透视中回应探索；整理动作、相册信息与成功归档记录更加连贯。照片仍完整等比展示，喜欢与相册标识留在固定的位置，让每次选择都有清晰的回应。',en:'Poetry appears as you pull, while rotating cards and perspective invite exploration. Refined curation gestures, album information, and local records of successful actions. Photos remain complete and proportional, with stable favorite and album markers to make every choice feel clear.'}},
   { date:'2026-10-13', version:'0.8.8 (29)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'记忆，也有自己的面孔。',en:'A face for your memories.'}, body:{zh:'接入三款已确认的碎片女神头像，保留游客的选择；完善视频播放、成就翻卡、系统背景材质与浏览手势。回忆图谱统一按照片与视频计数。当前为源码更新，尚未构建或上传。',en:'Three approved fragment-goddess avatars with persistent guest preferences. Refined video playback, achievement-card flips, system background materials, and browsing gestures. Memory Atlas now counts photos and videos together. This source update has not been built or uploaded.'}},
   { date:'2026-10-12', version:'0.8.3 (24)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'让浏览更流畅，让去留更从容。',en:'A calmer way to browse and decide.'}, body:{zh:'快速日期轨、年 / 月跳转、横向扫选与相册筛选。全相册胶片条按需加载，回收站增加分页和设备倾斜。回忆图谱完善日期边界与资源大小说明。浏览与整理体验继续在真实设备上打磨。',en:'A draggable date rail, year/month navigation, sweep selection, and album filters. An on-demand filmstrip, paginated Trash with device tilt, and clearer Atlas date boundaries and size estimates. Browsing and curation continue to be refined on real devices.'}},
   { date:'2026-10-12', version:'0.8.2 (23)', tag:{zh:'私人内测',en:'Private beta'}, title:{zh:'从原型，走到你的 iPhone。',en:'From a prototype to your iPhone.'}, body:{zh:'构建 23 进入邀请制 TestFlight 内部测试。针对大图库优化单图加载和预览手势，完善真实账号与元数据备份；照片和视频留在系统图库。',en:'Build 23 entered invite-only internal TestFlight testing. Photo loading and preview gestures were refined for large libraries, alongside account access and metadata backups. Photos and videos remain in the system library.'}},
@@ -167,8 +170,9 @@ dialog.addEventListener('click', event => {
   if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
 });
 
-sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
 contacts = setupContacts({getLanguage:()=>language, text:key=>copy[language][key]});
 details = setupDetails({text:key=>copy[language][key]});
 applyLanguage();
+sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
+sceneMotion.refresh();
 updateScroll();

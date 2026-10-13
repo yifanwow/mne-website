@@ -1,5 +1,17 @@
 # Website verification · 2026-10-13
 
+Version 1.3.1 interaction, artwork and journal checks:
+
+- Before the fix, both Chromium and WebKit desktop tests confirmed that all three ratio choices produced the same capped 184 px height. The information click also overlapped with its hover state. This reproduced a visible-feedback defect, rather than a failed click handler, on the tested browsers.
+- After the fix, six photographs form a calculated masonry layout. Adaptive mode retains three original proportions; fixed 9:16 and 4:6 modes have measured correct geometry and visibly different dimensions. Images remain complete. The quick-album image is a true landscape photograph.
+- Information explicitly expands and collapses; its readout grows by 16 px in both desktop engines. Hover-open album menus respond to click and reopen, and album actions remain functional. Critical controls initialize before decorative motion. Release-version URLs prevent mixing cached module and stylesheet revisions.
+- The 01 logo animates on entry, hover and click, then retains all five complete strokes. Reduce Motion keeps a static complete logo. The mobile prologue has 44 px bottom spacing.
+- The cleaning statistic uses an inline SVG sun. The illustration spans January 2022 through October 13, 2026, with 58 monthly groups and five yearly groups. Weekly/monthly/yearly totals remain 1,284; long pie charts keep the twelve-sector cap.
+- Development notes and source badge now reflect local App source 0.9.7 (38), with three additional chronological entries and 13 total entries. Building/uploading is still described as pending, in agreement with the App checklist.
+- Full Chromium checks pass at five viewport sizes in Chinese and English; mobile WebKit passes at 320, 390 and 768 px in both languages. Dedicated desktop Chromium and WebKit interaction/geometry checks pass. Screenshots are under ignored `artifacts/v6/`.
+- Vivaldi verification uses an isolated temporary profile only; it never reads the user's normal profile. The installed application did not initialize under the pipe-based automation launch. Its normal user-profile behavior is not inferred from that startup failure.
+- A subsequent standard DevTools connection also failed to initialize this installed Vivaldi in the isolated environment. No Vivaldi pass is claimed. After the completed browser runs, decorative demo images and the status toast were made non-intercepting; an additional desktop rerun was not approved and was stopped. That last CSS adjustment has static validation only.
+
 Version 1.3.0 mobile and product-feature checks passed:
 
 - Chromium: Chinese and English at 320, 390, 768, 1024 and 1440 px. Existing gallery, card touch/keyboard, statistics, chart, journal, QR, pause and Reduce Motion checks pass.

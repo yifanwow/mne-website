@@ -37,6 +37,11 @@ Only web-sized derivatives are included. Originals remain untouched. Exports pre
 | `photos/treeline.webp` | `IMG_0427.PNG` | Additional owner photograph |
 | `photos/stones.webp` | `IMG_9747.jpg` | Additional owner photograph |
 | `photos/station.webp` | `FE1E6AAC-51A1-4BDE-A4BA-7348160EA13D.JPG` | Additional owner photograph |
+| `photos/roof.webp` | `85310772-73A1-42E9-914F-95EEC8B35D29.JPG` | Landscape night rooftops |
+| `photos/stilllife.webp` | `52781AEF-7FD6-48EC-B774-34CA0D5B4C41.jpg` | Objects in a shop |
+| `photos/littleworld.webp` | `IMG_8555.PNG` | A miniature figure |
+
+The quick-album demonstration now uses the original landscape sunset. Its former photo appears in the hero phone instead. The six-photo ratio study mixes original 4:3, 3:4 and 9:16 frames; exports retain the full original photograph, and fixed frame modes use contain.
 
 The former Unsplash example images have been removed. Photography remains copyright Yifan. Inclusion in this website does not grant permission for unrelated reuse.
 

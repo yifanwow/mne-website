@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 const {webkit}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
 const browser=await webkit.launch({headless:true});
 const assert=(value,message)=>{if(!value)throw new Error(message);};
-await fs.mkdir('artifacts/v5/webkit',{recursive:true});
+await fs.mkdir('artifacts/v6/webkit',{recursive:true});
 for(const width of [320,390,768])for(const lang of ['zh','en']) {
   const height=width===320?720:width===390?844:1024;
   const context=await browser.newContext({viewport:{width,height},isMobile:true,hasTouch:true,locale:lang==='zh'?'zh-CN':'en-US'});
@@ -16,13 +16,13 @@ for(const width of [320,390,768])for(const lang of ['zh','en']) {
   const contacts=await page.locator('.hero-contacts>a,.wechat-contact>button').evaluateAll(els=>els.map(el=>({top:el.getBoundingClientRect().top,label:el.getAttribute('aria-label')})));
   assert(contacts.every(contact=>contact.label&&Math.abs(contact.top-contacts[0].top)<1),'Icon contacts wrap or lack accessible names');
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'WebKit horizontal overflow');
-  await page.screenshot({path:`artifacts/v5/webkit/hero-${lang}-${width}.png`});
+  await page.screenshot({path:`artifacts/v6/webkit/hero-${lang}-${width}.png`});
   for(const selector of ['#experience-story','#fragment-journey']) {
     await page.locator(selector).evaluate(el=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,Number(el.dataset.motionStart)+(Number(el.dataset.motionEnd)-Number(el.dataset.motionStart))*.5);});
     await page.waitForTimeout(600);
     const content=selector==='#experience-story'?'.feature-chapter.current':'.fragment-hint';
     assert(await page.locator(content).evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight-8),`WebKit content exceeds viewport: ${selector}, ${width}, ${lang}`);
-    await page.screenshot({path:`artifacts/v5/webkit/${selector.slice(1)}-${lang}-${width}.png`});
+    await page.screenshot({path:`artifacts/v6/webkit/${selector.slice(1)}-${lang}-${width}.png`});
   }
   const changes=await page.evaluate(async()=>{
     const scene=document.querySelector('#fragment-journey'),tile=document.querySelector('.fragment-tile');
@@ -51,7 +51,7 @@ for(const width of [320,390,768])for(const lang of ['zh','en']) {
   await page.locator('[data-aspect-choice="4:6"]').tap();
   assert(await page.locator('[data-aspect-choice="4:6"]').getAttribute('aria-pressed')==='true','Aspect selection accessibility failed');
   for(const selector of ['#detail-filter','#detail-info','#detail-quick','#detail-aspect'])await page.locator(selector).scrollIntoViewIfNeeded();
-  await page.locator('#details').screenshot({path:`artifacts/v5/webkit/details-${lang}-${width}.png`});
+  await page.locator('#details').screenshot({path:`artifacts/v6/webkit/details-${lang}-${width}.png`});
   await page.locator('#credits-open').tap();
   assert(await page.locator('#credits-dialog').isVisible(),'Learn-more panel failed');
   assert(await page.locator('#credits-dialog a').count()===3,'Learn-more destinations missing');

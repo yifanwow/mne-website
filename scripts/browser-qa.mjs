@@ -7,7 +7,7 @@ const page=await context.newPage();
 const errors=[],failures=[];
 page.on('pageerror',e=>errors.push(e.message));
 page.on('response',r=>{if(r.status()>=400)failures.push(`${r.status()} ${r.url()}`);});
-await fs.mkdir('artifacts/v5',{recursive:true});
+await fs.mkdir('artifacts/v6',{recursive:true});
 const assert=(value,message)=>{if(!value)throw new Error(message);};
 async function scrollToScene(selector,progress=0) {
   await page.locator(selector).evaluate((el,p)=>{
@@ -64,8 +64,8 @@ for(const viewport of viewports) {
   assert(!alignment.navVisible||alignment.navError<1,'Navigation is not centered');
   assert(alignment.buttonError<1,'Button text is not centered');
   assert(await page.locator('[data-i18n="heroDescription"]').innerText()==='照片是回忆的载体，选择你想留住的故事。','Updated hero copy missing');
-  await page.screenshot({path:`artifacts/v5/hero-zh-${viewport.width}.png`});
-  await scrollToScene('#story');await page.screenshot({path:`artifacts/v5/story-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v6/hero-zh-${viewport.width}.png`});
+  await scrollToScene('#story');await page.screenshot({path:`artifacts/v6/story-${viewport.width}.png`});
   // Observe the picture moving while the title is actually on screen, independently of scene progress data.
   for(const [scene,titleSelector,artSelector] of [
     ['#experience-story','.experience-pinned h2','.scroll-demo-photo'],
@@ -83,7 +83,7 @@ for(const viewport of viewports) {
   for(const [p,phase] of [[.02,'0'],[.5,'1'],[.9,'2']]) {
     await scrollToScene('#experience-story',p);
     assert(await page.locator('.demo-phone').getAttribute('data-phase')===phase,`Scroll demonstration phase ${phase} failed at ${viewport.width}`);
-    if(p===.5)await page.screenshot({path:`artifacts/v5/experience-${viewport.width}.png`});
+    if(p===.5)await page.screenshot({path:`artifacts/v6/experience-${viewport.width}.png`});
     if(p===.5)assert(await page.locator('.experience-pinned h2').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Experience title scrolled out during playback');
   }
   await scrollToScene('#experience-story',.02);
@@ -93,14 +93,14 @@ for(const viewport of viewports) {
   if(viewport.width<=850)assert(await page.locator('.fragment-tile').first().evaluate(el=>getComputedStyle(el).filter==='none'&&getComputedStyle(el).transitionDuration==='0s'),'Mobile cards retain animated filters or transitions');
   assert(focusStyle.opacity>.98&&focusStyle.background.endsWith('31)'), `Focused card lacks an opaque foreground at ${viewport.width}: ${JSON.stringify(focusStyle)}`);
   assert((await page.locator('#fragment-story-index').innerText()).startsWith('04'),'Vertical scroll did not traverse card collection');
-  await page.screenshot({path:`artifacts/v5/fragments-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v6/fragments-${viewport.width}.png`});
   assert(await page.locator('.fragment-hint').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight-8),'Card controls extend below the viewport');
   assert(await page.locator('.fragment-sticky .eyebrow').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Fragment heading scrolled out during playback');
   await scrollToScene('#atlas');
   await page.locator('.production-atlas').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1800);
   assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='1,284','Entrance count did not reach 1,284');
-  await page.screenshot({path:`artifacts/v5/atlas-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v6/atlas-${viewport.width}.png`});
   await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(150);
   await scrollToScene('#atlas');
   await page.locator('.production-stats').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
@@ -115,12 +115,12 @@ for(const viewport of viewports) {
   await page.waitForTimeout(250);
   assert(await page.locator('html').getAttribute('lang')==='en','English toggle failed');
   await checkLayout(viewport.width);
-  await page.screenshot({path:`artifacts/v5/hero-en-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v6/hero-en-${viewport.width}.png`});
   for(const selector of ['#experience-story','#fragment-journey']) {
     await scrollToScene(selector,.5);
     const content=selector==='#experience-story'?'.feature-chapter.current':'.fragment-hint';
     assert(await page.locator(content).evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight-8),`English scene exceeds viewport at ${viewport.width}`);
-    await page.screenshot({path:`artifacts/v5/${selector==='#experience-story'?'experience':'fragments'}-en-${viewport.width}.png`});
+    await page.screenshot({path:`artifacts/v6/${selector==='#experience-story'?'experience':'fragments'}-en-${viewport.width}.png`});
   }
   await page.reload();
   assert(await page.locator('html').getAttribute('lang')==='en','Language preference did not persist');
@@ -129,9 +129,9 @@ for(const viewport of viewports) {
 await page.setViewportSize({width:1440,height:1000});
 await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
 for(const selector of ['#detail-filter','#detail-info','#detail-quick','#detail-aspect'])await page.locator(selector).scrollIntoViewIfNeeded();
-await page.locator('#details').screenshot({path:'artifacts/v5/details-desktop.png'});
+await page.locator('#details').screenshot({path:'artifacts/v6/details-desktop.png'});
 const photography=await page.locator('img[src*="/photos/"]').evaluateAll(els=>els.map(el=>el.getAttribute('src')));
-assert(photography.length===28&&new Set(photography).size===28,'Photography repeats across page scenes');
+assert(photography.length===31&&new Set(photography).size===31,'Photography repeats across page scenes');
 await page.locator('#hide-archived').click();
 assert(await page.locator('#hide-archived').getAttribute('aria-checked')==='true','Archive filter switch failed');
 await page.locator('#hide-archived').click();
@@ -180,7 +180,7 @@ assert(await page.locator('#fragment-name').innerText()==='Moon Cycle','Card des
 await page.locator('#language-toggle').click();
 await scrollToScene('#atlas');
 await page.locator('[data-chart="bars"]').click();
-assert(await page.locator('#memory-chart .bar').count()===12,'Monthly bar chart failed');
+assert(await page.locator('#memory-chart .bar').count()===58,'Monthly bar chart failed');
 await page.locator('[data-period="week"]').click();
 assert(await page.locator('#memory-chart .bar').count()>=52,'Weekly grouping failed');
 await page.locator('[data-chart="pie"]').click();
@@ -197,9 +197,9 @@ const chartBox=await page.locator('#memory-chart').boundingBox();
 await page.mouse.click(chartBox.x+chartBox.width*.6,chartBox.y+chartBox.height*.6);
 assert((await page.locator('#atlas-chart-hint').innerText()).includes('当前阶段'),'Chart inspection failed');
 await page.locator('#timeline-expand').click();
-assert(await page.locator('.timeline-entry:not([hidden])').count()===10,'Journal expansion failed');
+assert(await page.locator('.timeline-entry:not([hidden])').count()===13,'Journal expansion failed');
 await page.locator('#language-toggle').click();
-assert(await page.locator('.timeline-entry:not([hidden])').count()===10,'Expanded journal state was lost on language switch');
+assert(await page.locator('.timeline-entry:not([hidden])').count()===13,'Expanded journal state was lost on language switch');
 await page.locator('#timeline-expand').click();
 assert(await page.locator('.timeline-entry:not([hidden])').count()===4,'Journal collapse failed');
 await page.locator('#credits-open').click();
@@ -223,7 +223,7 @@ await page.setViewportSize({width:1440,height:1000});
 await page.reload({waitUntil:'networkidle'});
 for(const section of ['#story','#experience','#fragments','#atlas','#journal','#early-access'])await scrollToScene(section);
 await page.evaluate(()=>scrollTo(0,0));
-await page.screenshot({path:'artifacts/v5/full-static.png',fullPage:true});
+await page.screenshot({path:'artifacts/v6/full-static.png',fullPage:true});
 assert(!errors.length&&!failures.length,JSON.stringify({errors,failures}));
 await context.close();
 // Actual touch events: horizontal card swipe and native vertical scrolling remain independent.

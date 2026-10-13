@@ -1,4 +1,4 @@
-import { contactIcons } from './contact-icons.js';
+import { contactIcons } from './contact-icons.js?v=1.3.1';
 
 export function setupContacts({getLanguage,text}) {
   document.querySelectorAll('[data-contact-icon]').forEach(el=>{el.innerHTML=contactIcons[el.dataset.contactIcon];});
