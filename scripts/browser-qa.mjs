@@ -7,7 +7,7 @@ const page=await context.newPage();
 const errors=[],failures=[];
 page.on('pageerror',e=>errors.push(e.message));
 page.on('response',r=>{if(r.status()>=400)failures.push(`${r.status()} ${r.url()}`);});
-await fs.mkdir('artifacts/v2',{recursive:true});
+await fs.mkdir('artifacts/v4',{recursive:true});
 const assert=(value,message)=>{if(!value)throw new Error(message);};
 async function scrollToScene(selector,progress=0) {
   await page.locator(selector).evaluate((el,p)=>{
@@ -35,7 +35,7 @@ for(const viewport of viewports) {
   await page.setViewportSize(viewport);
   await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
   await page.waitForTimeout(2650);
-  const centreStroke=await page.locator('.memory-box-mark').evaluate(async svg=>{
+  const centreStroke=await page.locator('#logo-art .memory-box-mark').evaluate(async svg=>{
     const url=URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)],{type:'image/svg+xml'}));
     const image=new Image();image.src=url;await image.decode();
     const canvas=document.createElement('canvas');canvas.width=canvas.height=100;
@@ -47,7 +47,16 @@ for(const viewport of viewports) {
   assert((await page.locator('.story-seal').innerText()).includes('叙己'),'Author signature missing');
   assert(await page.locator('.story-seal small').innerText()==='Tell your story','Author subtitle incorrect');
   await checkLayout(viewport.width);
-  await page.screenshot({path:`artifacts/v2/hero-zh-${viewport.width}.png`});
+  const alignment=await page.evaluate(()=>{
+    const nav=document.querySelector('.site-header nav'),r=nav.getBoundingClientRect();
+    const button=document.querySelector('.hero-buttons .button'),b=button.getBoundingClientRect(),label=button.firstElementChild.getBoundingClientRect();
+    return {navVisible:r.width>0,navError:Math.abs((r.left+r.right)/2-innerWidth/2),buttonError:Math.abs((label.left+label.right)/2-(b.left+b.right)/2)};
+  });
+  assert(!alignment.navVisible||alignment.navError<1,'Navigation is not centered');
+  assert(alignment.buttonError<1,'Button text is not centered');
+  assert(await page.locator('[data-i18n="heroDescription"]').innerText()==='照片是回忆的载体，选择你想留住的故事。','Updated hero copy missing');
+  await page.screenshot({path:`artifacts/v4/hero-zh-${viewport.width}.png`});
+  await scrollToScene('#story');await page.screenshot({path:`artifacts/v4/story-${viewport.width}.png`});
   // Observe the picture moving while the title is actually on screen, independently of scene progress data.
   for(const [scene,titleSelector,artSelector] of [
     ['#experience-story','.experience-pinned h2','.scroll-demo-photo'],
@@ -65,20 +74,30 @@ for(const viewport of viewports) {
   for(const [p,phase] of [[.02,'0'],[.5,'1'],[.9,'2']]) {
     await scrollToScene('#experience-story',p);
     assert(await page.locator('.demo-phone').getAttribute('data-phase')===phase,`Scroll demonstration phase ${phase} failed at ${viewport.width}`);
-    if(p===.5)await page.screenshot({path:`artifacts/v2/experience-${viewport.width}.png`});
+    if(p===.5)await page.screenshot({path:`artifacts/v4/experience-${viewport.width}.png`});
     if(p===.5)assert(await page.locator('.experience-pinned h2').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Experience title scrolled out during playback');
   }
   await scrollToScene('#experience-story',.02);
   assert(await page.locator('.demo-phone').getAttribute('data-phase')==='0','Reverse scrolling did not restore the gallery');
   await scrollToScene('#fragment-journey',.5);
+  const focusStyle=await page.locator('.fragment-tile.active').evaluate(el=>({opacity:Number(getComputedStyle(el).opacity),background:getComputedStyle(el).backgroundColor}));
+  assert(focusStyle.opacity>.98&&focusStyle.background.endsWith('31)'), 'Focused card lacks an opaque foreground');
   assert((await page.locator('#fragment-story-index').innerText()).startsWith('04'),'Vertical scroll did not traverse card collection');
-  await page.screenshot({path:`artifacts/v2/fragments-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v4/fragments-${viewport.width}.png`});
+  assert(await page.locator('.fragment-hint').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight-8),'Card controls extend below the viewport');
   assert(await page.locator('.fragment-sticky .eyebrow').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Fragment heading scrolled out during playback');
   await scrollToScene('#atlas');
   await page.locator('.production-atlas').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1800);
   assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='1,284','Entrance count did not reach 1,284');
-  await page.screenshot({path:`artifacts/v2/atlas-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v4/atlas-${viewport.width}.png`});
+  await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(150);
+  await scrollToScene('#atlas');
+  await page.locator('.production-stats').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
+  const replayCount=await page.locator('[data-stat="reviewed"] [data-count]').innerText();
+  assert(replayCount!=='1,284','Counter did not replay after reentry');
+  await page.waitForTimeout(1550);
+  assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='1,284','Replayed counter did not reach final value');
   await scrollToScene('#journal');
   await scrollToScene('#early-access');
   await page.evaluate(()=>scrollTo(0,0));
@@ -86,7 +105,13 @@ for(const viewport of viewports) {
   await page.waitForTimeout(250);
   assert(await page.locator('html').getAttribute('lang')==='en','English toggle failed');
   await checkLayout(viewport.width);
-  await page.screenshot({path:`artifacts/v2/hero-en-${viewport.width}.png`});
+  await page.screenshot({path:`artifacts/v4/hero-en-${viewport.width}.png`});
+  for(const selector of ['#experience-story','#fragment-journey']) {
+    await scrollToScene(selector,.5);
+    const content=selector==='#experience-story'?'.feature-chapter.current':'.fragment-hint';
+    assert(await page.locator(content).evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight-8),`English scene exceeds viewport at ${viewport.width}`);
+    await page.screenshot({path:`artifacts/v4/${selector==='#experience-story'?'experience':'fragments'}-en-${viewport.width}.png`});
+  }
   await page.reload();
   assert(await page.locator('html').getAttribute('lang')==='en','Language preference did not persist');
   await page.locator('#language-toggle').click();
@@ -160,7 +185,7 @@ await page.setViewportSize({width:1440,height:1000});
 await page.reload({waitUntil:'networkidle'});
 for(const section of ['#story','#experience','#fragments','#atlas','#journal','#early-access'])await scrollToScene(section);
 await page.evaluate(()=>scrollTo(0,0));
-await page.screenshot({path:'artifacts/v2/full-static.png',fullPage:true});
+await page.screenshot({path:'artifacts/v4/full-static.png',fullPage:true});
 assert(!errors.length&&!failures.length,JSON.stringify({errors,failures}));
 await context.close();
 // Actual touch events: horizontal card swipe and native vertical scrolling remain independent.
@@ -189,4 +214,4 @@ await swipe(180,newBox.y+220,0,-160);
 assert(await touchPage.evaluate(()=>scrollY)>yBefore+30,'Card touch surface trapped vertical page scrolling');
 await touchContext.close();
 await browser.close();
-console.log(JSON.stringify({status:'passed',mode:viewports.length?'full':'focused interactions',widths:viewports.length?viewports.map(v=>v.width):[390,1440],languages:['zh-CN','en'],checks:['layout and images','scroll demo forward and reverse','seven-card scroll navigation','touch swipe and native vertical scroll','keyboard card navigation','original card stories and translation','entry counters','week/month/year grouping','trend/bars/pie and conserved totals','chart inspection','journal and language persistence','dialog Escape','motion pause','reduced-motion static collection','no JavaScript or HTTP errors']},null,2));
+console.log(JSON.stringify({status:'passed',mode:viewports.length?'full':'focused interactions',widths:viewports.length?viewports.map(v=>v.width):[390,1440],languages:['zh-CN','en'],checks:['layout and images','scroll demo forward and reverse','seven-card scroll navigation','touch swipe and native vertical scroll','keyboard card navigation','original card stories and translation','repeated entry counters','centered navigation and button labels','opaque focused cards and visible scene controls','week/month/year grouping','trend/bars/pie and conserved totals','chart inspection','journal and language persistence','dialog Escape','motion pause','reduced-motion static collection','no JavaScript or HTTP errors']},null,2));

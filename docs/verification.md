@@ -1,5 +1,18 @@
 # Website verification · 2026-10-13
 
+Version 1.2.0 composition checks passed in local Chromium at 320, 390, 768, 1024 and 1440 px:
+
+- Updated Chinese copy, matching English copy and document titles. The philosophy description includes the requested line break.
+- Navigation is independently centered on the viewport; primary button labels are centered while arrows remain on the right. Both measured in the browser.
+- Expanded memory-box design panel shows the original logo geometry and app icon, with separate SVG gradient identifiers.
+- Larger scroll demos and card artwork adapt to viewport height. Chinese and English scene descriptions and card controls remain visible.
+- Focused cards have an opaque foreground, raised placement, stronger light and pointer-driven sheen; neighboring cards recede with perspective, dimming and blur. Existing scroll, touch and keyboard navigation continue to pass.
+- Leaving the statistics and returning restarts the count animation; final values are verified after each return.
+- Denser twinkling stars, glowing points and an occasional meteor remain controlled by the pause button and system Reduce Motion.
+- Existing chart, language persistence, QR, timeline, SVG, static assets and runtime error checks all pass. Desktop and mobile screenshots were visually reviewed.
+
+Screenshots for this revision are under ignored `artifacts/v4/`.
+
 Version 1.1.1 refinement checks passed in a full browser run across all five viewport widths:
 
 - The finished SVG Logo was rasterized in the browser; the central vertical stroke is visible. It also remains visible after drawing finishes.

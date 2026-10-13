@@ -13,6 +13,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   let drag = null, tilt = {x:0,y:0};
   const logo = document.querySelector('#logo-art');
   logo.innerHTML = memoryBoxSVG();
+  document.querySelector('#box-study-art').innerHTML = memoryBoxSVG('boxStudyInk');
   const replay = document.querySelector('#logo-replay');
   function playLogo() {
     const paths=[...logo.querySelectorAll('[data-logo-stroke]')];
@@ -108,14 +109,17 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     });
   }
   function paintFragments() {
-    const mobile=innerWidth<600;
-    const spacing=mobile?110:175;
+    const width=fragmentCards[0].offsetWidth;
+    const spacing=width*(innerWidth<600?.88:.94);
     fragmentCards.forEach((el,i)=>{
       const delta=i-displayIndex, distance=Math.abs(delta);
-      el.style.transform=`translateX(calc(-50% + ${delta*spacing}px)) translateY(${distance*distance*10}px) translateZ(${-distance*90}px) rotateY(${clamp(-delta*18,-42,42)+tilt.x*5}deg) rotateZ(${delta*2.6}deg) rotateX(${-tilt.y*7}deg)`;
-      el.style.opacity=String(clamp(1-distance*.19,.13,1));
-      el.style.zIndex=String(20-Math.round(distance*3));
-      el.style.filter=`drop-shadow(0 0 ${Math.max(3,11-distance*2)}px #c2a6fa35)`;
+      const focus=Math.max(0,1-distance), depth=Math.min(distance,3);
+      el.style.transform=`translateX(calc(-50% + ${delta*spacing}px)) translateY(${18+depth*23-focus*16}px) translateZ(${-depth*65}px) rotateY(${clamp(-delta*21,-48,48)+tilt.x*8*focus}deg) rotateZ(${delta*2.8}deg) rotateX(${-tilt.y*10*focus}deg) scale(${1-depth*.085})`;
+      el.style.opacity=String(clamp(1-distance*.38,.08,1));
+      el.style.zIndex=String(100-Math.round(distance*10));
+      el.style.filter=`brightness(${1-depth*.16}) blur(${Math.max(0,distance-1)*.45}px) drop-shadow(0 0 ${8+focus*18}px #c2a6fa${focus>.5?'55':'15'})`;
+      el.style.setProperty('--light-x',`${50+tilt.x*70}%`);
+      el.style.setProperty('--light-y',`${50+tilt.y*70}%`);
     });
     describeFragment();
   }
@@ -160,17 +164,24 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   // Exact celestial icon coordinates and readout slots from ProfileStatColumn.
   document.querySelectorAll('[data-stat]').forEach(el=>el.querySelector('.stat-art').innerHTML=statisticSVG(el.dataset.stat));
   const countElements=[...document.querySelectorAll('[data-count]')];
-  let countStart=0,countFinished=false;
+  let countStart=0,countFinished=false,counterVisible=false;
   function countValue(el,p) {
     const decimals=Number(el.dataset.decimals||0);
     el.textContent=(Number(el.dataset.count)*p).toLocaleString(getLanguage()==='zh'?'zh-CN':'en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
   }
   const counterObserver=new IntersectionObserver(entries=>{
-    if(entries.some(e=>e.isIntersecting)&&!countStart&&!countFinished) {
-      countStart=performance.now();
-      if(reducedMotion.matches||paused) {countElements.forEach(el=>countValue(el,1));countFinished=true;}
+    for(const entry of entries) {
+      const visible=entry.isIntersecting&&entry.intersectionRatio>=.12;
+      if(visible&&!counterVisible) {
+        countStart=performance.now();countFinished=false;
+        countElements.forEach(el=>countValue(el,reducedMotion.matches||paused?1:0));
+        if(reducedMotion.matches||paused)countFinished=true;
+      } else if(!visible&&counterVisible) {
+        countStart=0;countFinished=true;countElements.forEach(el=>countValue(el,1));
+      }
+      counterVisible=visible;
     }
-  },{threshold:.25});
+  },{threshold:[0,.12]});
   counterObserver.observe(document.querySelector('.app-profile-preview'));
 
   // Fixed illustrative captures, grouped by the chosen calendar unit. Photo/video counts add to 1,284.
@@ -272,7 +283,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   // One isolated, capped background canvas. Pause while hidden and respect system motion preferences.
   const canvas=document.querySelector('#memory-sky'),ctx=canvas.getContext('2d');
   let skyWidth=innerWidth,skyHeight=innerHeight,frame=0,lastSky=0;
-  const stars=Array.from({length:62},(_,i)=>({x:((i*0.61803398875+.17)%1),y:((i*0.41421356237+.31)%1),r:i%11===0?1.05:.35+(i%4)*.15,phase:i*1.87,period:3.2+(i%8)*.54}));
+  const stars=Array.from({length:148},(_,i)=>({x:((i*0.61803398875+.17)%1),y:((i*0.41421356237+.31)%1),r:i%13===0?1.4:.4+(i%4)*.19,phase:i*1.87,period:2.4+(i%8)*.57}));
   function sizeSky() {
     skyWidth=innerWidth;skyHeight=innerHeight;
     const dpr=Math.min(devicePixelRatio||1,1.5);
@@ -283,15 +294,37 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     const staticSky=reducedMotion.matches||paused;
     const shift=staticSky?0:Math.sin(window.scrollY/1800)*16;
     stars.forEach((star,i)=>{
-      const pulse=staticSky?.4:.28+.35*(.5+.5*Math.sin(time/1000/star.period*Math.PI*2+star.phase));
+      const pulse=staticSky?.55:.22+.65*Math.pow(.5+.5*Math.sin(time/1000/star.period*Math.PI*2+star.phase),2);
       const x=star.x*skyWidth+(staticSky?0:Math.sin(time/16000+star.phase)*3),y=star.y*skyHeight+shift;
       ctx.fillStyle=`rgba(206,186,236,${pulse})`;ctx.beginPath();ctx.arc(x,y,star.r,0,Math.PI*2);ctx.fill();
-      if(i%11===0) {ctx.strokeStyle=`rgba(206,186,236,${pulse*.35})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.moveTo(x,y-4);ctx.lineTo(x,y+4);ctx.stroke();}
+      if(i%13===0) {
+        const glow=ctx.createRadialGradient(x,y,0,x,y,10);glow.addColorStop(0,`rgba(215,188,255,${pulse*.35})`);glow.addColorStop(1,'rgba(215,188,255,0)');ctx.fillStyle=glow;ctx.fillRect(x-10,y-10,20,20);
+        const reach=3+pulse*4;ctx.strokeStyle=`rgba(228,211,255,${pulse*.7})`;ctx.lineWidth=.65;ctx.beginPath();ctx.moveTo(x-reach,y);ctx.lineTo(x+reach,y);ctx.moveTo(x,y-reach);ctx.lineTo(x,y+reach);ctx.stroke();
+      }
     });
+    if(!staticSky) {
+      const cycle=(time%17000)/17000;
+      if(cycle>.78&&cycle<.86) {
+        const p=(cycle-.78)/.08,x=skyWidth*(.72-p*.28),y=skyHeight*(.13+p*.16);
+        const tail=ctx.createLinearGradient(x,y,x+80,y-45);tail.addColorStop(0,`rgba(226,206,255,${Math.sin(p*Math.PI)*.65})`);tail.addColorStop(1,'rgba(226,206,255,0)');ctx.strokeStyle=tail;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+80,y-45);ctx.stroke();
+      }
+    }
     ctx.strokeStyle='rgba(189,155,233,.055)';ctx.lineWidth=.6;
     for(const [a,b] of [[3,16],[16,29],[29,42],[9,22],[22,35]]) {const s=stars[a],e=stars[b];ctx.beginPath();ctx.moveTo(s.x*skyWidth,s.y*skyHeight+shift);ctx.lineTo(e.x*skyWidth,e.y*skyHeight+shift);ctx.stroke();}
   }
   function measure() {
+    const mobile=innerWidth<=600;
+    const demoScale=mobile?clamp((innerHeight-490)/557,.54,.85):clamp((innerHeight-320)/557,.7,1.48);
+    document.querySelector('.experience-phone-wrap').style.setProperty('--demo-scale',demoScale);
+    if(!reducedMotion.matches) {
+      const pin=document.querySelector('.fragment-sticky');
+      const otherHeight=['.fragment-heading','.fragment-story','.fragment-navigation','.fragment-hint'].reduce((total,selector)=>total+pin.querySelector(selector).offsetHeight,0);
+      const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,210,650);
+      viewport.style.height=`${budget}px`;
+      fragmentCards.forEach(card=>card.style.width=`${Math.min(mobile?280:400,(budget-46)/1.4)}px`);
+    } else {
+      viewport.style.removeProperty('height');fragmentCards.forEach(card=>card.style.removeProperty('width'));
+    }
     for(const [key,selector,pinSelector,triggerSelector] of [
       ['experience','#experience-story','.experience-pinned','.section-heading h2'],
       ['fragments','#fragment-journey','.fragment-sticky','[data-i18n="fragmentEyebrow"]']
@@ -341,6 +374,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   reducedMotion.addEventListener('change',()=>{
     playLogo();countElements.forEach(el=>countValue(el,1));countFinished=true;
     if(reducedMotion.matches){cancelAnimationFrame(frame);frame=0;paintDemo(0);drawSky();}else start();
+    measure();
   });
   window.addEventListener('resize',measure,{passive:true});
   window.addEventListener('scroll',updateScroll,{passive:true});

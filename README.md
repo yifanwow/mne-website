@@ -33,10 +33,10 @@ HOST=0.0.0.0 npm run dev
 - `dist/index.html`：页面、元信息与语义结构。
 - `dist/styles.css`：主题、手机 ≤600px / 平板 ≤850px / 桌面布局、动画和系统无障碍偏好。
 - `dist/app.js`：`copy` 中英文文案、`journal` 开发时间线、布局和图表演示。
-- `dist/motion.js`：滚动演示、触控卡牌、图谱、入场数字与背景星空。
+- `dist/motion.js`：滚动演示、触控卡牌、图谱、每次进入时重播的数字与背景星空。
 - `dist/motion.css`：滚动场景和手机 / 平板 / 桌面适配。
 - `dist/motion-copy.js`：新增场景的双语文案。
-- `dist/refinements.css`：标题与演示共用的停留区、署名和联系方式排版。
+- `dist/refinements.css`：标题与演示共用的停留区、视口尺寸适配、记忆盒设计展示、署名和联系方式排版。
 - `dist/contacts.js`、`dist/contact-icons.js`：个人站已有联系方式、品牌图标和微信二维码交互。
 - `dist/app-art.js`：App 原始 Logo 与天体统计几何的 SVG 实现。
 - `dist/fragments-data.js`：可继续扩展的卡面名称与 App 原文描述。

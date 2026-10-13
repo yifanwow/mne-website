@@ -6,8 +6,8 @@ import { setupContacts } from './contacts.js';
 const copy = {
   zh: {
     skip:'跳到内容',navExperience:'体验',navFragments:'记忆碎片',navJournal:'开发手记',navStatus:'探索 Mne',
-    heroEyebrow:'一个安静的，记忆整理空间',heroLine1:'留住记忆。',heroLine2:'留一点空白。',heroDescription:'照片是记忆的载体。Mne 帮你轻轻整理，<br>让值得留下的瞬间，再一次闪耀。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 私人内测中',phoneCount:'1,284 份回忆',floatingTitle:'少一点杂乱，多一点珍贵。',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
-    storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。我们相信，整理不是抹去过去，而是为真正重要的瞬间，留出空间。没有替你做决定的 AI，只有照片、直觉，和你。',
+    heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'照片是回忆的载体，选择你想留住的故事。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 私人内测中',phoneCount:'1,284 份回忆',floatingTitle:'少一点杂乱，多一点珍贵。',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
+    storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>整理不是抹去，而是为真正重要的瞬间，留出空间。回望本身，也是人生的过程。',
     experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'一划之间，做个决定。',featureGestureDescription:'左右重温，上滑暂存回收站。长按预览，横向扫选，把喜欢的瞬间加入 Mne Archive。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
     fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'翻过一张张照片，也像重新读过往的自己。<br>那些曾让你停留的片段，慢慢成为新的印记。',
@@ -18,8 +18,8 @@ const copy = {
   },
   en: {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
-    heroEyebrow:'A QUIET SPACE FOR YOUR MEMORIES',heroLine1:'Keep the memories.',heroLine2:'Leave a little space.',heroDescription:'Photos hold our memories. Mne helps you gently<br>make room for the moments that still matter.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'1,284 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
-    storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Named after Mnemosyne, the goddess of memory, Mne is built on a simple belief: curating is a way to make room for what matters. No AI making the decisions for you. Just your photos, your intuition, and you.',
+    heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Photos hold our memories. Choose the stories you want to keep.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'1,284 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
+    storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Curating makes room for the moments that matter. Looking back is part of living.',
     experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'A small gesture. A clear choice.',featureGestureDescription:'Swipe to revisit. Swipe up to set a photo aside. Long press to preview, sweep to select, and add meaningful moments to Mne Archive.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
     fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Looking through your photos is another way of reading who you were.<br>The moments you pause for become new pieces of your story.',
@@ -93,7 +93,7 @@ function applyLanguage() {
   document.querySelector('.lang-zh').classList.toggle('active', language === 'zh');
   document.querySelector('.lang-en').classList.toggle('active', language === 'en');
   document.querySelector('#language-toggle').setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换到中文');
-  document.title = language === 'zh' ? 'Mne — 留住记忆，留一点空白。' : 'Mne — Keep the memories. Leave a little space.';
+  document.title = language === 'zh' ? 'Mne — 记忆碎片，掌指之间。' : 'Mne — Fragments of memory, at your fingertips.';
   const description = language === 'zh' ? 'Mne，一款安静的 iPhone 照片整理 App。由你决定每张照片的去留，让真正的记忆更闪耀。' : 'Mne is a quiet, intuitive iPhone app for curating your photo library. Your photos. Your decisions. Room for what matters.';
   document.querySelector('meta[name="description"]').content = description;
   document.querySelector('meta[property="og:title"]').content = document.title;

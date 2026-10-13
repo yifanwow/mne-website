@@ -1,6 +1,6 @@
 export const motionCopy = {
   zh:{
-    logoReplay:'重看记忆盒动画',logoWhisper:'有些回忆，先好好收着。',logoMeaning:'一个盒子，收起照片，也收起彼时的自己。',logoStory:'把 M、N、E 折成一只盒子。收起照片，也收起光落下的那一刻。<br>让散落的片段各得其所，让彼时的自己，在留白里慢慢清晰。',logoInspiration:'记忆盒的灵感',
+    logoReplay:'重看记忆盒动画',logoWhisper:'每一份记忆，都是命运轻轻的印记。',logoMeaning:'一个盒子，收起照片，也收起彼时的自己。',logoStory:'把 M、N、E 折成一只盒子。收起照片，也收起光落下的那一刻。<br>让散落的片段各得其所，让彼时的自己，在留白里慢慢清晰。',logoInspiration:'记忆盒的灵感',
     contactRed:'小红书',contactWechat:'微信公众号',contactQr:'扫码，读一读叙己的故事。',contactLabel:'叙己的联系方式',
     demoScroll:'向下滑动，回忆会自己展开。',demoGrid:'远观',demoSingle:'靠近',demoSetAside:'暂存',demoRecover:'恢复',demoFootnote:'滚动演示 · App 内使用手势操作',demoDate:'2026 / 04 / 06',
     fragmentsHint:'上下滑动翻阅 · 也可左右轻扫卡片',fragmentsPrevious:'上一张成就卡',fragmentsNext:'下一张成就卡',fragmentGrowing:'故事仍在生长。新的碎片，会随 Mne 一起到来。',fragmentGalleryLabel:'成就卡面与故事',
@@ -8,7 +8,7 @@ export const motionCopy = {
     photographyBy:'摄影 / 叙己',creditsPhotography:'页面摄影作品由叙己拍摄并授权使用。照片只作界面示意，不是任何用户的真实图库。',creditsArtwork:'记忆盒线条、星轨统计与成就卡面，沿用 Mne 原版设计。',creditsWriting:'文案参考叙己的诗歌与随笔；卡面故事沿用 App 内原文。',motionPause:'暂停背景与演示动画',motionResume:'继续背景与演示动画'
   },
   en:{
-    logoReplay:'Replay the memory-box animation',logoWhisper:'Some memories can rest here.',logoMeaning:'A box for your photographs. And who you were when you took them.',logoStory:'M, N, and E fold into a box. A place for photographs, and the light they held.<br>Gather the scattered moments. Leave room to see who you were, a little more clearly.',logoInspiration:'THE IDEA OF A MEMORY BOX',
+    logoReplay:'Replay the memory-box animation',logoWhisper:'Every memory is a gentle imprint of fate.',logoMeaning:'A box for your photographs. And who you were when you took them.',logoStory:'M, N, and E fold into a box. A place for photographs, and the light they held.<br>Gather the scattered moments. Leave room to see who you were, a little more clearly.',logoInspiration:'THE IDEA OF A MEMORY BOX',
     contactRed:'RED',contactWechat:'WeChat Public',contactQr:'Scan to read more of Yifan’s stories.',contactLabel:'Contact Yifan',
     demoScroll:'Keep scrolling. Let the memories unfold.',demoGrid:'Step back',demoSingle:'Look closer',demoSetAside:'Set aside',demoRecover:'Restore',demoFootnote:'Scroll illustration · Gestures in the app',demoDate:'2026 / 04 / 06',
     fragmentsHint:'Scroll to explore · Swipe the cards to linger',fragmentsPrevious:'Previous achievement card',fragmentsNext:'Next achievement card',fragmentGrowing:'The story keeps growing. New fragments will arrive with Mne.',fragmentGalleryLabel:'Achievement artwork and stories',
