@@ -1,5 +1,5 @@
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.3.1';
-import { fragments } from './fragments-data.js?v=1.3.1';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.3.2';
+import { fragments } from './fragments-data.js?v=1.3.2';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;

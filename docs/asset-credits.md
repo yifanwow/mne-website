@@ -41,7 +41,7 @@ Only web-sized derivatives are included. Originals remain untouched. Exports pre
 | `photos/stilllife.webp` | `52781AEF-7FD6-48EC-B774-34CA0D5B4C41.jpg` | Objects in a shop |
 | `photos/littleworld.webp` | `IMG_8555.PNG` | A miniature figure |
 
-The quick-album demonstration now uses the original landscape sunset. Its former photo appears in the hero phone instead. The six-photo ratio study mixes original 4:3, 3:4 and 9:16 frames; exports retain the full original photograph, and fixed frame modes use contain.
+The quick-album demonstration uses the portrait `capture.webp` photograph in its vertical feature card; the landscape sunset appears in the hero phone. Each photograph appears once on the page. The six-photo ratio study mixes original 4:3, 3:4 and 9:16 frames; exports retain the full original photograph, and fixed frame modes use contain.
 
 The former Unsplash example images have been removed. Photography remains copyright Yifan. Inclusion in this website does not grant permission for unrelated reuse.
 

@@ -1,5 +1,12 @@
 # Website verification · 2026-10-13
 
+Version 1.3.2 feature-card layout checks:
+
+- 02B uses four portrait cards in one desktop row, two columns at ≤1000 px, and one column at ≤600 px. All four visual areas share a 370 px height; flexible galleries leave room for the controls in both languages.
+- Chromium and WebKit pass Chinese and English layout checks at 1440, 1024, 768, 390 and 320 px: expected column counts, no horizontal overflow, portrait cards, and no clipped switches, hints or ratio controls. Screenshots were visually reviewed under ignored `artifacts/v7/details/`.
+- Archive filtering, information expansion/collapse, hover and click album-menu behavior, album feedback, and six-image ratio geometry continue to pass in both engines. The quick-album photo is portrait again; all 31 photographs remain unique across the page.
+- Logo replay, five-year chart and current App development entry remain verified. Release URLs now use 1.3.2.
+
 Version 1.3.1 interaction, artwork and journal checks:
 
 - Before the fix, both Chromium and WebKit desktop tests confirmed that all three ratio choices produced the same capped 184 px height. The information click also overlapped with its hover state. This reproduced a visible-feedback defect, rather than a failed click handler, on the tested browsers.

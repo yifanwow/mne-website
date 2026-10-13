@@ -1,7 +1,7 @@
-import { motionCopy } from './motion-copy.js?v=1.3.1';
-import { initMotion } from './motion.js?v=1.3.1';
-import { setupContacts } from './contacts.js?v=1.3.1';
-import { setupDetails } from './details.js?v=1.3.1';
+import { motionCopy } from './motion-copy.js?v=1.3.2';
+import { initMotion } from './motion.js?v=1.3.2';
+import { setupContacts } from './contacts.js?v=1.3.2';
+import { setupDetails } from './details.js?v=1.3.2';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
