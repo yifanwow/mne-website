@@ -20,10 +20,12 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     let delay=0;
     paths.forEach((path,i)=>{
       path.getAnimations().forEach(a=>a.cancel());
+      path.style.strokeDashoffset='0';
       if(reducedMotion.matches || paused) { path.style.strokeDashoffset='0'; return; }
       path.style.strokeDasharray='1';
       const duration=2100*logoLengths[i]/total;
-      path.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+      const animation=path.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+      animation.onfinish=()=>{path.style.strokeDashoffset='0';animation.cancel();};
       delay+=duration;
     });
     replay.classList.remove('playing');
@@ -49,7 +51,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   }
   function paintDemo(progress) {
     const p=reducedMotion.matches ? 0 : progress;
-    const zoom=smooth((p-.03)/.28), close=smooth((p-.34)/.18);
+    const zoom=smooth(p/.28), close=smooth((p-.34)/.18);
     const discard=smooth((p-.56)/.15), recover=smooth((p-.77)/.16);
     demoCards.forEach((el,i)=>{
       const a=demoLayout(i,3), b=demoLayout(i,2);
@@ -70,7 +72,10 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     const phase=p<.34?0:p<.72?1:2;
     demoPhone.dataset.phase=String(phase);
     phaseLabels.forEach((el,i)=>el.classList.toggle('active',i===phase));
-    document.querySelectorAll('.feature-chapter').forEach((el,i)=>el.classList.toggle('current',i===phase));
+    document.querySelectorAll('.feature-chapter').forEach((el,i)=>{
+      el.classList.toggle('current',i===phase);
+      el.setAttribute('aria-hidden',String(!reducedMotion.matches&&i!==phase));
+    });
   }
 
   // Seven original artworks, one extensible collection. Vertical progress and direct touch add together.
@@ -287,18 +292,30 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     for(const [a,b] of [[3,16],[16,29],[29,42],[9,22],[22,35]]) {const s=stars[a],e=stars[b];ctx.beginPath();ctx.moveTo(s.x*skyWidth,s.y*skyHeight+shift);ctx.lineTo(e.x*skyWidth,e.y*skyHeight+shift);ctx.stroke();}
   }
   function measure() {
-    for(const [key,selector] of [['experience','#experience-story'],['fragments','#fragment-journey']]) {
+    for(const [key,selector,pinSelector,triggerSelector] of [
+      ['experience','#experience-story','.experience-pinned','.section-heading h2'],
+      ['fragments','#fragment-journey','.fragment-sticky','[data-i18n="fragmentEyebrow"]']
+    ]) {
       const el=document.querySelector(selector),rect=el.getBoundingClientRect();
-      sceneMetrics[key]={top:rect.top+scrollY,height:rect.height};
+      const pin=el.querySelector(pinSelector),pinRect=pin.getBoundingClientRect();
+      const trigger=pin.querySelector(triggerSelector),triggerRect=trigger.getBoundingClientRect();
+      // Recover the heading's natural position even when its parent is already sticky.
+      const naturalTop=rect.top+scrollY;
+      const triggerTop=naturalTop+triggerRect.top-pinRect.top;
+      const pinTop=parseFloat(getComputedStyle(pin).top)||0;
+      const start=triggerTop-innerHeight*.68;
+      const end=Math.max(start+1,naturalTop+rect.height-pin.offsetHeight-pinTop);
+      sceneMetrics[key]={start,end};
+      el.dataset.motionStart=String(start);el.dataset.motionEnd=String(end);
     }
     sizeSky();updateScroll();drawSky();
   }
   function updateScroll() {
     const exp=sceneMetrics.experience,frag=sceneMetrics.fragments;if(!exp||!frag)return;
-    const demoProgress=clamp((scrollY-exp.top+innerHeight*.25)/Math.max(1,exp.height-innerHeight*.5));
+    const demoProgress=clamp((scrollY-exp.start)/(exp.end-exp.start));
     if(!paused)paintDemo(demoProgress);
     if(!paused&&!reducedMotion.matches&&!drag) {
-      scrollIndex=clamp((scrollY-frag.top+90)/Math.max(1,frag.height-document.querySelector('.fragment-sticky').offsetHeight-100))*(fragments.length-1);
+      scrollIndex=clamp((scrollY-frag.start)/(frag.end-frag.start))*(fragments.length-1);
       targetIndex=clamp(scrollIndex+manualOffset,0,fragments.length-1);
       // Paint immediately for native scroll responsiveness; touch can hold a different position.
       displayIndex=targetIndex;paintFragments();

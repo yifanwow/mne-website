@@ -36,6 +36,8 @@ HOST=0.0.0.0 npm run dev
 - `dist/motion.js`：滚动演示、触控卡牌、图谱、入场数字与背景星空。
 - `dist/motion.css`：滚动场景和手机 / 平板 / 桌面适配。
 - `dist/motion-copy.js`：新增场景的双语文案。
+- `dist/refinements.css`：标题与演示共用的停留区、署名和联系方式排版。
+- `dist/contacts.js`、`dist/contact-icons.js`：个人站已有联系方式、品牌图标和微信二维码交互。
 - `dist/app-art.js`：App 原始 Logo 与天体统计几何的 SVG 实现。
 - `dist/fragments-data.js`：可继续扩展的卡面名称与 App 原文描述。
 - `dist/assets/`：公开品牌素材与作者授权摄影的网页导出，来源见 `docs/asset-credits.md`。
@@ -45,6 +47,8 @@ HOST=0.0.0.0 npm run dev
 界面与图表数字明确标为示意，使用作者明确授权的摄影作品，不使用账号资料或真实用户统计。切换语言会在本机 localStorage 保存偏好；不发送到服务器。照片、Logo 和成就卡面版权归各自作者所有。
 
 滚动由浏览器原生处理，不拦截滚轮、不锁定页面。卡牌横向触控保留上下滑动；背景 Canvas 限制为 24fps，页面隐藏时暂停。支持系统减少动态效果：改为静态演示和完整卡面网格。右下角可暂停背景与自动演示。
+
+Experience 和成就碎片从标题进入视野时开始推进；标题、图像和描述共用一个 sticky 区域。微信公众号二维码支持鼠标悬停、点击、触控、键盘焦点及 Escape 关闭。
 
 ## 检查 / Validation
 

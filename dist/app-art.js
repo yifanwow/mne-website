@@ -10,7 +10,8 @@ const strokes = [
 export const logoLengths = strokes.map(points => points.slice(1).reduce((sum,p,i) => sum+Math.hypot(p[0]-points[i][0],p[1]-points[i][1]),0));
 
 export function memoryBoxSVG() {
-  return `<svg class="memory-box-mark" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="boxInk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9ddff"/><stop offset=".55" stop-color="#c2a6fa"/><stop offset="1" stop-color="#8063a9"/></linearGradient></defs><g stroke="url(#boxInk)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none">${strokes.map((points,i)=>`<path data-logo-stroke="${i}" pathLength="1" d="${points.map(([x,y],j)=>`${j?'L':'M'}${x},${y}`).join(' ')}"/>`).join('')}</g></svg>`;
+  // A vertical stroke has zero bounding-box width. Use the shared icon coordinates for its gradient.
+  return `<svg class="memory-box-mark" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="boxInk" gradientUnits="userSpaceOnUse" x1="20" y1="12" x2="78" y2="84"><stop stop-color="#e9ddff"/><stop offset=".55" stop-color="#c2a6fa"/><stop offset="1" stop-color="#8063a9"/></linearGradient></defs><g stroke="url(#boxInk)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none">${strokes.map((points,i)=>`<path data-logo-stroke="${i}" pathLength="1" d="${points.map(([x,y],j)=>`${j?'L':'M'}${x},${y}`).join(' ')}"/>`).join('')}</g></svg>`;
 }
 
 function star(x,y,r,rotation=0) {

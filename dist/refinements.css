@@ -1,0 +1,129 @@
+/* Title-led scroll scenes: the headline, artwork and active caption stay together. */
+.experience-scroll { height: 250vh; min-height: 1700px; position: relative; }
+.experience-pinned { position: sticky; top: 86px; }
+.experience-pinned .section-heading { padding: 24px 0 30px; }
+.experience-pinned .section-heading.reveal, .fragment-sticky .fragment-heading.reveal { transform: none; }
+.experience-scene { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 100px; align-items: center; }
+.experience-stage { position: relative; top: auto; height: auto; min-height: 0; padding-bottom: 12px; }
+.feature-sequence { position: relative; height: 270px; margin-top: 0; }
+.feature-chapter { position: absolute; inset: 0; min-height: 0; padding: 0; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .45s,transform .55s var(--ease); }
+.feature-chapter.current { opacity: 1; transform: translateY(0); }
+.experience .section-heading h2 { margin-top: 12px; }
+
+.fragment-journey { height: 250vh; min-height: 1850px; margin-top: 16px; }
+.fragment-sticky { position: sticky; top: 86px; height: auto; padding-top: 13px; }
+.fragment-sticky .fragment-heading { margin: 0 auto 10px; width: min(1100px,calc(100% - 60px)); }
+.fragment-sticky .fragment-heading h2 { font-size: clamp(30px,4.5vh,44px); line-height: 1.3; margin: 12px 0 13px; }
+.fragment-sticky .fragment-heading>p:last-child { font-size: 12px; line-height: 1.8; }
+.fragment-viewport { height: clamp(260px,38vh,360px); }
+.fragment-tile { top: 10px; width: clamp(165px,24vh,225px); height: auto; }
+.fragment-story { min-height: 101px; }
+.fragment-story h3 { font-size: 20px; margin-top: 7px; }
+.fragment-story p { font-size: 13px; margin-top: 10px; min-height: 44px; }
+.fragment-navigation { margin-top: 12px; }
+.fragment-hint { margin-top: 12px; }
+.story-seal { min-width: 110px; font-size: 45px; white-space: nowrap; }
+.story-seal small { font-size: 8px; letter-spacing: .04em; color: #ad95c17a; }
+.box-story-label { display: block; font-size: 8px; letter-spacing: .1em; color: #b399d1; margin-bottom: 9px; }
+
+/* Existing public contact destinations from yifanovo.com. */
+.hero-contacts { display: flex; align-items: center; flex-wrap: wrap; column-gap: 17px; row-gap: 9px; margin-top: 22px; position: relative; z-index: 8; }
+.hero-contacts>a, .wechat-contact>button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 0; font-size: 10px; line-height: 1.5; color: #8e819c; transition: color .25s; white-space: nowrap; }
+.hero-contacts>a:hover, .wechat-contact>button:hover, .wechat-contact>button[aria-expanded="true"] { color: #cab1ec; }
+[data-contact-icon] { display: inline-flex; align-items: center; flex: none; }
+.hero-contacts svg { width: 15px; height: 15px; fill: currentColor; stroke: none; }
+.hero-contacts .wechat-contact { position: relative; }
+.wechat-popover { position: absolute; left: auto; right: 0; top: calc(100% + 9px); width: 177px; border-radius: 12px; padding: 15px 16px 12px; background: #231a30f5; box-shadow: 0 14px 38px #0006; z-index: 25; animation: qr-enter .25s var(--ease); }
+.wechat-popover[hidden] { display: none; }
+.wechat-popover::before { content: ''; position: absolute; top: -11px; left: 0; width: 100%; height: 12px; }
+.wechat-popover img { width: 143px; height: 143px; border-radius: 4px; background: white; image-rendering: pixelated; }
+.wechat-popover p { font-size: 8px; line-height: 1.8; text-align: center; color: #b9a4ce; margin-top: 9px; }
+.hero-footnote { margin-top: 19px; }
+@keyframes qr-enter { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+
+@media(max-width:1150px) {
+  .experience-scene { gap: 60px; }
+  .hero-contacts { column-gap: 14px; }
+  .hero-contacts>a, .wechat-contact>button { font-size: 9px; }
+}
+@media(max-width:850px) {
+  .hero-contacts { justify-content: center; }
+  .experience-scene { gap: 35px; }
+  .experience-pinned { top: 86px; }
+  .experience-pinned .section-heading { padding: 20px 0 28px; }
+  .fragment-sticky { top: 86px; }
+}
+@media(min-width:601px) and (max-height:850px) {
+  .experience-phone-wrap { width: 208px; height: 435px; }
+  .demo-phone { transform-origin: top left; transform: scale(.78) rotate(-3deg); }
+  .demo-phone[data-phase="1"] { transform: scale(.78); }
+  .demo-phone[data-phase="2"] { transform: scale(.78) rotate(3deg); }
+  .experience-pinned .section-heading { padding: 16px 0 20px; }
+  .experience-pinned .section-heading h2 { font-size: 30px; }
+  .experience-pinned, .fragment-sticky { top: 80px; }
+  .fragment-sticky .fragment-heading h2 { font-size: 32px; }
+  .fragment-sticky .fragment-heading { margin-bottom: 8px; }
+  .fragment-viewport { height: 270px; }
+  .fragment-tile { width: 180px; }
+  .fragment-navigation button { height: 30px; width: 30px; }
+}
+@media(max-width:600px) {
+  .hero-contacts { display: grid; grid-template-columns: repeat(3,max-content); column-gap: 18px; row-gap: 3px; justify-content: center; margin-top: 17px; }
+  .hero-contacts>a, .wechat-contact>button { font-size: 9px; }
+  .hero-contacts svg { width: 14px; height: 14px; }
+  .hero-footnote { margin-top: 16px; }
+  .story-seal { min-width: 77px; font-size: 31px; }
+  .story-seal small { font-size: 6px; }
+  .experience-scroll { height: 245vh; min-height: 1700px; }
+  .experience-pinned { top: 75px; }
+  .experience-pinned .section-heading { padding: 10px 0 17px; gap: 10px; }
+  .experience-pinned .section-heading h2 { font-size: 24px; margin-top: 8px; }
+  .experience-pinned .section-heading .eyebrow { font-size: 9px; }
+  .experience-pinned .section-heading>p { font-size: 10px; }
+  .experience-scene { grid-template-columns: minmax(0,1fr); gap: 12px; }
+  .experience-stage { padding: 0; height: auto; }
+  .experience-phone-wrap { width: 160px; height: 334px; }
+  .demo-phone { transform: scale(.6) rotate(-3deg); }
+  .demo-phone[data-phase="1"] { transform: scale(.6); }
+  .demo-phone[data-phase="2"] { transform: scale(.6) rotate(3deg); }
+  .experience-orbit { width: 285px; height: 340px; }
+  .demo-phase-indicator { margin-top: 13px; }
+  .demo-note { margin-top: 7px; font-size: 6px; }
+  .feature-sequence { height: 145px; margin-top: 0; }
+  .feature-chapter { max-width: none; min-height: 0; padding: 0 5px; justify-content: start; }
+  .feature-chapter .chapter-index { display: none; }
+  .feature-chapter h3 { font-size: 21px; }
+  .feature-chapter p { font-size: 11px; line-height: 1.8; margin-top: 9px; }
+  .feature-chapter .feature-tag { font-size: 6px; margin-top: 9px; }
+  .fragment-journey { height: 250vh; min-height: 1750px; margin-top: 14px; }
+  .fragment-sticky { top: 76px; padding: 7px 0 0; }
+  .fragment-sticky .fragment-heading { width: calc(100% - 40px); margin: 0 auto 7px; }
+  .fragment-sticky .fragment-heading .eyebrow { font-size: 8px; letter-spacing: .04em; }
+  .fragment-sticky .fragment-heading h2, html[lang="en"] .fragment-sticky .fragment-heading h2 { font-size: 26px; line-height: 1.25; margin: 8px 0 9px; }
+  .fragment-sticky .fragment-heading>p:last-child { font-size: 10px; line-height: 1.7; }
+  .fragment-viewport { height: clamp(225px,33vh,270px); }
+  .fragment-tile { width: clamp(150px,22vh,178px); top: 8px; }
+  .fragment-story { width: calc(100% - 45px); min-height: 94px; }
+  .fragment-story h3 { font-size: 18px; margin-top: 5px; }
+  .fragment-story p { font-size: 11px; line-height: 1.75; margin-top: 7px; min-height: 38px; }
+  .fragment-navigation { margin-top: 5px; gap: 20px; }
+  .fragment-navigation button { width: 30px; height: 30px; font-size: 14px; }
+  .fragment-hint { font-size: 7px; margin-top: 9px; }
+}
+@media(max-width:600px) and (max-height:760px) {
+  .experience-pinned { top: 73px; }
+  .experience-phone-wrap { width: 145px; height: 301px; }
+  .demo-phone { transform: scale(.54) rotate(-3deg); }
+  .demo-phone[data-phase="1"] { transform: scale(.54); }
+  .demo-phone[data-phase="2"] { transform: scale(.54) rotate(3deg); }
+  .experience-pinned .section-heading h2 { font-size: 22px; }
+  .feature-sequence { height: 145px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .experience-scroll, .fragment-journey { height: auto; min-height: 0; }
+  .experience-pinned, .fragment-sticky { position: relative; top: auto; }
+  .feature-sequence { height: auto; }
+  .feature-chapter { position: relative; inset: auto; min-height: 0; padding: 25px 0; opacity: 1; transform: none; }
+  .fragment-viewport { height: auto; }
+  .fragment-tile { width: auto; top: auto; }
+}

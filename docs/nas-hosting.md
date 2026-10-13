@@ -5,7 +5,7 @@
 1. 将仓库 `dist/` 内的文件上传到一个独立站点目录。
 2. 将 Nginx / Caddy / Web Station 的站点根目录指向该目录，以 `index.html` 为入口。
 3. 使用单独网站域名和 HTTPS。无需连接 App 的 API 服务。
-4. 检查 `/`、`/styles.css`、`/motion.css`、`/app.js`、`/motion.js`、`/assets/photos/city.webp` 返回 200。
+4. 检查 `/`、`/styles.css`、`/motion.css`、`/refinements.css`、`/app.js`、`/motion.js`、`/contacts.js`、`/assets/photos/city.webp` 返回 200。
 
 无需执行构建或安装依赖。相对资源路径支持域名根目录与子目录部署。不要把开发预览脚本的 Node 服务作为公网生产服务。
 

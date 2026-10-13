@@ -13,8 +13,7 @@ async function scrollToScene(selector,progress=0) {
   await page.locator(selector).evaluate((el,p)=>{
     document.documentElement.style.scrollBehavior='auto';
     const top=el.getBoundingClientRect().top+scrollY;
-    if(el.id==='experience-story')scrollTo(0,top-innerHeight*.25+p*(el.offsetHeight-innerHeight*.5));
-    else if(el.id==='fragment-journey')scrollTo(0,top-90+p*(el.offsetHeight-document.querySelector('.fragment-sticky').offsetHeight-100));
+    if(el.dataset.motionStart)scrollTo(0,Number(el.dataset.motionStart)+p*(Number(el.dataset.motionEnd)-Number(el.dataset.motionStart)));
     else scrollTo(0,top-100);
   },progress);
   await page.waitForTimeout(550);
@@ -36,18 +35,45 @@ for(const viewport of viewports) {
   await page.setViewportSize(viewport);
   await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
   await page.waitForTimeout(2650);
+  const centreStroke=await page.locator('.memory-box-mark').evaluate(async svg=>{
+    const url=URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)],{type:'image/svg+xml'}));
+    const image=new Image();image.src=url;await image.decode();
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=100;
+    const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0,100,100);
+    const pixel=[...ctx.getImageData(50,64,1,1).data];URL.revokeObjectURL(url);return pixel;
+  });
+  assert(centreStroke[3]>240&&centreStroke[2]>130,'Finished logo is missing its centre stroke');
+  assert(!(await page.locator('body').innerText()).includes('Do Not Open'),'Album reference remains visible');
+  assert((await page.locator('.story-seal').innerText()).includes('叙己'),'Author signature missing');
+  assert(await page.locator('.story-seal small').innerText()==='Tell your story','Author subtitle incorrect');
   await checkLayout(viewport.width);
   await page.screenshot({path:`artifacts/v2/hero-zh-${viewport.width}.png`});
+  // Observe the picture moving while the title is actually on screen, independently of scene progress data.
+  for(const [scene,titleSelector,artSelector] of [
+    ['#experience-story','.experience-pinned h2','.scroll-demo-photo'],
+    ['#fragment-journey','[data-i18n="fragmentEyebrow"]','.fragment-tile']
+  ]) {
+    await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,0);});
+    const naturalTop=await page.locator(titleSelector).evaluate(el=>el.getBoundingClientRect().top+scrollY);
+    await page.evaluate(top=>scrollTo(0,top-innerHeight*.82),naturalTop);await page.waitForTimeout(300);
+    const before=await page.locator(artSelector).first().evaluate(el=>el.getBoundingClientRect().width+':'+getComputedStyle(el).transform);
+    await page.evaluate(top=>scrollTo(0,top-innerHeight*.58),naturalTop);await page.waitForTimeout(600);
+    const after=await page.locator(artSelector).first().evaluate(el=>el.getBoundingClientRect().width+':'+getComputedStyle(el).transform);
+    const visible=await page.locator(titleSelector).evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=document.querySelector('.site-header').getBoundingClientRect().bottom&&r.bottom<innerHeight;});
+    assert(visible&&before!==after,`Title-led scroll start failed for ${scene} at ${viewport.width}`);
+  }
   for(const [p,phase] of [[.02,'0'],[.5,'1'],[.9,'2']]) {
     await scrollToScene('#experience-story',p);
     assert(await page.locator('.demo-phone').getAttribute('data-phase')===phase,`Scroll demonstration phase ${phase} failed at ${viewport.width}`);
     if(p===.5)await page.screenshot({path:`artifacts/v2/experience-${viewport.width}.png`});
+    if(p===.5)assert(await page.locator('.experience-pinned h2').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Experience title scrolled out during playback');
   }
   await scrollToScene('#experience-story',.02);
   assert(await page.locator('.demo-phone').getAttribute('data-phase')==='0','Reverse scrolling did not restore the gallery');
   await scrollToScene('#fragment-journey',.5);
   assert((await page.locator('#fragment-story-index').innerText()).startsWith('04'),'Vertical scroll did not traverse card collection');
   await page.screenshot({path:`artifacts/v2/fragments-${viewport.width}.png`});
+  assert(await page.locator('.fragment-sticky .eyebrow').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Fragment heading scrolled out during playback');
   await scrollToScene('#atlas');
   await page.locator('.production-atlas').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1800);
@@ -65,6 +91,19 @@ for(const viewport of viewports) {
   assert(await page.locator('html').getAttribute('lang')==='en','Language preference did not persist');
   await page.locator('#language-toggle').click();
 }
+await page.evaluate(()=>scrollTo(0,0));
+await page.locator('#wechat-toggle').hover();
+assert(await page.locator('#wechat-popover').isVisible(),'WeChat hover failed');
+await page.mouse.move(2,2);
+assert(!await page.locator('#wechat-popover').isVisible(),'WeChat hover did not dismiss');
+await page.locator('#wechat-toggle').click();
+assert(await page.locator('#wechat-popover').isVisible(),'WeChat click failed');
+const qrBox=await page.locator('#wechat-popover').boundingBox();
+assert(qrBox.x>=0&&qrBox.x+qrBox.width<=page.viewportSize().width,'WeChat QR is clipped');
+await page.keyboard.press('Escape');
+assert(!await page.locator('#wechat-popover').isVisible(),'WeChat Escape failed');
+const socialUrls=await page.locator('.hero-contacts>a').evaluateAll(els=>els.map(el=>el.getAttribute('href')));
+assert(JSON.stringify(socialUrls)===JSON.stringify(['https://github.com/yifanwow','https://instagram.com/yifanovo_','https://steamcommunity.com/id/yifanovo/','https://www.xiaohongshu.com/user/profile/5b2eb172f7e8b940e52e00c2']),'Portfolio contact destinations do not match');
 await scrollToScene('#fragment-journey',.5);
 await page.locator('#fragment-next').click();
 assert((await page.locator('#fragment-story-index').innerText()).startsWith('05'),'Card next button failed');
@@ -128,7 +167,11 @@ await context.close();
 const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,locale:'zh-CN'});
 const touchPage=await touchContext.newPage();
 await touchPage.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
-await touchPage.locator('#fragment-journey').evaluate(el=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,el.getBoundingClientRect().top+scrollY-90+(el.offsetHeight-document.querySelector('.fragment-sticky').offsetHeight-100)*.5);});
+await touchPage.locator('#wechat-toggle').tap();
+assert(await touchPage.locator('#wechat-popover').isVisible(),'Touch could not open WeChat QR');
+await touchPage.locator('#wechat-toggle').tap();
+assert(!await touchPage.locator('#wechat-popover').isVisible(),'Touch could not close WeChat QR');
+await touchPage.locator('#fragment-journey').evaluate(el=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,Number(el.dataset.motionStart)+(Number(el.dataset.motionEnd)-Number(el.dataset.motionStart))*.5);});
 await touchPage.waitForTimeout(500);
 const touch=await touchContext.newCDPSession(touchPage);
 const box=await touchPage.locator('#fragment-viewport').boundingBox();

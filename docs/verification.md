@@ -1,5 +1,13 @@
 # Website verification · 2026-10-13
 
+Version 1.1.1 refinement checks passed in a full browser run across all five viewport widths:
+
+- The finished SVG Logo was rasterized in the browser; the central vertical stroke is visible. It also remains visible after drawing finishes.
+- Author signature is “叙己 / Tell your story”; album references have been removed from the rendered page.
+- Photos and cards begin moving while their respective heading is visible, checked independently of the scene's progress mapping. Headings remain above the artwork during the pinned section.
+- Portfolio contact links match the current public personal site. WeChat QR works on hover, click, touch and Escape; its panel stays within the viewport.
+- Existing forward/reverse scrolling, card touch, language, chart, counter, timeline, pause and reduced-motion checks continue to pass.
+
 Version 1.1 adds the owner's photography, scroll scenes, seven-card collection, production app geometry, and the memory-box animation.
 
 Passed in local Chromium:

@@ -36,6 +36,10 @@ Copyright remains with Mne. Private app source, account services, credentials, p
 
 The founder's poems and reflections informed the copy's rhythm and theme of revisiting one's past: https://github.com/yifanwow/esilhmt . No unrelated works or repository illustrations were copied into the site.
 
-The owner's affection for *Memories...Do Not Open* informs the memory-box story. Official album link: https://thechainsmokers.lnk.to/MemoriesDoNotOpen . No album audio, lyrics or cover artwork are included.
+The memory-box story follows the owner's design idea: M, N and E folded into a container for photographs, a way to put scattered moments in order. The public copy focuses on that original concept.
+
+## Contact links and QR code
+
+Contact destinations, brand SVG marks and `wechat-public.jpg` were taken from the owner's current public portfolio at https://yifanovo.com, as requested. Instagram here links to the main personal account; the photography credit separately links to the photography account. GitHub and Instagram SVG icons in that site are Font Awesome brand icons (Font Awesome Free, CC BY 4.0): https://fontawesome.com/license/free . Other brand marks retain their respective owners' rights.
 
 All gallery, chart and statistic counts are illustrative. No testimonials, public download availability or user metrics have been invented.

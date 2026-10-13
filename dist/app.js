@@ -1,5 +1,6 @@
 import { motionCopy } from './motion-copy.js';
 import { initMotion } from './motion.js';
+import { setupContacts } from './contacts.js';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -47,6 +48,7 @@ const journal = [
 ];
 
 let sceneMotion = null;
+let contacts = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -104,6 +106,7 @@ function applyLanguage() {
   document.querySelector('#credits-close').setAttribute('aria-label', zh ? '关闭' : 'Close');
   renderTimeline();
   sceneMotion?.refresh();
+  contacts?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -162,5 +165,6 @@ dialog.addEventListener('click', event => {
 });
 
 sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
+contacts = setupContacts({getLanguage:()=>language, text:key=>copy[language][key]});
 applyLanguage();
 updateScroll();
