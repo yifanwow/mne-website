@@ -239,3 +239,61 @@
   .fragment-tile { width: auto; outline: none!important; box-shadow: none; background: none; }
   .fragment-tile::after { display: none; }
 }
+
+.section-star svg { display: block; width: 22px; height: 22px; }
+.fragment-viewport.scroll-driven .fragment-tile { transition: none; }
+/* Phones and compact tablets use the same left-aligned reading column. */
+@media(max-width:850px) {
+  .hero-copy,.fragment-heading,.fragment-story,.fragment-hint,.early-access { text-align: left; }
+  .hero-copy .eyebrow,.hero-buttons,.hero-footnote { justify-content: flex-start; }
+  .hero-description { margin-left: 0; margin-right: 0; font-size: 16px; line-height: 1.9; }
+  .hero-copy .eyebrow { font-size: 12px; letter-spacing: .025em; }
+  .logo-caption p { font-size: 12px; }
+  .hero-contacts { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 12px; margin-top: 20px; }
+  .hero-contacts>a,.wechat-contact>button { width: 44px; height: 44px; padding: 0; justify-content: center; border: 1px solid #c2a6fa25; border-radius: 50%; background: #c2a6fa06; }
+  .hero-contacts svg { width: 20px; height: 20px; }
+  .hero-contacts>a>span:last-child,.wechat-contact>button>span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .story-bottom p,.memory-box-story p,.atlas-copy>p:last-of-type,.access-description { font-size: 15px; }
+  .fragment-sticky .fragment-heading>p:last-child { font-size: 14px; line-height: 1.8; }
+  .fragment-sticky .fragment-heading .eyebrow { font-size: 11px; letter-spacing: .025em; }
+  .fragment-story { width: calc(100% - 56px); }
+  .fragment-story p { font-size: 15px; text-wrap: wrap; }
+  .fragment-hint { width: calc(100% - 56px); margin-inline: auto; font-size: 10px; }
+  .fragment-navigation { width: calc(100% - 56px); margin-inline: auto; justify-content: flex-start; }
+  .fragment-tile { transition: none; filter: none!important; box-shadow: 0 12px 25px #0005; transform-style: flat; }
+  .fragment-tile::after { background: linear-gradient(115deg,transparent 20%,#e4caff18 46%,transparent 65%); transition: none; }
+  .access-icon { margin-left: 0; }
+  .early-access>.eyebrow { justify-content: flex-start; }
+  .collection-outro p { font-size: 13px; }
+}
+@media(max-width:600px) {
+  .hero h1 { font-size: clamp(43px,11.5vw,50px); }
+  .hero-description { font-size: 15px; }
+  .hero-copy .eyebrow { font-size: 11px; }
+  .logo-caption p { font-size: 11px; max-width: 235px; }
+  .hero-contacts { gap: clamp(10px,3vw,15px); }
+  .hero-footnote { font-size: 10px; }
+  .story h2 { font-size: 24px; }
+  .story-bottom { gap: 16px; align-items: flex-start; }
+  .story-bottom p { font-size: 14px; }
+  .story-seal { min-width: 65px; font-size: 29px; }
+  .experience-pinned .section-heading .eyebrow { font-size: 11px; }
+  .experience-pinned .section-heading>p { font-size: 12px; }
+  .feature-chapter p { font-size: 13px; }
+  .feature-sequence { height: 166px; }
+  .fragment-sticky .fragment-heading h2,html[lang="en"] .fragment-sticky .fragment-heading h2 { font-size: 30px; }
+  .fragment-sticky .fragment-heading>p:last-child { font-size: 12px; }
+  .fragment-sticky .fragment-heading .eyebrow { font-size: 10px; }
+  .fragment-story,.fragment-hint,.fragment-navigation { width: calc(100% - 40px); }
+  .fragment-story p { font-size: 14px; }
+  .fragment-story h3 { font-size: 22px; }
+  .fragment-navigation button { width: 34px; height: 34px; }
+  .fragment-hint { font-size: 9px; }
+  .atlas-copy>p:last-of-type,.access-description,.principles-grid p { font-size: 14px; }
+}
+@media(max-width:360px) {
+  .hero-buttons { gap: 18px; }
+  .fragment-sticky .fragment-heading h2,html[lang="en"] .fragment-sticky .fragment-heading h2 { font-size: 28px; }
+  .fragment-story p { font-size: 13px; }
+  .feature-chapter p { font-size: 12px; }
+}

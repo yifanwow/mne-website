@@ -19,6 +19,11 @@ export function setupContacts({getLanguage,text}) {
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){pinned=false;show(false);}});
   function refresh() {
     document.querySelector('.hero-contacts').setAttribute('aria-label',text('contactLabel'));
+    document.querySelectorAll('.hero-contacts>a').forEach(link=>{
+      const label=link.lastElementChild.textContent;
+      link.setAttribute('aria-label',label);link.title=label;
+    });
+    button.setAttribute('aria-label',text('contactWechat'));button.title=text('contactWechat');
     panel.querySelector('img').alt=getLanguage()==='zh'?'叙己的微信公众号二维码':'Yifan’s WeChat public-account QR code';
   }
   refresh();

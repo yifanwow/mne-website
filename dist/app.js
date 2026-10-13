@@ -1,6 +1,7 @@
 import { motionCopy } from './motion-copy.js';
 import { initMotion } from './motion.js';
 import { setupContacts } from './contacts.js';
+import { setupDetails } from './details.js';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -10,11 +11,11 @@ const copy = {
     storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>整理不是抹去，而是为真正重要的瞬间，留出空间。回望本身，也是人生的过程。',
     experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'一划之间，做个决定。',featureGestureDescription:'左右重温，上滑暂存回收站。长按预览，横向扫选，把喜欢的瞬间加入 Mne Archive。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
-    fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'翻过一张张照片，也像重新读过往的自己。<br>那些曾让你停留的片段，慢慢成为新的印记。',
+    fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'收集卡片，解锁成就，让整理也成为一场回到过去的历险。<br>在重温与选择之间，发现新的乐趣，也重新认识自己。',
     atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'照片与视频，把时间织成了记忆的轮廓。按周、月或年，重看那些平静的日常，和格外丰盛的季节。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已删除',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
     privacyTitle:'照片，留在你的照片库。',privacyDescription:'照片和视频不上传到 Mne 服务器。不登录，也可以离线整理。私人内测登录只备份资料与本机整理元数据。',themeTitle:'让界面，顺应你的心情。',themeDescription:'明亮、暗夜、梦幻紫、青灰与 OLED nerd。五种主题，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:'为 iPhone 打造。真实的系统材质、轻柔的触觉与克制的动效。支持系统减少动态效果，让节奏由你掌握。',
     journalIndex:'持续生长，慢慢打磨',journalEyebrow:'一个关于记忆的 App，也有自己的记忆。',journalTitle:'Mne 的开发手记。',sourceLabel:'当前源码',journalMore:'回看更早的故事',journalLess:'收起早期手记',
-    accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在私人内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'素材鸣谢',creditsTitle:'素材与鸣谢',backTop:'回到顶部 ↑'
+    accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在私人内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'了解更多',creditsTitle:'在 Mne 之外，继续相遇。',backTop:'回到顶部 ↑'
   },
   en: {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
@@ -22,11 +23,11 @@ const copy = {
     storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Curating makes room for the moments that matter. Looking back is part of living.',
     experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'A small gesture. A clear choice.',featureGestureDescription:'Swipe to revisit. Swipe up to set a photo aside. Long press to preview, sweep to select, and add meaningful moments to Mne Archive.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
-    fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Looking through your photos is another way of reading who you were.<br>The moments you pause for become new pieces of your story.',
+    fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Collect cards and unlock achievements as you adventure through your past.<br>Find joy in revisiting your memories, and meet yourself again along the way.',
     atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Your photos and videos trace the shape of time. Look back by week, month, or year, at the quiet everyday moments and the seasons full of life.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Removed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
     privacyTitle:'Your photos stay in your library.',privacyDescription:'Your photos and videos are never uploaded to Mne servers. Curate offline without signing in. Private beta accounts back up profile and device activity metadata only.',themeTitle:'A space that feels like you.',themeDescription:'Light, Dark, Dream Purple, Sage, and OLED nerd. Five themes. Chinese and English. One familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:'Made for iPhone, with system materials, subtle haptics, and considered motion. Respects Reduce Motion, so the pace always feels right.',
     journalIndex:'GROWING, ONE DETAIL AT A TIME',journalEyebrow:'AN APP ABOUT MEMORIES HAS MEMORIES OF ITS OWN.',journalTitle:'The Mne journal.',sourceLabel:'Latest source',journalMore:'Look back a little further',journalLess:'Show fewer entries',
-    accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in private beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Credits',creditsTitle:'Artwork & credits',backTop:'Back to top ↑'
+    accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in private beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Beyond Mne',creditsTitle:'Meet me beyond Mne.',backTop:'Back to top ↑'
   }
 };
 
@@ -49,6 +50,7 @@ const journal = [
 
 let sceneMotion = null;
 let contacts = null;
+let details = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -107,6 +109,7 @@ function applyLanguage() {
   renderTimeline();
   sceneMotion?.refresh();
   contacts?.refresh();
+  details?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -166,5 +169,6 @@ dialog.addEventListener('click', event => {
 
 sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
 contacts = setupContacts({getLanguage:()=>language, text:key=>copy[language][key]});
+details = setupDetails({text:key=>copy[language][key]});
 applyLanguage();
 updateScroll();

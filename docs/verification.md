@@ -1,5 +1,19 @@
 # Website verification · 2026-10-13
 
+Version 1.3.0 mobile and product-feature checks passed:
+
+- Chromium: Chinese and English at 320, 390, 768, 1024 and 1440 px. Existing gallery, card touch/keyboard, statistics, chart, journal, QR, pause and Reduce Motion checks pass.
+- WebKit: Chinese and English at 320, 390 and 768 px. Mobile text aligns left; contact icons stay in a single row with accessible names. The philosophy marker is SVG, avoiding emoji presentation.
+- Card scroll updates are combined into animation frames. Card width is cached outside the scroll path; mobile animated blur/shadow filters and competing CSS transitions are removed. All 60 sampled WebKit scroll frames produce changing card transforms. This is an engine-level interaction check, not a physical iPhone frame-rate guarantee.
+- The moving mobile browser bar does not remap card sizes for small height changes. Enlarged captions and cards fit the viewport in both languages, including 320 px English.
+- 02B: archive filtering and restoration, photo readout, desktop hover menu, long press, touch menu, archive/recent-album feedback, Escape, ratio choices and translated feedback pass. Ratio demo images use contain, matching the app's complete-image layout.
+- All 28 photograph elements use distinct assets across the hero, 02A and 02B. Seventeen additional exports come from the owner's original folder with EXIF omitted.
+- The learn-more dialog links to photography, writing and the personal website.
+- Update script tested on a local copy of the NAS project: configuration is preserved, a full backup is retained, only changed website bytes are replaced and all 53 packaged files pass SHA-256 verification. It does not restart containers.
+- Screenshots were visually reviewed; this revision's captures are under ignored `artifacts/v5/`.
+
+The live NAS `/healthz` returned `ok` before this website synchronization. Public delivery of the new bytes is checked after synchronization; no container rebuild or infrastructure change is required for a static bind mount.
+
 NAS deployment preparation:
 
 - Compose YAML parses correctly; loopback port binding, read-only site/config mounts, temporary runtime directories and healthcheck are checked.

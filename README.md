@@ -36,6 +36,7 @@ HOST=0.0.0.0 npm run dev
 - `dist/motion.js`：滚动演示、触控卡牌、图谱、每次进入时重播的数字与背景星空。
 - `dist/motion.css`：滚动场景和手机 / 平板 / 桌面适配。
 - `dist/motion-copy.js`：新增场景的双语文案。
+- `dist/details.js`、`dist/details.css`：02B 的归档筛选、照片信息、长按／最近相册和比例切换演示。
 - `dist/refinements.css`：标题与演示共用的停留区、视口尺寸适配、记忆盒设计展示、署名和联系方式排版。
 - `dist/contacts.js`、`dist/contact-icons.js`：个人站已有联系方式、品牌图标和微信二维码交互。
 - `dist/app-art.js`：App 原始 Logo 与天体统计几何的 SVG 实现。
@@ -43,6 +44,7 @@ HOST=0.0.0.0 npm run dev
 - `dist/assets/`：公开品牌素材与作者授权摄影的网页导出，来源见 `docs/asset-credits.md`。
 - `deploy/`：NAS 的 Nginx 与 Docker Compose 配置。
 - `scripts/stage-nas.mjs`：向一个新目录准备独立部署包，或核对逐文件 SHA-256。
+- `scripts/sync-nas.mjs`：先备份现有 NAS 网站，再原位更新变更网页文件，保留 NAS 专用 Compose 与 Nginx 配置。
 
 编辑文案需要同步两种语言。时间线取自 Mne 本地 README，核对日期 2026-10-13。0.8.8 (29) 是当前源码版本，0.8.2 (23) 是已确认进入私人 TestFlight 的构建；不把源码更新称为已发布版本。网站没有公开下载链接或邀请码。
 
@@ -51,6 +53,10 @@ HOST=0.0.0.0 npm run dev
 滚动由浏览器原生处理，不拦截滚轮、不锁定页面。卡牌横向触控保留上下滑动；背景 Canvas 限制为 24fps，页面隐藏时暂停。支持系统减少动态效果：改为静态演示和完整卡面网格。右下角可暂停背景与自动演示。
 
 Experience 和成就碎片从标题进入视野时开始推进；标题、图像和描述共用一个 sticky 区域。微信公众号二维码支持鼠标悬停、点击、触控、键盘焦点及 Escape 关闭。
+
+02A 演示连续浏览与整理手势，02B 展示减少整理步骤的四个亮点。网页交互为示意，不会修改任何图库。首页、02A 和 02B 共使用 28 张不同的作者作品。≤850px 的手机和小平板采用更大的左对齐文字与单排联系图标；卡牌动画按绘制帧合并更新，并避免移动端逐帧滤镜与地址栏伸缩造成的尺寸重算。
+
+WebKit 移动检查可使用 `node scripts/mobile-webkit-qa.mjs`，需要额外安装 Playwright 的 WebKit 引擎。
 
 ## 检查 / Validation
 

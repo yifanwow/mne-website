@@ -20,6 +20,24 @@ Only web-sized derivatives are included. Originals remain untouched. Exports pre
 | `photos/night.webp` | `IMG_1495.PNG` | Night sky |
 | `photos/dawn.webp` | `IMG_0936.jpg` | Morning sky |
 
+| `photos/autumn.webp` | `IMG_0535.jpg` | Additional owner photograph |
+| `photos/fern.webp` | `IMG_0537.PNG` | Additional owner photograph |
+| `photos/window.webp` | `IMG_0897.PNG` | Additional owner photograph |
+| `photos/wire.webp` | `IMG_2120.PNG` | Additional owner photograph |
+| `photos/amber.webp` | `IMG_5815.jpg` | Additional owner photograph |
+| `photos/rainbow.webp` | `IMG_6649.PNG` | Additional owner photograph |
+| `photos/cityglow.webp` | `IMG_6770.PNG` | Additional owner photograph |
+| `photos/meadow.webp` | `IMG_6875.jpg` | Additional owner photograph |
+| `photos/room.webp` | `200D99E5-BFF5-4562-9D19-9A72F946876F.JPG` | Additional owner photograph |
+| `photos/flowerfield.webp` | `IMG_2520.PNG` | Additional owner photograph |
+| `photos/wildbird.webp` | `IMG_2620.PNG` | Additional owner photograph |
+| `photos/skyline.webp` | `IMG_9429.PNG` | Additional owner photograph |
+| `photos/evening.webp` | `IMG_8507.PNG` | Additional owner photograph |
+| `photos/capture.webp` | `IMG_8500.PNG` | Additional owner photograph |
+| `photos/treeline.webp` | `IMG_0427.PNG` | Additional owner photograph |
+| `photos/stones.webp` | `IMG_9747.jpg` | Additional owner photograph |
+| `photos/station.webp` | `FE1E6AAC-51A1-4BDE-A4BA-7348160EA13D.JPG` | Additional owner photograph |
+
 The former Unsplash example images have been removed. Photography remains copyright Yifan. Inclusion in this website does not grant permission for unrelated reuse.
 
 ## Original Mne design

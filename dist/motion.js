@@ -4,13 +4,15 @@ import { fragments } from './fragments-data.js';
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
 const smooth = t => { t=clamp(t); return t*t*(3-2*t); };
-const photography = ['city','blossom','forest','sea','bird','waterfall','moon','garden','dawn','sunset','night','blossom'];
+const photography = ['waterfall','moon','night','autumn','fern','window','wire','amber','rainbow','cityglow','meadow','room'];
 
 export function initMotion({getLanguage,text,reducedMotion}) {
   let paused = false;
   let sceneMetrics = {};
   let scrollIndex = 0, manualOffset = 0, displayIndex = 0, targetIndex = 0, activeIndex = -1;
   let drag = null, tilt = {x:0,y:0};
+  let cardWidth=230, compact=innerWidth<=850, scrollDirty=false, fragmentsDirty=false, lastDemo=-1, lastFragments=-1;
+  let measuredWidth=innerWidth,measuredHeight=innerHeight;
   const logo = document.querySelector('#logo-art');
   logo.innerHTML = memoryBoxSVG();
   document.querySelector('#box-study-art').innerHTML = memoryBoxSVG('boxStudyInk');
@@ -109,21 +111,23 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     });
   }
   function paintFragments() {
-    const width=fragmentCards[0].offsetWidth;
-    const spacing=width*(innerWidth<600?.88:.94);
+    const spacing=cardWidth*(innerWidth<600?.88:.94);
     fragmentCards.forEach((el,i)=>{
       const delta=i-displayIndex, distance=Math.abs(delta);
       const focus=Math.max(0,1-distance), depth=Math.min(distance,3);
       el.style.transform=`translateX(calc(-50% + ${delta*spacing}px)) translateY(${18+depth*23-focus*16}px) translateZ(${-depth*65}px) rotateY(${clamp(-delta*21,-48,48)+tilt.x*8*focus}deg) rotateZ(${delta*2.8}deg) rotateX(${-tilt.y*10*focus}deg) scale(${1-depth*.085})`;
-      el.style.opacity=String(clamp(1-distance*.38,.08,1));
+      el.style.opacity=String(compact&&distance>2.8?0:clamp(1-distance*.38,.08,1));
       el.style.zIndex=String(100-Math.round(distance*10));
-      el.style.filter=`brightness(${1-depth*.16}) blur(${Math.max(0,distance-1)*.45}px) drop-shadow(0 0 ${8+focus*18}px #c2a6fa${focus>.5?'55':'15'})`;
-      el.style.setProperty('--light-x',`${50+tilt.x*70}%`);
-      el.style.setProperty('--light-y',`${50+tilt.y*70}%`);
+      if(!compact) {
+        el.style.filter=`brightness(${1-depth*.16}) blur(${Math.max(0,distance-1)*.45}px) drop-shadow(0 0 ${8+focus*18}px #c2a6fa${focus>.5?'55':'15'})`;
+        el.style.setProperty('--light-x',`${50+tilt.x*70}%`);
+        el.style.setProperty('--light-y',`${50+tilt.y*70}%`);
+      } else el.style.removeProperty('filter');
     });
     describeFragment();
   }
   function selectFragment(index) {
+    viewport.classList.remove('scroll-driven');
     targetIndex=clamp(index,0,fragments.length-1);
     manualOffset=targetIndex-scrollIndex;
     displayIndex=targetIndex;
@@ -142,15 +146,19 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     viewport.classList.add('dragging');
   });
   viewport.addEventListener('pointermove',event=>{
-    const rect=viewport.getBoundingClientRect();
-    if(!reducedMotion.matches) tilt={x:(event.clientX-rect.left)/rect.width-.5,y:(event.clientY-rect.top)/rect.height-.5};
+    if(!drag&&event.pointerType!=='mouse')return;
+    if(!compact&&!reducedMotion.matches) {
+      const rect=viewport.getBoundingClientRect();
+      tilt={x:(event.clientX-rect.left)/rect.width-.5,y:(event.clientY-rect.top)/rect.height-.5};
+    }
     if(drag) {
       const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
       if(Math.abs(dy)>Math.abs(dx)+15) {finishDrag();return;}
       displayIndex=clamp(drag.index-dx/(innerWidth<600?135:200),0,fragments.length-1);
       targetIndex=displayIndex;manualOffset=displayIndex-scrollIndex;
     }
-    paintFragments();
+    fragmentsDirty=true;scrollDirty=true;
+    if(paused||reducedMotion.matches) {paintFragments();fragmentsDirty=false;}
   });
   function finishDrag() {
     if(!drag) return;
@@ -313,18 +321,29 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     for(const [a,b] of [[3,16],[16,29],[29,42],[9,22],[22,35]]) {const s=stars[a],e=stars[b];ctx.beginPath();ctx.moveTo(s.x*skyWidth,s.y*skyHeight+shift);ctx.lineTo(e.x*skyWidth,e.y*skyHeight+shift);ctx.stroke();}
   }
   function measure() {
+    measuredWidth=innerWidth;measuredHeight=innerHeight;
+    compact=innerWidth<=850;lastDemo=-1;lastFragments=-1;
     const mobile=innerWidth<=600;
-    const demoScale=mobile?clamp((innerHeight-490)/557,.54,.85):clamp((innerHeight-320)/557,.7,1.48);
+    const sequence=document.querySelector('.feature-sequence');
+    sequence.style.removeProperty('height');
+    if(mobile&&!reducedMotion.matches) {
+      const captionHeight=Math.max(sequence.offsetHeight,...[...sequence.children].map(el=>el.scrollHeight));
+      sequence.style.height=`${captionHeight}px`;
+    }
+    const demoPin=document.querySelector('.experience-pinned');
+    const phoneRoom=innerHeight-(parseFloat(getComputedStyle(demoPin).top)||0)-demoPin.querySelector('.section-heading').offsetHeight-sequence.offsetHeight-document.querySelector('.demo-phase-indicator').offsetHeight-document.querySelector('.demo-note').offsetHeight-62;
+    const demoScale=mobile?clamp(phoneRoom/557,.35,.85):clamp((innerHeight-320)/557,.7,1.48);
     document.querySelector('.experience-phone-wrap').style.setProperty('--demo-scale',demoScale);
     if(!reducedMotion.matches) {
       const pin=document.querySelector('.fragment-sticky');
       const otherHeight=['.fragment-heading','.fragment-story','.fragment-navigation','.fragment-hint'].reduce((total,selector)=>total+pin.querySelector(selector).offsetHeight,0);
-      const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,210,650);
+      const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,170,650);
       viewport.style.height=`${budget}px`;
       fragmentCards.forEach(card=>card.style.width=`${Math.min(mobile?280:400,(budget-46)/1.4)}px`);
     } else {
       viewport.style.removeProperty('height');fragmentCards.forEach(card=>card.style.removeProperty('width'));
     }
+    cardWidth=fragmentCards[0].offsetWidth;
     for(const [key,selector,pinSelector,triggerSelector] of [
       ['experience','#experience-story','.experience-pinned','.section-heading h2'],
       ['fragments','#fragment-journey','.fragment-sticky','[data-i18n="fragmentEyebrow"]']
@@ -346,18 +365,20 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   function updateScroll() {
     const exp=sceneMetrics.experience,frag=sceneMetrics.fragments;if(!exp||!frag)return;
     const demoProgress=clamp((scrollY-exp.start)/(exp.end-exp.start));
-    if(!paused)paintDemo(demoProgress);
+    if(!paused&&demoProgress!==lastDemo) {paintDemo(demoProgress);lastDemo=demoProgress;}
     if(!paused&&!reducedMotion.matches&&!drag) {
       scrollIndex=clamp((scrollY-frag.start)/(frag.end-frag.start))*(fragments.length-1);
       targetIndex=clamp(scrollIndex+manualOffset,0,fragments.length-1);
-      // Paint immediately for native scroll responsiveness; touch can hold a different position.
-      displayIndex=targetIndex;paintFragments();
+      displayIndex=targetIndex;
+      if(displayIndex!==lastFragments)viewport.classList.add('scroll-driven');
     }
+    if(displayIndex!==lastFragments||drag||fragmentsDirty) {paintFragments();lastFragments=displayIndex;fragmentsDirty=false;}
     document.querySelector('.ambient-background').style.setProperty('--sky-shift',`${Math.sin(scrollY/1600)*35}px`);
   }
   function tick(time) {
     if(document.hidden||paused||reducedMotion.matches){frame=0;return;}
-    if(time-lastSky>1000/24) {drawSky(time);lastSky=time;}
+    if(scrollDirty) {scrollDirty=false;updateScroll();}
+    if(time-lastSky>1000/(compact?18:24)) {drawSky(time);lastSky=time;}
     if(countStart&&!countFinished) {const p=clamp((time-countStart)/1500);countElements.forEach(el=>countValue(el,1-Math.pow(1-p,3)));if(p===1)countFinished=true;}
     frame=requestAnimationFrame(tick);
   }
@@ -376,8 +397,12 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     if(reducedMotion.matches){cancelAnimationFrame(frame);frame=0;paintDemo(0);drawSky();}else start();
     measure();
   });
-  window.addEventListener('resize',measure,{passive:true});
-  window.addEventListener('scroll',updateScroll,{passive:true});
+  window.addEventListener('resize',()=>{
+    // Safari's moving address bar must not resize the cards and remap scroll progress mid-gesture.
+    if(innerWidth<=850&&innerWidth===measuredWidth&&Math.abs(innerHeight-measuredHeight)<140) {sizeSky();return;}
+    measure();
+  },{passive:true});
+  window.addEventListener('scroll',()=>{scrollDirty=true;},{passive:true});
   function refresh() {
     // Translated text changes document height. Keep the reader's chosen card through that reflow.
     const heldIndex=displayIndex;
