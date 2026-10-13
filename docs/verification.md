@@ -1,5 +1,12 @@
 # Website verification · 2026-10-13
 
+NAS deployment preparation:
+
+- Compose YAML parses correctly; loopback port binding, read-only site/config mounts, temporary runtime directories and healthcheck are checked.
+- Standalone deployment staging and SHA-256 verification pass for all 34 packaged files.
+- Docker and Nginx runtime validation are pending on NAS: this Mac has no Docker, and NAS SSH refused the connection. No container, DNS record, certificate or reverse proxy has been started/changed by this preparation.
+- Finder share is mounted at `/Volumes/docker`, corresponding to the existing NAS `/volume1/docker` layout. Container startup instructions are in `docs/nas-hosting.md`.
+
 Version 1.2.0 composition checks passed in local Chromium at 320, 390, 768, 1024 and 1440 px:
 
 - Updated Chinese copy, matching English copy and document titles. The philosophy description includes the requested line break.

@@ -41,6 +41,8 @@ HOST=0.0.0.0 npm run dev
 - `dist/app-art.js`：App 原始 Logo 与天体统计几何的 SVG 实现。
 - `dist/fragments-data.js`：可继续扩展的卡面名称与 App 原文描述。
 - `dist/assets/`：公开品牌素材与作者授权摄影的网页导出，来源见 `docs/asset-credits.md`。
+- `deploy/`：NAS 的 Nginx 与 Docker Compose 配置。
+- `scripts/stage-nas.mjs`：向一个新目录准备独立部署包，或核对逐文件 SHA-256。
 
 编辑文案需要同步两种语言。时间线取自 Mne 本地 README，核对日期 2026-10-13。0.8.8 (29) 是当前源码版本，0.8.2 (23) 是已确认进入私人 TestFlight 的构建；不把源码更新称为已发布版本。网站没有公开下载链接或邀请码。
 
@@ -60,6 +62,6 @@ npm run check
 
 ## NAS 部署 / NAS hosting
 
-`dist/` 是完整静态站，直接由 Nginx / Caddy / NAS Web Station 托管。无需 Node、数据库或 Mne 后端。部署操作等待用户验收，当前没有向 NAS 写入文件。准备说明见 `docs/nas-hosting.md`。
+Docker 部署准备采用官方 Nginx 镜像，完整静态站放入 `site/`，只读挂载到容器。默认仅在 NAS 本机 `127.0.0.1:18174` 监听，再由群晖反向代理提供 `mne.yifanovo.com` 的 HTTPS 入口。无需构建、Node、数据库或 Mne 后端。部署文件准备到 Finder 的独立目录 `docker/mne-website`；容器启动、DNS 和证书由用户在 NAS 上完成，尚未进行生产验收。步骤见 [NAS 部署说明](docs/nas-hosting.md)。
 
 GitHub 仅用于公开源码备份；没有启用 GitHub Pages。
