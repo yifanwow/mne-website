@@ -1,4 +1,14 @@
-# Website verification · 2026-10-16
+# Website 1.5.0 verification · 2026-10-16
+
+- Chromium and WebKit pass both languages at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720: no horizontal overflow or clipped interactive controls in album, shortcut, or storage/growth modules.
+- Album edit gathers rows to 85 px, unfolds the main row to 168 px, retains a custom name, changes cover choice, and changes actual DOM order upward/downward and to the top.
+- Waterfall and single-photo menus share favorite/membership state; completed actions appear in the illustrative activity trail. Removing membership does not reduce cumulative progress. Overlay dismissal cannot accidentally hover-select a thumbnail behind it.
+- Storage totals reproduce the documented low/reference/high model (13.14/14.31/16.14 GB). Reference photo/cache and video/cache scopes are 11.26/2.99 GB. Model disclosure and Reduced Motion controls work.
+- Native browser touch checks in Chromium and WebKit at 390×844, Chinese and English, pass reorder, cover selection, both menu modes, membership preservation, activity totals and storage selection.
+- JavaScript syntax, asset paths, bilingual keys, unique IDs and whitespace checks pass. Screenshots were reviewed under ignored artifacts/v9/. Long element captures can include fixed header/skip-link overlays outside their normal viewport; these are capture artifacts.
+- Local preview remains running at the user's request. No NAS connection, iOS build or physical device testing. Website 1.5.0 does not change App 0.9.127 (158).
+
+## Earlier checks
 
 Version 1.4.0:
 

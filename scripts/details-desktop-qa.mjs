@@ -56,14 +56,14 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
 
   await page.locator('#album-edit').click();await page.waitForTimeout(800);
   assert(await page.locator('#album-studio').evaluate(el=>el.classList.contains('editing')),'Album edit did not enter');
-  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===112,'Album previews did not gather');
+  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===85,'Album previews did not gather');
   await page.locator('#album-name').fill('A new story');
   await page.locator('[data-cover="lamplight"]').click();
   assert((await page.locator('#album-cover').evaluate(el=>el.style.backgroundImage)).includes('lamplight.webp'),'Cover did not change');
   await page.locator('#album-pin').click();
   assert(await page.locator('#album-pin').getAttribute('aria-pressed')==='true','Album pin failed');
   await page.locator('#album-edit').click();await page.waitForTimeout(800);
-  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===244,'Album previews did not unfold');
+  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===168,'Album previews did not unfold');
   assert(await page.locator('#album-name').inputValue()==='A new story','Rename did not persist');
   for(const [category,count] of [['ordinary',6],['themed',8],['mystery',6]]) {
     await page.locator('[data-card-category="'+category+'"]').click();

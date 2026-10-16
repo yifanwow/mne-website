@@ -1,5 +1,13 @@
 # Mne website
 
+## 1.5.0 · 相册、敏捷菜单与成长
+
+相册展示使用三行列表，编辑时收拢，支持改名、封面切换、上移／下移与真正置顶。瀑布流和单张示意共享喜欢／相册状态，喜欢、加入与移出相册会联动成长记录。这些都是本页临时状态，不读取图库、不写账号或发送网络请求。
+
+新增 `dist/product.js`、`product-copy.js`、`product.css`：展示照片／视频容量、估算情景与整理足迹。固定示意原件 12.84 GB；按 App 缓存／索引假设得到低 13.14、中 14.31、高 16.14 GB。参考情景照片＋缓存 11.26 GB、视频＋缓存 2.99 GB、索引约 0.06 GB。累计删除资源记录 2.6 GB 单独呈现，不代表设备立即释放的空间。顶部统计改为“已整理”，示意基线是归档 156＋喜欢 100＋删除 72。
+
+新增检查为 `scripts/product-qa.mjs` 和 `scripts/product-touch-qa.mjs`。最新离线更新包为 1.5.0，见 [NAS 更新步骤](docs/nas-update.md)。下文保留此前版本说明。
+
 Mne 的公开介绍页：暗色 / 梦幻紫、克制留白、磨砂玻璃、中英双语。记忆盒线绘动画、滚动驱动的浏览演示、二十张成就卡的分类与 3D 滚动 / 触控联动、App 原始几何统计与数字入场，以及星空和缓慢变化的背景光。摄影作品均来自作者授权的原图。原生 HTML、CSS、JavaScript，无框架、无第三方运行时依赖。产品本体是 iPhone App，网页支持手机、平板和桌面。
 
 The public bilingual website for Mne, a native iPhone app for thoughtful photo curation. Built with HTML, CSS and vanilla JavaScript. No framework, dependencies, analytics, API calls, or build step.
