@@ -66,3 +66,11 @@ The memory-box story follows the owner's design idea: M, N and E folded into a c
 Contact destinations, brand SVG marks and `wechat-public.jpg` were taken from the owner's current public portfolio at https://yifanovo.com, as requested. Instagram here links to the main personal account; the photography credit separately links to the photography account. GitHub and Instagram SVG icons in that site are Font Awesome brand icons (Font Awesome Free, CC BY 4.0): https://fontawesome.com/license/free . Other brand marks retain their respective owners' rights.
 
 All gallery, chart and statistic counts are illustrative. No testimonials, public download availability or user metrics have been invented.
+
+## 2026-10-16 · GitHub 0.9.127 assets
+
+Source snapshot: `cf56cac2ce6a4f8e241f2dfcae058254ef3f322c`. The current `AppIconPurple` replaces the former purple icon. Thirteen additional card derivatives (`light-gatherer`, `order-weaver`, `chronicle-book`, `first-glance`, `traces-of-yesterday`, `thousand-chapters`, `ebb-tide`, `world-beyond-walls`, `magician`, `high-priestess`, `empress`, `wheel-of-fortune`, `lovers`) come from the corresponding `Achievement*.imageset` files. They are resized to 640 px wide and lossless WebP without redrawing. Original alpha and framing remain intact. The five mystery previews obscure the artwork and do not display original names, stories, or conditions.
+
+Album cover choices add `photos/shop.webp` from `55E7235B-8DE5-4286-B3B8-A9EEEE23B9F0.jpg`, `photos/harbor.webp` from `IMG_2159.jpg`, and `photos/lamplight.webp` from `IMG_2425.PNG`, all from the owner-authorized folder. These three photographs do not appear in other sections; the selected cover reuses its thumbnail within this same demonstration. All 34 photograph elements use distinct files. No original file was changed and EXIF/GPS are omitted.
+
+The harbor web derivative is mechanically rotated 90° counterclockwise to restore a level skyline; the original is unchanged. Album stack previews intentionally reuse the same three cover choices within this illustration.

@@ -1,5 +1,5 @@
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.3.2';
-import { fragments } from './fragments-data.js?v=1.3.2';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.4.0';
+import { fragments as collection } from './fragments-data.js?v=1.4.0';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -91,22 +91,35 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     });
   }
 
-  // Seven original artworks, one extensible collection. Vertical progress and direct touch add together.
+  // The three shelves follow the app: six ordinary, eight themed, and Fool + five mysteries.
+  let fragments=collection.filter(card=>card.category==='themed');
   const viewport=document.querySelector('#fragment-viewport');
-  const fragmentCards=fragments.map((fragment,i)=>{
+  function createFragmentCards() { return fragments.map((fragment,i)=>{
     const card=document.createElement('figure');
     card.className='fragment-tile';
-    card.innerHTML=`<img src="./assets/${fragment.id}.png" width="500" height="700" loading="lazy" draggable="false" alt=""><figcaption><span class="tile-title"></span><p class="tile-story"></p></figcaption>`;
+    card.classList.toggle('veiled',!!fragment.mystery);
+    card.innerHTML=`<img src="./assets/${fragment.asset}" width="500" height="700" loading="lazy" draggable="false" alt=""><figcaption><span class="tile-title"></span><p class="tile-story"></p></figcaption>`;
     card.dataset.index=i;viewport.append(card);return card;
-  });
+  }); }
+  let fragmentCards=createFragmentCards();
   const dots=document.querySelector('#fragment-nav-dots');
   dots.innerHTML=fragments.map(()=>'<i></i>').join('');
   const previous=document.querySelector('#fragment-prev');
   const next=document.querySelector('#fragment-next');
+  document.querySelectorAll('[data-card-category]').forEach(button=>button.addEventListener('click',()=>{
+    if(drag)finishDrag();
+    fragments=collection.filter(card=>card.category===button.dataset.cardCategory);
+    viewport.replaceChildren();fragmentCards=createFragmentCards();
+    dots.innerHTML=fragments.map(()=>'<i></i>').join('');
+    document.querySelectorAll('[data-card-category]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));
+    displayIndex=targetIndex=0;activeIndex=-1;lastFragments=-1;
+    describeFragment(true);measure();selectFragment(0);
+  }));
   function describeFragment(force=false) {
     const index=Math.round(clamp(displayIndex,0,fragments.length-1));
     if(index===activeIndex && !force) return;
     activeIndex=index;
+    const story=document.querySelector('.fragment-story'),previousHeight=story.offsetHeight;
     const lang=getLanguage(), fragment=fragments[index];
     document.querySelector('#fragment-name').textContent=fragment.name[lang];
     document.querySelector('#fragment-story-text').textContent=fragment.story[lang];
@@ -115,10 +128,13 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     previous.disabled=index===0;next.disabled=index===fragments.length-1;
     fragmentCards.forEach((el,i)=>{
       el.classList.toggle('active',i===index);
+      el.setAttribute('aria-hidden',String(!reducedMotion.matches&&i!==index));
       el.querySelector('img').alt=fragments[i].name[lang];
       el.querySelector('.tile-title').textContent=fragments[i].name[lang];
       el.querySelector('.tile-story').textContent=fragments[i].story[lang];
     });
+    // Longer translated names may wrap. Refit the artwork only when the caption height changes.
+    if(story.offsetHeight!==previousHeight)requestAnimationFrame(measure);
   }
   function paintFragments() {
     const spacing=cardWidth*(innerWidth<600?.88:.94);
@@ -205,17 +221,17 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   // Fixed illustrative captures, grouped by the chosen calendar unit. Photo/video counts add to 1,284.
   const seasonal=[38,52,44,89,66,72,136,108,84,116,74,55];
   const yearWeights=[.48,.7,.9,1.05,1.2];
-  // Five calendar years, through the fixed illustration date 2026-10-13; no future captures.
+  // Five calendar years, through the fixed illustration date 2026-10-16; no future captures.
   const weights=Array.from({length:58},(_,i)=>seasonal[i%12]*yearWeights[Math.floor(i/12)]);
   const weightTotal=weights.reduce((a,b)=>a+b,0);
   const monthCounts=weights.map(v=>Math.round(v/weightTotal*1284));
   monthCounts[57]+=1284-monthCounts.reduce((a,b)=>a+b,0);
   const captures=monthCounts.flatMap((count,index)=>{
     const year=2022+Math.floor(index/12),month=index%12;
-    const days=index===57?13:new Date(Date.UTC(year,month+1,0)).getUTCDate();
+    const days=index===57?16:new Date(Date.UTC(year,month+1,0)).getUTCDate();
     return Array.from({length:count},(_,i)=>new Date(Date.UTC(year,month,1+Math.floor(i/count*days))));
   });
-  let period='month',chartType='trend',buckets=[];
+  let period='year',chartType='bars',buckets=[],startYear=2022,endYear=2026;
   let selectedBucket=null;
   const chart=document.querySelector('#memory-chart');
   const group=document.querySelector('#chart-shape');
@@ -223,6 +239,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   function groupCaptures() {
     const grouped=new Map();
     for(const date of captures) {
+      if(date.getUTCFullYear()<startYear||date.getUTCFullYear()>endYear)continue;
       let start;
       if(period==='year')start=new Date(Date.UTC(date.getUTCFullYear(),0,1));
       else if(period==='month')start=new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),1));
@@ -248,6 +265,13 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     chart.dataset.type=chartType;chart.dataset.period=period;
     chart.setAttribute('aria-label',getLanguage()==='zh'?'照片与视频分布示例，非真实用户数据':'Illustrative photo and video distribution, not real user data');
     const total=buckets.reduce((a,b)=>a+b.count,0);
+    const photos=Math.round(total*1024/1284),videos=total-photos;
+    for(const [selector,value] of [['.production-atlas-heading [data-count]',total],['.media-counts>span:first-child [data-count]',photos],['.media-counts>span:last-child [data-count]',videos],['.resource-readout [data-count]',total/100]]) {
+      const el=document.querySelector(selector);el.dataset.count=String(value);
+      if(countFinished)countValue(el,1);
+    }
+    document.querySelector('#storage-photos').textContent=`${(photos/100).toFixed(2)} GB`;
+    document.querySelector('#storage-videos').textContent=`${(videos/100).toFixed(2)} GB`;
     if(chartType==='pie') {
       const palette=['#c2a6fa','#a17ddb','#dec2fa','#8a73ba','#bab0e8','#daa4da','#9794d6','#6e6191'];
       // Match the app's cap of 12 sectors: 11 principal buckets and an explicit Other.
@@ -287,9 +311,17 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     chartType=button.dataset.chart;
     document.querySelectorAll('[data-chart]').forEach(el=>{el.classList.toggle('active',el===button);el.setAttribute('aria-pressed',String(el===button));});renderChart();
   }));
-  document.querySelectorAll('[data-period]').forEach(button=>button.addEventListener('click',()=>{
+  document.querySelectorAll('button[data-period]').forEach(button=>button.addEventListener('click',()=>{
     period=button.dataset.period;
-    document.querySelectorAll('[data-period]').forEach(el=>{el.classList.toggle('active',el===button);el.setAttribute('aria-pressed',String(el===button));});renderChart();
+    document.querySelectorAll('button[data-period]').forEach(el=>{el.classList.toggle('active',el===button);el.setAttribute('aria-pressed',String(el===button));});renderChart();
+  }));
+  const rangeStart=document.querySelector('#atlas-start'),rangeEnd=document.querySelector('#atlas-end');
+  [rangeStart,rangeEnd].forEach(select=>select.addEventListener('change',()=>{
+    startYear=Number(rangeStart.value);endYear=Number(rangeEnd.value);
+    if(startYear>endYear) {if(select===rangeStart)endYear=startYear;else startYear=endYear;}
+    rangeStart.value=String(startYear);rangeEnd.value=String(endYear);renderChart();
+    // Controls are a deliberate action; show their current snapshot even before the entrance counter.
+    document.querySelectorAll('.production-atlas [data-count]').forEach(el=>countValue(el,1));
   }));
   function inspectChart(event) {
     if(chartType==='pie')return;
@@ -353,7 +385,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     document.querySelector('.experience-phone-wrap').style.setProperty('--demo-scale',demoScale);
     if(!reducedMotion.matches) {
       const pin=document.querySelector('.fragment-sticky');
-      const otherHeight=['.fragment-heading','.fragment-story','.fragment-navigation','.fragment-hint'].reduce((total,selector)=>total+pin.querySelector(selector).offsetHeight,0);
+      const otherHeight=['.fragment-heading','.fragment-categories','.fragment-story','.fragment-navigation','.fragment-hint'].reduce((total,selector)=>total+pin.querySelector(selector).offsetHeight,0);
       const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,170,650);
       viewport.style.height=`${budget}px`;
       fragmentCards.forEach(card=>card.style.width=`${Math.min(mobile?280:400,(budget-46)/1.4)}px`);
@@ -420,6 +452,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     measure();
   },{passive:true});
   window.addEventListener('scroll',()=>{scrollDirty=true;},{passive:true});
+  window.addEventListener('mne:layout',measure);
   function refresh() {
     // Translated text changes document height. Keep the reader's chosen card through that reflow.
     const heldIndex=displayIndex;
@@ -429,6 +462,8 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     studyReplay.setAttribute('aria-label',text('logoReplay'));
     pauseButton.setAttribute('aria-label',text(paused?'motionResume':'motionPause'));
     document.querySelector('.atlas-period').setAttribute('aria-label',text('atlasPeriod'));
+    rangeStart.setAttribute('aria-label',text('atlasStart'));rangeEnd.setAttribute('aria-label',text('atlasEnd'));
+    document.querySelector('.fragment-categories').setAttribute('aria-label',getLanguage()==='zh'?'成就分类':'Achievement categories');
     document.querySelector('.production-chart-controls').setAttribute('aria-label',getLanguage()==='zh'?'图表类型':'Chart type');
     describeFragment(true);renderChart();measure();
     selectFragment(heldIndex);

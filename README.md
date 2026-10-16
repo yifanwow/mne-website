@@ -1,6 +1,6 @@
 # Mne website
 
-Mne 的公开介绍页：暗色 / 梦幻紫、克制留白、磨砂玻璃、中英双语。记忆盒线绘动画、滚动驱动的浏览演示、成就卡的 3D 滚动 / 触控联动、App 原始几何统计与数字入场，以及星空和缓慢变化的背景光。摄影作品均来自作者授权的原图。原生 HTML、CSS、JavaScript，无框架、无第三方运行时依赖。产品本体是 iPhone App，网页支持手机、平板和桌面。
+Mne 的公开介绍页：暗色 / 梦幻紫、克制留白、磨砂玻璃、中英双语。记忆盒线绘动画、滚动驱动的浏览演示、二十张成就卡的分类与 3D 滚动 / 触控联动、App 原始几何统计与数字入场，以及星空和缓慢变化的背景光。摄影作品均来自作者授权的原图。原生 HTML、CSS、JavaScript，无框架、无第三方运行时依赖。产品本体是 iPhone App，网页支持手机、平板和桌面。
 
 The public bilingual website for Mne, a native iPhone app for thoughtful photo curation. Built with HTML, CSS and vanilla JavaScript. No framework, dependencies, analytics, API calls, or build step.
 
@@ -46,7 +46,7 @@ HOST=0.0.0.0 npm run dev
 - `scripts/stage-nas.mjs`：向一个新目录准备独立部署包，或核对逐文件 SHA-256。
 - `scripts/sync-nas.mjs`：先备份现有 NAS 网站，再原位更新变更网页文件，保留 NAS 专用 Compose 与 Nginx 配置。
 
-编辑文案需要同步两种语言。时间线取自 Mne 本地 README，核对日期 2026-10-13。0.9.7 (38) 是当前源码版本，0.8.2 (23) 是已确认进入私人 TestFlight 的构建；不把源码更新称为已发布版本。网站没有公开下载链接或邀请码。
+编辑文案需要同步两种语言。内容核对自 GitHub 提交 cf56cac2ce，日期 2026-10-16。App 最新源码 0.9.127 (158) 已 Archive 并上传 App Store Connect，进入 Apple 处理；尚未核验处理完成或后续分发，不称为公开发布。网站没有公开下载链接或邀请码。
 
 界面与图表数字明确标为示意，使用作者明确授权的摄影作品，不使用账号资料或真实用户统计。切换语言会在本机 localStorage 保存偏好；不发送到服务器。照片、Logo 和成就卡面版权归各自作者所有。
 
@@ -54,7 +54,7 @@ HOST=0.0.0.0 npm run dev
 
 Experience 和成就碎片从标题进入视野时开始推进；标题、图像和描述共用一个 sticky 区域。微信公众号二维码支持鼠标悬停、点击、触控、键盘焦点及 Escape 关闭。
 
-02A 演示连续浏览与整理手势，02B 展示减少整理步骤的四个亮点。02B 在桌面采用四张竖向卡片横排；≤1000px 改为两列，≤600px 改为单列。统一的画面高度让四个功能并排比较，快捷归档使用竖向照片。网页交互为示意，不会修改任何图库。首页、02A 和 02B 共使用 31 张不同的作者作品。≤850px 的手机和小平板采用更大的左对齐文字与单排联系图标；卡牌动画按绘制帧合并更新，并避免移动端逐帧滤镜与地址栏伸缩造成的尺寸重算。
+02A 演示连续浏览与整理手势，02B 展示减少整理步骤的四个亮点。02B 在桌面采用四张竖向卡片横排；≤1000px 改为两列，≤600px 改为单列。统一的画面高度让四个功能并排比较，快捷归档使用竖向照片。网页交互为示意，不会修改任何图库。首页、02A 和 02B（含相册展示）共使用 34 张不同的作者作品。≤850px 的手机和小平板采用更大的左对齐文字与单排联系图标；卡牌动画按绘制帧合并更新，并避免移动端逐帧滤镜与地址栏伸缩造成的尺寸重算。
 
 WebKit 移动检查可使用 `node scripts/mobile-webkit-qa.mjs`，需要额外安装 Playwright 的 WebKit 引擎。
 
@@ -68,8 +68,14 @@ npm run check
 
 ## NAS 部署 / NAS hosting
 
-Docker 部署准备采用官方 Nginx 镜像，完整静态站放入 `site/`，只读挂载到容器。默认仅在 NAS 本机 `127.0.0.1:18174` 监听，再由群晖反向代理提供 `mne.yifanovo.com` 的 HTTPS 入口。无需构建、Node、数据库或 Mne 后端。部署文件准备到 Finder 的独立目录 `docker/mne-website`；容器启动、DNS 和证书由用户在 NAS 上完成，尚未进行生产验收。步骤见 [NAS 部署说明](docs/nas-hosting.md)。
+Docker 部署准备采用官方 Nginx 镜像，完整静态站放入 `site/`，只读挂载到容器。默认仅在 NAS 本机 `127.0.0.1:18174` 监听，再由群晖反向代理提供 `mne.yifanovo.com` 的 HTTPS 入口。无需构建、Node、数据库或 Mne 后端。部署文件准备到 Finder 的独立目录 `docker/mne-website`；原网站已由用户部署。1.4.0 因 NAS 未连接，交付离线替换包，本次未更新运行环境。步骤见 [NAS 部署说明](docs/nas-hosting.md)。
 
 GitHub 仅用于公开源码备份；没有启用 GitHub Pages。
 
-01 的记忆盒支持入场、悬停和点击重播；02B 的六图比例示意按原始画幅计算布局。回忆图谱包含 2022—2026 五个年度的固定示意数据，开发手记与 App 的本地源码记录保持同步。
+01 的记忆盒支持入场、悬停和点击重播；02B 的六图比例示意按原始画幅计算布局。回忆图谱包含 2022—2026 五个年度的固定示意数据，开发手记与 App 的 GitHub 快照保持同步。
+
+## 1.4.0 更新 · 2026-10-16
+
+三类二十张卡（六普通、八主题、愚者＋五神秘），神秘预览保留悬念。相册示意支持编辑、改名、换封面和置顶；快捷添加为五 / 十个最近相册。图谱默认年度柱形图，可选年份区间并展开容量估算。来源与交付边界见 [同步记录](docs/github-sync-2026-10-16.md)。
+
+运行 `node scripts/package-update.mjs` 可生成完整静态替换 ZIP，输出在忽略的 `releases/` 中。用户将包内 `site/` 的内容覆盖到 NAS 原 `docker/mne-website/site/`，保持原挂载目录和 Docker 配置。操作见 [更新步骤](docs/nas-update.md)。包内含 SHA-256 清单，未连接或修改 NAS。

@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 const {chromium,webkit}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=(value,message)=>{if(!value)throw new Error(message);};
-await fs.mkdir('artifacts/v7/details',{recursive:true});
+await fs.mkdir('artifacts/v8/details',{recursive:true});
 for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   const browser=await engine.launch({headless:true});
   const context=await browser.newContext({viewport:{width:1440,height:1000},locale:'zh-CN'});
@@ -37,22 +37,54 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   assert(sizes['9:16'].every(size=>Math.abs(size.w/size.h-9/16)<.015),'9:16 geometry is incorrect');
   assert(sizes['4:6'].every(size=>Math.abs(size.w/size.h-4/6)<.015),'4:6 geometry is incorrect');
   assert(Math.abs(sizes['9:16'][0].w-sizes['4:6'][0].w)>8,'Ratio click does not visibly change frame dimensions');
-  await page.locator('#detail-aspect').screenshot({path:`artifacts/v7/details/ratios-${name}.png`});
+  await page.locator('#detail-aspect').screenshot({path:`artifacts/v8/details/ratios-${name}.png`});
   await page.locator('#box-study-replay').click();await page.waitForTimeout(300);
   const running=await page.locator('#box-study-art').evaluate(el=>[...el.querySelectorAll('path')].some(path=>path.getAnimations().some(animation=>animation.playState==='running')));
   assert(running,'Study logo replay did not animate');
   await page.waitForTimeout(2300);
   assert(await page.locator('#box-study-art').evaluate(el=>[...el.querySelectorAll('path')].every(path=>parseFloat(path.style.strokeDashoffset)===0)),'Study logo did not finish complete');
-  await page.locator('.memory-box-story').screenshot({path:`artifacts/v7/details/logo-${name}.png`});
+  await page.locator('.memory-box-story').screenshot({path:`artifacts/v8/details/logo-${name}.png`});
   assert(await page.locator('.cleaning-sun').count()===1,'Cleaning icon is not SVG');
-  await page.locator('[data-period="year"]').click();
+  await page.locator('button[data-period="year"]').click();
   await page.locator('[data-chart="bars"]').click();
   assert(await page.locator('#memory-chart .bar').count()===5,'Atlas does not span five years');
   const yearlyLabels=await page.locator('#memory-chart .axis-label').allTextContents();
   assert(yearlyLabels.includes('2022')&&yearlyLabels.includes('2026'),'Yearly axis omits illustration years');
-  await page.locator('.app-profile-preview').screenshot({path:`artifacts/v7/details/atlas-${name}.png`});
-  assert((await page.locator('.version-badge').innerText()).includes('0.9.7'),'Source badge is out of date');
-  assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.7 (38)'),'Latest development entry is missing');
+  await page.locator('.app-profile-preview').screenshot({path:`artifacts/v8/details/atlas-${name}.png`});
+  assert((await page.locator('.version-badge').innerText()).includes('0.9.127'),'Source badge is out of date');
+  assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.127 (158)'),'Latest development entry is missing');
+
+  await page.locator('#album-edit').click();await page.waitForTimeout(800);
+  assert(await page.locator('#album-studio').evaluate(el=>el.classList.contains('editing')),'Album edit did not enter');
+  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===112,'Album previews did not gather');
+  await page.locator('#album-name').fill('A new story');
+  await page.locator('[data-cover="lamplight"]').click();
+  assert((await page.locator('#album-cover').evaluate(el=>el.style.backgroundImage)).includes('lamplight.webp'),'Cover did not change');
+  await page.locator('#album-pin').click();
+  assert(await page.locator('#album-pin').getAttribute('aria-pressed')==='true','Album pin failed');
+  await page.locator('#album-edit').click();await page.waitForTimeout(800);
+  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===244,'Album previews did not unfold');
+  assert(await page.locator('#album-name').inputValue()==='A new story','Rename did not persist');
+  for(const [category,count] of [['ordinary',6],['themed',8],['mystery',6]]) {
+    await page.locator('[data-card-category="'+category+'"]').click();
+    assert(await page.locator('.fragment-tile').count()===count,'Card shelf count mismatch');
+    if(category==='mystery')assert(await page.locator('.fragment-tile.veiled').count()===5,'Mysteries are not veiled');
+    await page.locator('#fragment-viewport').focus();await page.keyboard.press('End');
+    assert((await page.locator('#fragment-story-index').innerText()).startsWith(String(count).padStart(2,'0')),'Last card inaccessible');
+    await page.keyboard.press('Home');
+  }
+  await page.locator('[data-card-category="themed"]').click();
+  await page.locator('#atlas-start').selectOption('2023');await page.locator('#atlas-end').selectOption('2025');
+  assert(await page.locator('#memory-chart .bar').count()===3,'Year range did not filter data');
+  const rangeTotal=Number(await page.locator('.production-atlas-heading [data-count]').getAttribute('data-count'));
+  assert(rangeTotal>0&&rangeTotal<1284,'Range summary did not update');
+  await page.locator('.storage-details summary').click();
+  assert(await page.locator('#storage-photos').isVisible(),'Storage breakdown did not expand');
+  await page.locator('#atlas-start').selectOption('2026');
+  assert(await page.locator('#atlas-end').inputValue()==='2026','Crossed date bounds not normalized');
+  await page.locator('#atlas-start').selectOption('2022');await page.locator('#atlas-end').selectOption('2026');
+  assert(Number(await page.locator('.production-atlas-heading [data-count]').getAttribute('data-count'))===1284,'Full range did not restore total');
+
   for(const width of [1440,1024,768,390,320])for(const lang of ['zh','en']) {
     await page.setViewportSize({width,height:1000});
     if((await page.locator('html').getAttribute('lang')).startsWith('en')!==(lang==='en'))await page.locator('#language-toggle').click();
@@ -67,9 +99,18 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
     for(const selector of ['#hide-archived','.aspect-controls','.press-hint','#photo-info-toggle']) {
       assert(await page.locator(selector).evaluate(el=>{const a=el.getBoundingClientRect(),b=el.closest('.detail-visual').getBoundingClientRect();return a.x>=b.x-1&&a.right<=b.right+1&&a.y>=b.y-1&&a.bottom<=b.bottom+1;}),`${name}/${width}/${lang}: clipped ${selector}`);
     }
+    await page.locator('#album-studio').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    assert(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),'Album causes horizontal overflow');
+    if([1440,390].includes(width))await page.locator('#album-studio').screenshot({path:'artifacts/v8/details/album-'+name+'-'+lang+'-'+width+'.png'});
+    await page.locator('#fragment-journey').evaluate(el=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,Number(el.dataset.motionStart)+.3*(Number(el.dataset.motionEnd)-Number(el.dataset.motionStart)));});
+    await page.waitForTimeout(500);
+    const pin=await page.locator('.fragment-sticky').evaluate(el=>{const r=el.getBoundingClientRect();return {top:r.top,bottom:r.bottom};});
+    assert(pin.bottom<=1002,name+'/'+width+'/'+lang+': card content exceeds viewport '+JSON.stringify(pin));
+    if([1440,390].includes(width))await page.locator('.fragment-sticky').screenshot({path:'artifacts/v8/details/cards-'+name+'-'+lang+'-'+width+'.png'});
     const photos=await page.locator('img[src*="assets/photos/"]').evaluateAll(els=>els.map(el=>el.getAttribute('src')));
-    assert(photos.length===31&&new Set(photos).size===31,'Photographs repeat across the page');
-    if([1440,768,390].includes(width))await page.locator('#details').screenshot({path:`artifacts/v7/details/row-${name}-${lang}-${width}.png`});
+    assert(photos.length===34&&new Set(photos).size===34,'Photographs repeat across the page');
+    if([1440,768,390].includes(width))await page.locator('#details').screenshot({path:`artifacts/v8/details/row-${name}-${lang}-${width}.png`});
   }
   assert(!errors.length,errors.join('\n'));
   console.log(JSON.stringify({engine:name,status:'passed',infoExpandedBy:after-before,aspectChanges:sizes}));

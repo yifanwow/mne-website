@@ -1,4 +1,19 @@
-# Website verification · 2026-10-13
+# Website verification · 2026-10-16
+
+Version 1.4.0:
+
+- Source content verified from GitHub commit cf56cac2ce6a4f8e241f2dfcae058254ef3f322c (App 0.9.127 / 158), not inferred from local uncommitted files. New cards use the corresponding original asset sets and names/stories from MemorySeal and AppLanguage.
+- Chromium and WebKit pass feature interactions and Chinese/English layout at 1440, 1024, 768, 390 and 320 px: four/two/one columns, no horizontal overflow, visible switches/info/ratio controls, portrait quick menu, six correct ratio frames, complete logo replay, and current source badge/journal.
+- Both engines pass album edit gather/unfold, name editing, cover choice and pin feedback; three card category sizes (6/8/6), five obscured mysteries and keyboard End/Home; Atlas range filtering, crossed-bound normalization, total restoration, storage expansion and annual grouping.
+- On 320×720, both engines pass all twenty card captions in both languages with controls inside the viewport, sixteen journal entries and preserved expansion on language change, repeated-entry counters, and all three Reduced Motion category grids. Caption height changes refit the artwork.
+- Mobile WebKit passes touch checks at 320, 390 and 768 px in both languages: native vertical scrolling, sixty changing card frames, photo filter/readout/menu/ratio controls, single-row contacts, and learn-more dialog.
+- Desktop, English mobile and Reduced Motion screenshots visually reviewed; current images are under ignored artifacts/v8/. Final harbor orientation and stack-photo decoration were visually checked separately; they do not change layout geometry.
+- JavaScript syntax, asset references, unique IDs, bilingual keys and whitespace checked. No iOS build, real device test, Vivaldi test or NAS deployment was performed in this request.
+- Deliverable is a full static site update ZIP with offline instructions and SHA-256 manifest. Existing NAS infrastructure files are excluded.
+
+## Historical verification
+
+### 2026-10-13
 
 Version 1.3.2 feature-card layout checks:
 

@@ -1,7 +1,8 @@
-import { motionCopy } from './motion-copy.js?v=1.3.2';
-import { initMotion } from './motion.js?v=1.3.2';
-import { setupContacts } from './contacts.js?v=1.3.2';
-import { setupDetails } from './details.js?v=1.3.2';
+import { motionCopy } from './motion-copy.js?v=1.4.0';
+import { initMotion } from './motion.js?v=1.4.0';
+import { setupContacts } from './contacts.js?v=1.4.0';
+import { setupDetails } from './details.js?v=1.4.0';
+import { setupAlbums } from './albums.js?v=1.4.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -12,8 +13,8 @@ const copy = {
     experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'一划之间，做个决定。',featureGestureDescription:'左右重温，上滑暂存回收站。长按预览，横向扫选，把喜欢的瞬间加入 Mne Archive。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
     fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'收集卡片，解锁成就，让整理也成为一场回到过去的历险。<br>在重温与选择之间，发现新的乐趣，也重新认识自己。',
-    atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'照片与视频，把时间织成了记忆的轮廓。按周、月或年，重看那些平静的日常，和格外丰盛的季节。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已删除',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
-    privacyTitle:'照片，留在你的照片库。',privacyDescription:'照片和视频不上传到 Mne 服务器。不登录，也可以离线整理。私人内测登录只备份资料与本机整理元数据。',themeTitle:'让界面，顺应你的心情。',themeDescription:'明亮、暗夜、梦幻紫、青灰与 OLED nerd。五种主题，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:'为 iPhone 打造。真实的系统材质、轻柔的触觉与克制的动效。支持系统减少动态效果，让节奏由你掌握。',
+    atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'按周、月或年，回看记忆的起伏。选择某一年，或圈定一段岁月。照片、视频与容量估算，让回忆的轮廓更加清晰。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已删除',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
+    privacyTitle:'照片，留在你的照片库。',privacyDescription:'照片和视频留在系统图库，不上传到 Mne 服务器。不登录也能整理；二十张卡面随包提供。联网可更新寄语与已知卡面，登录可备份资料与整理元数据。',themeTitle:'让界面，顺应你的心情。',themeDescription:'白昼、暗夜、旧梦、青灰与 OLED nerd。五种主题与独立图标选择，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:'为 iPhone 打造。真实的系统材质、轻柔的触觉与克制的动效。支持系统减少动态效果，让节奏由你掌握。',
     journalIndex:'持续生长，慢慢打磨',journalEyebrow:'一个关于记忆的 App，也有自己的记忆。',journalTitle:'Mne 的开发手记。',sourceLabel:'当前源码',journalMore:'回看更早的故事',journalLess:'收起早期手记',
     accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在私人内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'了解更多',creditsTitle:'在 Mne 之外，继续相遇。',backTop:'回到顶部 ↑'
   },
@@ -24,8 +25,8 @@ const copy = {
     experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'A small gesture. A clear choice.',featureGestureDescription:'Swipe to revisit. Swipe up to set a photo aside. Long press to preview, sweep to select, and add meaningful moments to Mne Archive.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
     fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Collect cards and unlock achievements as you adventure through your past.<br>Find joy in revisiting your memories, and meet yourself again along the way.',
-    atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Your photos and videos trace the shape of time. Look back by week, month, or year, at the quiet everyday moments and the seasons full of life.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Removed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
-    privacyTitle:'Your photos stay in your library.',privacyDescription:'Your photos and videos are never uploaded to Mne servers. Curate offline without signing in. Private beta accounts back up profile and device activity metadata only.',themeTitle:'A space that feels like you.',themeDescription:'Light, Dark, Dream Purple, Sage, and OLED nerd. Five themes. Chinese and English. One familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:'Made for iPhone, with system materials, subtle haptics, and considered motion. Respects Reduce Motion, so the pace always feels right.',
+    atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Look back by week, month, or year. Choose one year or a span of time. Photos, videos, and storage estimates bring the shape of your memories into focus.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Removed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
+    privacyTitle:'Your photos stay in your library.',privacyDescription:'Photos and videos stay in your system library. Curate without signing in; all twenty cards are bundled. A connection can refresh words and known card artwork. Accounts back up profile and activity metadata.',themeTitle:'A space that feels like you.',themeDescription:'Daylight, Midnight, Old dream, Blue sage, and OLED nerd. Five themes with independently chosen icons. Chinese and English. A familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:'Made for iPhone, with system materials, subtle haptics, and considered motion. Respects Reduce Motion, so the pace always feels right.',
     journalIndex:'GROWING, ONE DETAIL AT A TIME',journalEyebrow:'AN APP ABOUT MEMORIES HAS MEMORIES OF ITS OWN.',journalTitle:'The Mne journal.',sourceLabel:'Latest source',journalMore:'Look back a little further',journalLess:'Show fewer entries',
     accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in private beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Beyond Mne',creditsTitle:'Meet me beyond Mne.',backTop:'Back to top ↑'
   }
@@ -34,8 +35,11 @@ const copy = {
 Object.assign(copy.zh, motionCopy.zh);
 Object.assign(copy.en, motionCopy.en);
 
-// Curated from the local Mne README, 2026-10-13. A source version is not a release.
+// Verified against GitHub cf56cac2ce, 2026-10-16. Upload is not a public release.
 const journal = [
+  {date:'2026-10-16',version:'0.9.127 (158)',tag:{zh:'已上传构建',en:'Build uploaded'},title:{zh:'故事有了封面，回望有了新的回响。',en:'A cover for your stories. New echoes of the past.'},body:{zh:'相册可自选最多七张封面、改名和置顶，编辑时预览轻轻聚拢。二十张成就卡分为三类，新增八张主题卡；回忆图谱默认按年展示，可探索年份区间与容量构成。完善首次语言选择、六段教程与生日星座。构建 158 已上传 App Store Connect，上传时 Apple 开始处理；尚未核验处理完成或外测分发。',en:'Choose up to seven album covers, rename and pin albums, and watch previews gather in Edit. Twenty achievement cards across three shelves, including eight new themed cards. Yearly bars, year ranges, and a clearer storage breakdown join first-launch language choice, six guides, and birthday/zodiac profiles. Build 158 was uploaded to App Store Connect and entered Apple processing; completion and external distribution have not been verified.'}},
+  {date:'2026-10-14',version:'0.9.51 — 0.9.60',tag:{zh:'浏览与手势',en:'Browsing & gestures'},title:{zh:'让动作更轻，让回忆不断。',en:'Lighter gestures. Unbroken memories.'},body:{zh:'喜欢、归档与相册编辑更快响应，失败会撤回对应操作。时间浏览条与日期气泡一起出现，可拖动穿梭；单图下滑、胶片切换和恢复反馈继续打磨。新增六段录屏教程，回忆图谱支持具体年份与区间。',en:'Likes, archiving, and album edits respond sooner, with rollback when an operation fails. A draggable timeline rail and date bubble, refined single-photo returns, filmstrip transitions, and recovery feedback. Six video guides and specific-year/range selection in Memory Atlas.'}},
+  {date:'2026-10-14',version:'0.9.8 — 0.9.50',tag:{zh:'收藏与发现',en:'Collection & discovery'},title:{zh:'沿着星光，拾起新的碎片。',en:'Follow the starlight. Find another fragment.'},body:{zh:'成就收藏走进双列画廊，卡片随倾斜轻轻回应。五张神秘碎片藏起名字与故事，等待亲自发现。完善上滑暂存、下滑返回、相册信息与磨砂星空，让照片始终完整留在画面里。',en:'A two-column achievement gallery, with cards that respond gently to device tilt. Five mysterious fragments keep their names and stories veiled until discovered. Refined set-aside and return gestures, album readouts, and frosted starfields keep photographs complete and in view.'}},
   { date:'2026-10-13', version:'0.9.7 (38)', tag:{zh:'源码更新',en:'Source update'}, title:{zh:'常用的动作，就在手边。',en:'Keep familiar actions close.'}, body:{zh:'单图长按菜单跟随触点，保留五个最近成功添加的相册；上滑时预载的下一张自然接棒。成就详情轻触旋转，深下拉带来更完整的历险感，白昼主题也更清晰柔和。当前为源码进展，构建与上传待自行完成。',en:'A press-anchored photo menu with five recently used albums, and a preloaded next photo that takes over as you swipe. Tap to spin achievement details, explore deeper pull gestures, and enjoy a calmer, clearer Daylight theme. This is source progress; building and uploading remain pending.'}},
   { date:'2026-10-13', version:'0.9.4 — 0.9.6', tag:{zh:'设计打磨',en:'Design refinements'}, title:{zh:'让记忆盒，像一束柔和的光。',en:'A softer light for the memory box.'}, body:{zh:'逐步调整桌面图标的尺寸、位置与线宽，让盒子的轮廓更清楚；为线条加入磨砂玻璃、内部柔光与细微颗粒。五套主题图标同步打磨，保留记忆盒最初的辨识度。',en:'Refined the app icon’s scale, placement, and stroke weight for a clearer silhouette. Frosted glass, soft inner light, and fine grain add depth to the lines. All five theme icons share the same considered memory-box identity.'}},
   { date:'2026-10-13', version:'0.8.9 — 0.9.3', tag:{zh:'交互打磨',en:'Interaction refinements'}, title:{zh:'回望过去，也发现新的乐趣。',en:'Look back, and find something new.'}, body:{zh:'诗句随着下拉浮现，卡片在旋转与透视中回应探索；整理动作、相册信息与成功归档记录更加连贯。照片仍完整等比展示，喜欢与相册标识留在固定的位置，让每次选择都有清晰的回应。',en:'Poetry appears as you pull, while rotating cards and perspective invite exploration. Refined curation gestures, album information, and local records of successful actions. Photos remain complete and proportional, with stable favorite and album markers to make every choice feel clear.'}},
@@ -54,6 +58,7 @@ const journal = [
 let sceneMotion = null;
 let contacts = null;
 let details = null;
+let albums = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -113,6 +118,7 @@ function applyLanguage() {
   sceneMotion?.refresh();
   contacts?.refresh();
   details?.refresh();
+  albums?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -172,6 +178,7 @@ dialog.addEventListener('click', event => {
 
 contacts = setupContacts({getLanguage:()=>language, text:key=>copy[language][key]});
 details = setupDetails({text:key=>copy[language][key]});
+albums = setupAlbums({text:key=>copy[language][key]});
 applyLanguage();
 sceneMotion = initMotion({getLanguage:()=>language, text:key=>copy[language][key], reducedMotion});
 sceneMotion.refresh();
