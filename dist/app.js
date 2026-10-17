@@ -1,10 +1,10 @@
-import { motionCopy } from './motion-copy.js?v=1.5.0';
-import { initMotion } from './motion.js?v=1.5.0';
-import { setupContacts } from './contacts.js?v=1.5.0';
-import { setupDetails } from './details.js?v=1.5.0';
-import { setupAlbums } from './albums.js?v=1.5.0';
-import { setupProduct } from './product.js?v=1.5.0';
-import { productCopy } from './product-copy.js?v=1.5.0';
+import { motionCopy } from './motion-copy.js?v=1.6.0';
+import { initMotion } from './motion.js?v=1.6.0';
+import { setupContacts } from './contacts.js?v=1.6.0';
+import { setupDetails } from './details.js?v=1.6.0';
+import { setupAlbums } from './albums.js?v=1.6.0';
+import { setupProduct } from './product.js?v=1.6.0';
+import { productCopy } from './product-copy.js?v=1.6.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {

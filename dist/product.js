@@ -1,121 +1,124 @@
-// Product illustrations use fixed data and transient page state only.
+import {uiIcon,albumSamples} from './native-ui.js?v=1.6.0';
+import {statisticSVG} from './app-art.js?v=1.6.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=1.6.0';
+// Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
-  const studio=document.querySelector('#shortcut-studio'),surface=document.querySelector('#shortcut-surface');
-  const menu=document.querySelector('#shortcut-menu'),open=document.querySelector('#shortcut-open');
-  const status=document.querySelector('#shortcut-status'),activity=document.querySelector('#growth-events');
-  const photos=['shop','harbor','lamplight'];
-  const favorites=new Set(),members=new Set(),reviewed=new Set(),countedLikes=new Set(),countedArchives=new Set();
-  let selected=0,mode='grid',menuOpen=false,hold=0,press=null,held=false,events=[],notice=null,hoverSuppressedUntil=0;
-  let scenario='central',scope='all';
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  const scenarios={low:{photo:.2048,video:.078,index:.018272},central:{photo:1.024,video:.39,index:.05768},high:{photo:2.048,video:1.04,index:.210176}};
-  const format=value=>value.toFixed(2);
-  function setMenu(value) {
-    // Hiding an overlay emits pointerenter on the thumbnail underneath; it is not new hover intent.
-    if(!value&&menuOpen)hoverSuppressedUntil=performance.now()+500;
-    menuOpen=value;menu.hidden=!value;open.setAttribute('aria-expanded',String(value));studio.classList.toggle('menu-open',value);
+ const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');
+ const preview=document.querySelector('#native-preview'),previewPhoto=document.querySelector('#native-preview-photo'),bubble=document.querySelector('#native-recent-bubble'),strip=document.querySelector('#native-action-strip');
+ const singleOverlay=document.querySelector('#native-single-overlay'),menu=document.querySelector('#shortcut-menu'),status=document.querySelector('#shortcut-status');
+ const picker=document.querySelector('#shortcut-album-picker'),stats=document.querySelector('#native-growth-stats'),statDialog=document.querySelector('#growth-dialog');
+ const favorite=new Set(),pending=new Set(),seen=new Set(),likedRecords=new Set(),archiveRecords=new Set(),members=new Map(photos.map(p=>[p.id,new Set()]));
+ const recent=[...albumSamples,{id:'archive',key:null}];let selected=0,mode='grid',removing=false,previewOpen=false,menuOpen=false,point={x:150,y:240},hold=0,held=false,start=null,notice=null,statKind='reviewed',hoverUntil=0;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const name=a=>a.key?text(a.key):'Mne Archive';const current=()=>photos[selected];const memberships=()=>members.get(current().id);
+ function recordView(){seen.add(current().id);renderStats();}
+ function close(){const wasOpen=previewOpen||menuOpen;previewOpen=false;menuOpen=false;removing=false;preview.hidden=true;singleOverlay.hidden=true;open.setAttribute('aria-expanded','false');if(wasOpen)hoverUntil=performance.now()+400;}
+ function setMode(value){mode=value;surface.dataset.mode=mode;close();document.querySelectorAll('[data-shortcut-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shortcutMode===mode)));if(mode==='single')recordView();renderPhoto();}
+ function renderPhoto(){
+  const p=current();surface.style.setProperty('--active-photo',`url('./assets/photos/${p.id}.webp')`);
+  document.querySelector('#shortcut-resolution').textContent=`${p.width} × ${p.height}`;
+  document.querySelector('#shortcut-membership').textContent=memberships().size?[...memberships()].map(id=>name(recent.find(a=>a.id===id))).join(' · '):text('shortcutEmptyAlbum');
+  open.tabIndex=mode==='single'?0:-1;open.setAttribute('aria-hidden',String(mode!=='single'));open.setAttribute('aria-label',text('shortcutOpen'));
+  document.querySelectorAll('[data-filmstrip-photo]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.filmstripPhoto)===selected)));
+  if(previewOpen)renderPreview();if(menuOpen)renderSingleMenu();
+ }
+ function photoButton(p,i,film=false){
+  const b=document.createElement('button');b.type='button';b.dataset[film?'filmstripPhoto':'shortcutPhoto']=String(i);b.setAttribute('aria-label',`${text('shortcutPhotoInfo')} ${i+1}`);b.innerHTML=`<img src="./assets/photos/${p.id}.webp" alt="" loading="lazy" draggable="false">`;
+  if(film)b.addEventListener('click',()=>{selected=i;close();recordView();renderPhoto();});
+  else {
+   b.style.setProperty('--photo-ratio',p.width/p.height);
+   b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&mode==='grid'&&!previewOpen&&performance.now()>hoverUntil){selected=i;showPreview();}});
+   b.addEventListener('pointerdown',e=>beginPress(e,()=>{selected=i;showPreview();}));
+   b.addEventListener('pointermove',movePress);for(const event of ['pointerup','pointercancel','pointerleave'])b.addEventListener(event,()=>clearTimeout(hold));
+   b.addEventListener('contextmenu',e=>{e.preventDefault();selected=i;showPreview();});
+   b.addEventListener('click',()=>{if(held){held=false;return;}selected=i;setMode('single');});
   }
-  function renderEvents() {
-    document.querySelector('#growth-reviewed').textContent=(1284+reviewed.size).toLocaleString();
-    document.querySelector('#growth-organized').textContent=(328+countedLikes.size+countedArchives.size).toLocaleString();
-    activity.replaceChildren(...events.slice(0,3).map(event=>{
-      const row=document.createElement('li'),mark=document.createElement('i'),body=document.createElement('div'),label=document.createElement('strong'),date=document.createElement('small');
-      mark.textContent=event.kind==='growthLike'?'♡':event.kind==='growthArchive'?'+':'↗';
-      label.textContent=text(event.kind);date.textContent=text('growthNow');body.append(label,date);row.append(mark,body);return row;
-    }));
-    if(!events.length) {
-      const row=document.createElement('li'),mark=document.createElement('i'),body=document.createElement('div'),label=document.createElement('strong'),date=document.createElement('small');
-      mark.textContent='↗';label.textContent=text('growthEarlier');date.textContent=text('growthSeed');body.append(label,date);row.append(mark,body);activity.append(row);
-    }
+  return b;
+ }
+ function layoutWaterfall(){
+  const width=(grid.clientWidth-8)/3,heights=[0,0,0];
+  [...grid.children].forEach((button,i)=>{const column=heights.indexOf(Math.min(...heights)),height=width*photos[i].height/photos[i].width;button.style.width=width+'px';button.style.height=height+'px';button.style.transform=`translate(${column*(width+4)}px,${heights[column]}px)`;heights[column]+=height+4;});
+ }
+ function beginPress(e,callback){if(e.button!==0)return;start={x:e.clientX,y:e.clientY};held=false;clearTimeout(hold);hold=setTimeout(()=>{held=true;callback();},400);}
+ function movePress(e){if(start&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>12)clearTimeout(hold);}
+ function showPreview(){if(mode!=='grid')return;previewOpen=true;removing=false;preview.hidden=false;singleOverlay.hidden=true;recordView();renderPhoto();}
+ function renderPreview(){
+  const p=current(),h=surface.clientHeight,w=surface.clientWidth,scale=Math.min((w-36)/p.width,Math.min(520,h*.55)/p.height);
+  const width=p.width*scale*1.05,height=p.height*scale*1.05;
+  previewPhoto.style.cssText=`background-image:url('./assets/photos/${p.id}.webp');width:${width}px;height:${height}px;left:${(w-width)/2}px;top:${Math.max(20,h*.4-height/2)}px;`;
+  bubble.replaceChildren();const targets=removing?recent.filter(a=>memberships().has(a.id)):recent;
+  bubble.hidden=!targets.length;for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.previewAlbum=a.id;b.innerHTML=`${uiIcon(removing?'remove':'add')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));bubble.append(b);}
+  strip.replaceChildren();const actions=[['favorite',favorite.has(p.id)?'shortcutUnlike':'shortcutLike','heart'],['picker','shortcutAdd','add']];
+  if(memberships().size)actions.push(['removeMode','shortcutRemove','remove']);actions.push(['trash',pending.has(p.id)?'shortcutRestore':'shortcutTrash',pending.has(p.id)?'restore':'trash']);
+  for(const [action,key,icon] of actions){const b=document.createElement('button');b.type='button';b.dataset.previewAction=action;b.innerHTML=`${uiIcon(icon)}<span></span>`;b.querySelector('span').textContent=text(key);b.setAttribute('aria-pressed',String(action==='favorite'?favorite.has(p.id):action==='removeMode'&&removing));if(action==='trash'&&!pending.has(p.id))b.className='destructive';b.addEventListener('click',()=>act(action));strip.append(b);}
+ }
+ function showSingle(e){
+  if(mode!=='single')return;const r=surface.getBoundingClientRect();point={x:typeof e?.clientX==='number'?e.clientX-r.left:r.width/2,y:typeof e?.clientY==='number'?e.clientY-r.top:r.height*.5};
+  menuOpen=true;removing=false;singleOverlay.hidden=false;open.setAttribute('aria-expanded','true');renderSingleMenu();
+ }
+ function renderSingleMenu(){
+  menu.replaceChildren();const rows=[['favorite',favorite.has(current().id)?'shortcutUnlike':'shortcutLike','heart'],['picker','shortcutAdd','add']];if(memberships().size)rows.push(['removeMode','shortcutRemove','remove']);
+  for(const [action,key,icon] of rows){const b=document.createElement('button');b.type='button';b.dataset.singleAction=action;b.innerHTML=`${uiIcon(icon)}<span></span>`;b.querySelector('span').textContent=text(key);b.addEventListener('click',()=>act(action));menu.append(b);}
+  const title=document.createElement('small');title.textContent=text(removing?'shortcutRemove':'shortcutRecent');menu.append(title);
+  const targets=removing?recent.filter(a=>memberships().has(a.id)):recent;
+  for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.singleAlbum=a.id;b.innerHTML=`${uiIcon(removing?'remove':'album')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));menu.append(b);}
+  // Same bounding and above/below preference as PhotoQuickMenuGeometry.frame.
+  const w=surface.clientWidth,h=surface.clientHeight,width=Math.min(272,w-24),count=rows.length+targets.length,height=Math.min(count*44+(count>2?42:2),h-24);
+  const x=Math.max(12,Math.min(point.x-width/2,w-width-12)),preferred=point.y+height+26<=h?point.y+14:point.y-height-14;
+  menu.style.cssText=`width:${width}px;height:${height}px;left:${x}px;top:${Math.max(12,Math.min(preferred,h-height-12))}px;`;
+ }
+ function act(action){
+  if(action==='removeMode'){removing=!removing;if(mode==='grid')renderPreview();else renderSingleMenu();return;}
+  if(action==='picker'){openPicker();return;}
+  if(action==='trash'){pending.has(current().id)?pending.delete(current().id):pending.add(current().id);notice=pending.has(current().id)?'shortcutTrashed':'shortcutRestored';renderPreview();}
+  else commit('favorite');status.textContent=text(notice);
+ }
+ function commit(action,target){
+  const id=current().id;
+  if(action==='favorite'){if(favorite.has(id)){favorite.delete(id);notice='shortcutUnliked';}else{favorite.add(id);likedRecords.add(id);notice='shortcutLiked';}}
+  else if(action==='album'){memberships().add(target);archiveRecords.add(`${id}:${target}`);notice='shortcutAdded';}
+  else{memberships().delete(target);notice='shortcutRemoved';removing=false;}
+  if(mode==='single')close();renderPhoto();renderStats();status.textContent=text(notice);
+ }
+ function openPicker(){
+  document.querySelector('#shortcut-picker-list').replaceChildren(...recent.map(a=>{const b=document.createElement('button');b.type='button';b.innerHTML=`${uiIcon('album')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>{commit('album',a.id);picker.close();});return b;}));picker.showModal();
+ }
+ grid.replaceChildren(...photos.map((p,i)=>photoButton(p,i)));document.querySelector('#native-filmstrip').replaceChildren(...photos.map((p,i)=>photoButton(p,i,true)));
+ open.addEventListener('pointerdown',e=>beginPress(e,()=>showSingle(e)));open.addEventListener('pointermove',movePress);for(const event of ['pointerup','pointercancel','pointerleave'])open.addEventListener(event,()=>clearTimeout(hold));
+ open.addEventListener('contextmenu',e=>{e.preventDefault();showSingle(e);});open.addEventListener('click',e=>{if(held){held=false;return;}showSingle(e);});
+ document.querySelector('#native-preview-close').addEventListener('click',close);document.querySelector('#native-menu-close').addEventListener('click',close);
+ previewPhoto.addEventListener('click',()=>setMode('single'));
+ document.querySelector('#shortcut-picker-close').addEventListener('click',()=>picker.close());
+ document.querySelectorAll('[data-shortcut-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.shortcutMode)));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});new ResizeObserver(()=>{layoutWaterfall();if(previewOpen)renderPreview();if(menuOpen)renderSingleMenu();}).observe(surface);
+ const usage=document.querySelector('#storage-open'),storage=document.querySelector('#native-storage-content');usage.addEventListener('click',()=>{storage.hidden=!storage.hidden;usage.setAttribute('aria-expanded',String(!storage.hidden));});
+ function counts(){return {reviewed:1284+seen.size,processed:328+likedRecords.size+archiveRecords.size,space:'2.6'};}
+ function renderStats(){
+  stats.replaceChildren();const c=counts();
+  for(const [kind,label,art,value] of [['reviewed','growthReviewed','reviewed',c.reviewed],['processed','growthOrganized','removed',c.processed],['space','growthReleased','space',c.space]]){
+   const b=document.createElement('button');b.type='button';b.className='native-stat';b.dataset.growthKind=kind;b.innerHTML=`<span class="native-stat-art">${statisticSVG(art).replaceAll('stat-'+art,'growth-'+art)}</span><strong>${value.toLocaleString()}${kind==='space'?'<small> GB</small>':''}</strong><span></span>`;b.lastElementChild.textContent=text(label);b.setAttribute('aria-label',`${text('growthTap')}: ${text(label)}`);b.addEventListener('click',()=>{statKind=kind;renderStatDetail();statDialog.showModal();});stats.append(b);
   }
-  function record(kind) {events.unshift({kind});if(events.length>12)events.length=12;renderEvents();}
-  function describePhoto() {
-    const id=photos[selected],liked=favorites.has(id),member=members.has(id);
-    surface.style.setProperty('--active-photo',`url('./assets/photos/${id}.webp')`);
-    surface.dataset.selected=String(selected);
-    document.querySelector('#shortcut-resolution').textContent=selected===1?'4027 × 2265':'2268 × 4032';
-    open.tabIndex=mode==='single'?0:-1;open.setAttribute('aria-hidden',String(mode!=='single'));
-    document.querySelectorAll('[data-shortcut-photo]').forEach(button=>{
-      button.setAttribute('aria-pressed',String(Number(button.dataset.shortcutPhoto)===selected));
-      button.setAttribute('aria-label',`${text('shortcutOpen')} ${Number(button.dataset.shortcutPhoto)+1}`);
-    });
-    const favorite=document.querySelector('[data-shortcut-action="favorite"]');
-    favorite.querySelector('span:last-child').textContent=text(liked?'shortcutUnlike':'shortcutLike');favorite.setAttribute('aria-pressed',String(liked));
-    document.querySelector('[data-shortcut-action="remove"]').hidden=!member;
-    document.querySelector('#shortcut-membership').textContent=text(member?'shortcutMember':'shortcutEmptyAlbum');
-    document.querySelector('#shortcut-favorite-mark').hidden=!liked;
+ }
+ function renderStatDetail(){
+  const container=document.querySelector('#growth-dialog-content'),c=counts(),kind=statKind,art=kind==='processed'?'removed':kind;
+  container.innerHTML=`<div class="native-detail-art">${statisticSVG(art).replaceAll('stat-'+art,'detail-'+art)}</div><h3></h3><strong class="native-detail-value">${c[kind].toLocaleString()}${kind==='space'?' GB':''}</strong>`;
+  container.querySelector('h3').textContent=text(kind==='reviewed'?'growthReviewed':kind==='processed'?'growthOrganized':'growthReleased');
+  container.querySelector('h3').id='growth-dialog-title';statDialog.setAttribute('aria-labelledby','growth-dialog-title');
+  const dl=document.createElement('dl');dl.className='native-stat-breakdown';
+  const rows=kind==='processed'?[['growthDeleted',72],['growthArchived',156+archiveRecords.size],['growthLiked',100+likedRecords.size]]:kind==='space'?[['growthKnown','2.34 GB'],['growthEstimated','260 MB']]:[['growthPhotos',1024+seen.size],['growthVideos',260]];
+  for(const [key,value] of rows){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=text(key);dd.textContent=value.toLocaleString();dl.append(dt,dd);}container.append(dl);
+  if(kind==='reviewed'){
+   const panels=document.createElement('div');panels.className='native-footprint-panels';
+   panels.innerHTML='<article><small></small><strong></strong><p></p></article><article><small></small><strong></strong><p></p></article>';
+   panels.children[0].querySelector('small').textContent=text('growthReadTime');panels.children[0].querySelector('strong').textContent=text('growthTime');panels.children[0].querySelector('p').textContent=text('growthFilm');
+   panels.children[1].querySelector('small').textContent=text('growthReadRoom');panels.children[1].querySelector('strong').textContent='≈ '+((1024+seen.size)*.1016*.1524).toFixed(2)+' m²';panels.children[1].querySelector('p').textContent=text('growthArea');container.append(panels);
   }
-  function seePhoto() {if(!reviewed.has(photos[selected])){reviewed.add(photos[selected]);record('growthReview');}}
-  document.querySelectorAll('[data-shortcut-mode]').forEach(button=>button.addEventListener('click',()=>{
-    mode=button.dataset.shortcutMode;surface.dataset.mode=mode;setMenu(false);
-    document.querySelectorAll('[data-shortcut-mode]').forEach(el=>el.setAttribute('aria-pressed',String(el===button)));
-    if(mode==='single')seePhoto();
-    describePhoto();
-  }));
-  document.querySelectorAll('[data-shortcut-photo]').forEach(button=>{
-    button.addEventListener('click',()=>{selected=Number(button.dataset.shortcutPhoto);describePhoto();seePhoto();setMenu(true);});
-    button.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'&&mode==='grid'&&!menuOpen&&performance.now()>hoverSuppressedUntil){selected=Number(button.dataset.shortcutPhoto);describePhoto();setMenu(true);}});
-    button.addEventListener('contextmenu',event=>{event.preventDefault();selected=Number(button.dataset.shortcutPhoto);describePhoto();seePhoto();setMenu(true);});
-    let timer=0,start=null;
-    button.addEventListener('pointerdown',event=>{if(event.button!==0)return;start={x:event.clientX,y:event.clientY};timer=setTimeout(()=>{selected=Number(button.dataset.shortcutPhoto);describePhoto();seePhoto();setMenu(true);},420);});
-    button.addEventListener('pointermove',event=>{if(start&&Math.hypot(event.clientX-start.x,event.clientY-start.y)>10)clearTimeout(timer);});
-    for(const event of ['pointerup','pointercancel','pointerleave'])button.addEventListener(event,()=>clearTimeout(timer));
-  });
-  open.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')setMenu(true);});
-  open.addEventListener('pointerdown',event=>{
-    if(event.button!==0)return;press={x:event.clientX,y:event.clientY};held=false;
-    hold=setTimeout(()=>{held=true;seePhoto();setMenu(true);},420);
-  });
-  open.addEventListener('pointermove',event=>{if(press&&Math.hypot(event.clientX-press.x,event.clientY-press.y)>10)clearTimeout(hold);});
-  for(const name of ['pointerup','pointercancel','pointerleave'])open.addEventListener(name,()=>clearTimeout(hold));
-  open.addEventListener('click',()=>{if(held){held=false;return;}seePhoto();setMenu(true);});
-  open.addEventListener('contextmenu',event=>{event.preventDefault();seePhoto();setMenu(true);});
-  document.querySelector('#shortcut-close').addEventListener('click',()=>{setMenu(false);open.focus();});
-  document.addEventListener('pointerdown',event=>{if(!surface.contains(event.target))setMenu(false);});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menuOpen){setMenu(false);open.focus();}});
-  document.querySelectorAll('[data-shortcut-action]').forEach(button=>button.addEventListener('click',()=>{
-    const id=photos[selected];
-    if(button.dataset.shortcutAction==='favorite') {
-      if(favorites.has(id)){favorites.delete(id);notice='shortcutUnliked';record('growthUnlike');}
-      else {favorites.add(id);countedLikes.add(id);notice='shortcutLiked';record('growthLike');}
-    } else if(button.dataset.shortcutAction==='remove') {
-      members.delete(id);notice='shortcutRemoved';record('growthRemove');
-    } else {
-      if(members.has(id))notice='shortcutAlready';
-      else {members.add(id);countedArchives.add(id);notice='shortcutAdded';record('growthArchive');}
-    }
-    setMenu(false);describePhoto();status.textContent=text(notice);
-    if(!reduced.matches)status.animate([{opacity:.3,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:350});
-  }));
-
-  function renderStorage() {
-    const estimate=scenarios[scenario],photo=10.24+estimate.photo,video=2.6+estimate.video,total=photo+video+estimate.index;
-    const values={all:total,photos:photo,videos:video,index:estimate.index};
-    const value=document.querySelector('#insight-total');value.textContent=format(values[scope]);
-    document.querySelector('#insight-total-label').textContent=text(scope==='photos'?'insightPhotos':scope==='videos'?'insightVideos':scope==='index'?'insightIndex':'insightAll');
-    document.querySelector('#insight-photo-total').textContent=format(photo)+' GB';
-    document.querySelector('#insight-video-total').textContent=format(video)+' GB';
-    document.querySelector('#insight-photo-cache').textContent=format(estimate.photo)+' GB';
-    document.querySelector('#insight-video-cache').textContent=format(estimate.video)+' GB';
-    document.querySelector('#insight-index-total').textContent=format(estimate.index)+' GB';
-    const parts=[['photos',photo],['videos',video],['index',estimate.index]];let offset=0;
-    for(const [key,part] of parts) {
-      const segment=document.querySelector(`[data-storage-segment="${key}"]`),length=part/total*100;
-      segment.setAttribute('stroke-dasharray',`${length} ${100-length}`);segment.setAttribute('stroke-dashoffset',String(-offset));
-      segment.style.opacity=scope==='all'||scope===key?'1':'.16';offset+=length;
-    }
-    document.querySelector('#storage-ring').setAttribute('aria-label',`${text('insightAll')}: ${format(total)} GB. ${text('insightPhotos')}: ${format(photo)} GB. ${text('insightVideos')}: ${format(video)} GB.`);
-    document.querySelectorAll('[data-storage-scope]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.storageScope===scope)));
-    document.querySelectorAll('[data-storage-scenario]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.storageScenario===scenario)));
-  }
-  document.querySelectorAll('[data-storage-scope]').forEach(button=>button.addEventListener('click',()=>{scope=button.dataset.storageScope;renderStorage();}));
-  document.querySelectorAll('[data-storage-scenario]').forEach(button=>button.addEventListener('click',()=>{scenario=button.dataset.storageScenario;renderStorage();}));
-  function refresh() {
-    describePhoto();renderEvents();renderStorage();status.textContent=text(notice||'shortcutHint');
-    open.setAttribute('aria-label',text('shortcutOpen'));document.querySelector('#shortcut-close').setAttribute('aria-label',text('shortcutClose'));
-    document.querySelector('.shortcut-studio .product-modes').setAttribute('aria-label',text('shortcutModesLabel'));
-    document.querySelector('.storage-studio .product-modes').setAttribute('aria-label',text('storageScenarioLabel'));
-    document.querySelector('.growth-subheading>a').setAttribute('aria-label',text('growthTry'));
-  }
-  refresh();return {refresh};
+  const p=document.createElement('p');p.className='native-model-note';p.hidden=true;p.textContent=text(kind==='reviewed'?'growthReviewedNote':kind==='processed'?'growthProcessedNote':'growthResourceNote');
+  const info=document.createElement('button');info.type='button';info.className='native-detail-info';info.innerHTML=uiIcon('info')+'<span>info</span>';info.setAttribute('aria-expanded','false');let timer=0;
+  info.addEventListener('click',()=>{clearTimeout(timer);p.hidden=!p.hidden;info.setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden)timer=setTimeout(()=>{p.hidden=true;info.setAttribute('aria-expanded','false');},5000);});container.append(info,p);
+ }
+ document.querySelector('#growth-done').addEventListener('click',()=>statDialog.close());
+ for(const dialog of [picker,statDialog])dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close();});
+ function refresh(){renderPhoto();renderStats();if(statDialog.open)renderStatDetail();document.querySelectorAll('.product-modes')[0]?.setAttribute('aria-label',text('shortcutModesLabel'));previewPhoto.setAttribute('aria-label',text('shortcutSingle'));document.querySelector('#native-preview-close').setAttribute('aria-label',text('shortcutClose'));document.querySelector('#native-menu-close').setAttribute('aria-label',text('shortcutClose'));document.querySelector('#shortcut-picker-close').setAttribute('aria-label',text('shortcutClose'));status.textContent=text(notice||'shortcutHint');}
+ refresh();return {refresh};
 }

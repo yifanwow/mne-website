@@ -1,6 +1,18 @@
 # 网站内容同步 · 2026-10-16
 
-## 网站 1.5.0 · 产品讲述补充
+## 网站 1.6.0 · 原生交互校准 · 2026-10-17
+
+再次核对本机与 GitHub 的 App 提交，仍为 `cf56cac2ce6a4f8e241f2dfcae058254ef3f322c`、0.9.127 (158)。仅更新网站，没有修改、构建或运行 iOS 工程。
+
+- 对照 `PhotoAlbumRow.swift`、`PhotoAlbum.swift / AlbumPreviewLayout`，展示四个七图相册。方形封面的边长、间距、轻微旋转与编辑分阶段移动从源码移植；编辑稳定后可用真实指针拖动排序，触屏手柄保留指针捕获，其他区域保留原生竖向滚动。最多七张封面的顺序、改名、置顶和删除均只改变示意状态。
+- 对照 `PhotoPreview.swift` 还原瀑布流浮起预览、最近相册气泡及底部横向操作条；对照 `PhotoQuickMenu.swift`、`TimelineView+Single.swift` 和 `PhotoImageGeometry.swift`，还原单张触点附近的纵向菜单与边界避让。喜欢和相册归属共用，移出只列实际归属的相册。
+- 对照 `MemoryStorageBreakdown.swift` 去除自创容量环图及情景选择，采用照片／缓存、视频／缓存两行、估算区间与中值、原件／缓存／索引明细和方法说明。固定示意模型不变，按 App 的格式显示。
+- 对照 `ProfileStatisticDetailView.swift`、`ReleasedMemoryDetails.swift` 和 `ProfileSpaceReadout.swift`，采用三项统计点击详情、照片／视频数量、时间与冲印面积比喻、删除／归档／喜欢构成、已知和估算资源体积。替换自创活动流，不把临时回收动作伪称设备实际释放空间。
+- 色值来自 `AppTheme+Colors.swift` 的梦幻紫主题；统计天体图形沿用原有源码 SVG。视觉参考为 App 仓库的 `docs/design/album-polish-0926/rows-dreamPurple-390.png` 及 `docs/design/photo-chrome-0930/` 中的中文预览和单张导出。线性操作图标为网页 SVG 近似，不声称浏览器运行 SwiftUI。
+
+素材来自既有作者授权摄影，四个相册之间 28 张图不重复，同一图库的预览／封面／缩略图有意复用。网页没有新建虚构 App 版本或开发手记条目；当前 App 手记仍为已核实的 0.9.127 (158)。交付 1.6.0 完整静态 ZIP，NAS 由用户手动替换文件。
+
+## 网站 1.5.0 · 历史实现（已由 1.6.0 替换）
 
 相册改为三行演示，编辑时收拢，箭头调整实际顺序，置顶会移动到列表第一项；补齐封面、改名和删除容器保留照片的说明。新增瀑布流／单张敏捷菜单，喜欢与相册状态共用，完成的操作联动本页成长记录。
 

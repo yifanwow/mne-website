@@ -54,17 +54,7 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   assert((await page.locator('.version-badge').innerText()).includes('0.9.127'),'Source badge is out of date');
   assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.127 (158)'),'Latest development entry is missing');
 
-  await page.locator('#album-edit').click();await page.waitForTimeout(800);
-  assert(await page.locator('#album-studio').evaluate(el=>el.classList.contains('editing')),'Album edit did not enter');
-  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===85,'Album previews did not gather');
-  await page.locator('#album-name').fill('A new story');
-  await page.locator('[data-cover="lamplight"]').click();
-  assert((await page.locator('#album-cover').evaluate(el=>el.style.backgroundImage)).includes('lamplight.webp'),'Cover did not change');
-  await page.locator('#album-pin').click();
-  assert(await page.locator('#album-pin').getAttribute('aria-pressed')==='true','Album pin failed');
-  await page.locator('#album-edit').click();await page.waitForTimeout(800);
-  assert(await page.locator('.album-stack').evaluate(el=>el.offsetHeight)===168,'Album previews did not unfold');
-  assert(await page.locator('#album-name').inputValue()==='A new story','Rename did not persist');
+  // Native albums and both photo menus are covered by native-ui-qa.mjs.
   for(const [category,count] of [['ordinary',6],['themed',8],['mystery',6]]) {
     await page.locator('[data-card-category="'+category+'"]').click();
     assert(await page.locator('.fragment-tile').count()===count,'Card shelf count mismatch');
@@ -108,8 +98,8 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
     const pin=await page.locator('.fragment-sticky').evaluate(el=>{const r=el.getBoundingClientRect();return {top:r.top,bottom:r.bottom};});
     assert(pin.bottom<=1002,name+'/'+width+'/'+lang+': card content exceeds viewport '+JSON.stringify(pin));
     if([1440,390].includes(width))await page.locator('.fragment-sticky').screenshot({path:'artifacts/v8/details/cards-'+name+'-'+lang+'-'+width+'.png'});
-    const photos=await page.locator('img[src*="assets/photos/"]').evaluateAll(els=>els.map(el=>el.getAttribute('src')));
-    assert(photos.length===34&&new Set(photos).size===34,'Photographs repeat across the page');
+    const photos=await page.locator('img[src*="assets/photos/"]').evaluateAll(els=>els.filter(el=>!el.closest('.native-screen,.native-dialog')).map(el=>el.getAttribute('src')));
+    assert(photos.length===31&&new Set(photos).size===31,'Editorial photograph placements repeat');
     if([1440,768,390].includes(width))await page.locator('#details').screenshot({path:`artifacts/v8/details/row-${name}-${lang}-${width}.png`});
   }
   assert(!errors.length,errors.join('\n'));

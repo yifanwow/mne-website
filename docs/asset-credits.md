@@ -41,7 +41,7 @@ Only web-sized derivatives are included. Originals remain untouched. Exports pre
 | `photos/stilllife.webp` | `52781AEF-7FD6-48EC-B774-34CA0D5B4C41.jpg` | Objects in a shop |
 | `photos/littleworld.webp` | `IMG_8555.PNG` | A miniature figure |
 
-The quick-album demonstration uses the portrait `capture.webp` photograph in its vertical feature card; the landscape sunset appears in the hero phone. Each photograph appears once on the page. The six-photo ratio study mixes original 4:3, 3:4 and 9:16 frames; exports retain the full original photograph, and fixed frame modes use contain.
+The quick-album demonstration uses the portrait `capture.webp` photograph in its vertical feature card; the landscape sunset appears in the hero phone. The original editorial photo placements use distinct assets; native App demonstrations also reuse photographs as part of the same library. The six-photo ratio study mixes original 4:3, 3:4 and 9:16 frames; exports retain the full original photograph, and fixed frame modes use contain.
 
 The former Unsplash example images have been removed. Photography remains copyright Yifan. Inclusion in this website does not grant permission for unrelated reuse.
 
@@ -71,6 +71,10 @@ All gallery, chart and statistic counts are illustrative. No testimonials, publi
 
 Source snapshot: `cf56cac2ce6a4f8e241f2dfcae058254ef3f322c`. The current `AppIconPurple` replaces the former purple icon. Thirteen additional card derivatives (`light-gatherer`, `order-weaver`, `chronicle-book`, `first-glance`, `traces-of-yesterday`, `thousand-chapters`, `ebb-tide`, `world-beyond-walls`, `magician`, `high-priestess`, `empress`, `wheel-of-fortune`, `lovers`) come from the corresponding `Achievement*.imageset` files. They are resized to 640 px wide and lossless WebP without redrawing. Original alpha and framing remain intact. The five mystery previews obscure the artwork and do not display original names, stories, or conditions.
 
-Album cover choices add `photos/shop.webp` from `55E7235B-8DE5-4286-B3B8-A9EEEE23B9F0.jpg`, `photos/harbor.webp` from `IMG_2159.jpg`, and `photos/lamplight.webp` from `IMG_2425.PNG`, all from the owner-authorized folder. These three photographs do not appear in other sections; the selected cover reuses its thumbnail within this same demonstration. All 34 photograph elements use distinct files. No original file was changed and EXIF/GPS are omitted.
+Album cover choices add `photos/shop.webp` from `55E7235B-8DE5-4286-B3B8-A9EEEE23B9F0.jpg`, `photos/harbor.webp` from `IMG_2159.jpg`, and `photos/lamplight.webp` from `IMG_2425.PNG`, all from the owner-authorized folder. These three photographs do not appear in other sections; the selected cover reuses its thumbnail within this same demonstration. The asset library contains 34 different photographs. No original file was changed and EXIF/GPS are omitted.
 
-The harbor web derivative is mechanically rotated 90° counterclockwise to restore a level skyline; the original is unchanged. Album stack previews intentionally reuse the same three cover choices within this illustration.
+The harbor web derivative is mechanically rotated 90° counterclockwise to restore a level skyline; the original is unchanged. The 1.6.0 demonstration supersedes the original three-photo stack.
+
+## 2026-10-17 · Native interface studies
+
+Four seven-photo albums use 28 distinct existing author photographs, with no repeats between albums. Cover candidates, pinned slots, full previews and filmstrips intentionally repeat their own library photograph; this models the App rather than separate editorial imagery. No new photograph or AI-generated asset was added. `photo-catalog.js` contains only the selected originals' pixel dimensions for the source-style masonry and photo readouts, without original filenames, location or EXIF. `native-ui.js` line icons are web SVG approximations of the App's system-symbol actions; the celestial statistic art remains ported from App geometry.

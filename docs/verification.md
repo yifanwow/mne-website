@@ -1,4 +1,13 @@
-# Website 1.5.0 verification · 2026-10-16
+# Website 1.6.0 verification · 2026-10-17
+
+- Chromium and WebKit pass Chinese and English at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720 without horizontal document overflow or site errors. Current screenshots are under ignored `artifacts/v10/`; final viewport captures were reviewed separately to avoid fixed-header and entrance-transition capture artifacts.
+- Four albums each contain seven photographs, with 28 unique assets across albums. Actual mouse dragging changes order in both engines; the lifted row is measured to follow pointer coordinates. Cover slots/candidates, ordered pinned covers and retained custom names pass.
+- Grid preview has recent album bubbles and a horizontal action strip. Single-photo mode uses a distinct vertical menu, clamped to the photo surface with a maximum 272 px width. Favorite/membership sharing, removing from actual memberships, and dismissal after single-mode actions pass.
+- Storage open/close and expandable breakdown use the App's reference model and layout. Growth statistics open the corresponding detail dialog, including processed action counts and reviewed time/print-area panels.
+- At 390×844 in both languages, Chromium native touch events verify dragging from the reorder handle, cover choice, single-photo actions, album addition/removal, storage disclosures and growth details. WebKit native tap flows pass; its reorder is keyboard-tested in that mobile run, with actual mouse drag covered by the desktop run. These checks are not physical iPhone or Vivaldi verification.
+- Static validation covers JavaScript syntax, asset paths, bilingual keys, unique IDs and whitespace. Production module/style URL revisions are 1.6.0. No iOS build or NAS update was performed. Local preview remains running at the user's request.
+
+## Website 1.5.0 verification · historical
 
 - Chromium and WebKit pass both languages at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720: no horizontal overflow or clipped interactive controls in album, shortcut, or storage/growth modules.
 - Album edit gathers rows to 85 px, unfolds the main row to 168 px, retains a custom name, changes cover choice, and changes actual DOM order upward/downward and to the top.
