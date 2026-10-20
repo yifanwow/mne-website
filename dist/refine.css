@@ -92,3 +92,8 @@
 @media(prefers-reduced-motion:reduce) { .demo-quick-menu,.demo-quick-feedback,.demo-hold-point,.rail-panel a { transition:none; } }
 
 .demo-phone:not([data-phase="0"]) .scroll-demo-photo>span { opacity:0; }
+
+/* Center the two desktop stories in the space below the fixed header. */
+@media (min-width:761px) and (prefers-reduced-motion:no-preference) {
+  .scroll-story .story-pin { min-height:calc(100svh - 119px); }
+}

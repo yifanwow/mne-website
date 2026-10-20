@@ -1,4 +1,4 @@
-import {albumSamples,uiIcon} from './native-ui.js?v=1.9.2';
+import {albumSamples,uiIcon} from './native-ui.js?v=1.9.3';
 // AlbumPreviewLayout + AlbumEditingPhase from the App, expressed in DOM coordinates.
 export function setupAlbums({text}) {
  const studio=document.querySelector('#album-studio'),list=document.querySelector('#album-list'),scroll=document.querySelector('#album-scroll');

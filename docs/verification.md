@@ -1,3 +1,11 @@
+# Website 1.9.3 layout verification · 2026-10-20
+
+- Chromium and WebKit pass a geometry smoke check of Quick Actions and Quick Duplicate Check in Chinese/English at 1710×1000, 1920×1200, 1440×900, 1024×768 and 768×1024. While pinned, the combined text/visual content is vertically centered below the fixed header: upper/lower clear-space difference stays within 25px and pinned content fits within the viewport.
+- `scripts/stories-qa.mjs` passes both engines/languages at five desktop/tablet/mobile sizes, covering all five steps forward and backward, preview states, no recorded growth changes, no clipping/overflow, pause/resume, and manual static steps under Reduced Motion. The new minimum height applies only to the two-column layout with normal motion; phone stacking remains unchanged.
+- Chinese and English desktop screenshots under ignored `artifacts/v16/` were visually reviewed. Static references, bilingual keys, unique IDs and whitespace pass. Full static delivery is 1.9.3; no iOS or NAS changes.
+
+## Earlier verification
+
 # Website 1.9.2 navigation verification · 2026-10-20
 
 - Chromium and WebKit smoke checks pass Chinese/English at 1640×900, 1710×1000, 1920×1080 and 1640×600. Directory text computes to 12px and the current chapter to 14px; active state follows Experience, Farewell and Insights. The active entry remains within the scrollable directory in short windows.

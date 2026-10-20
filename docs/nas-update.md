@@ -1,14 +1,16 @@
-# Mne 网站 1.9.2 · NAS 文件替换
+# Mne 网站 1.9.3 · NAS 文件替换
 
 这个包是现有网站的静态文件更新，不包含 Docker 配置。网站内容对应 GitHub 上 Mne 0.9.190 (221)。
 
-1. 在电脑解压 `mne-website-update-1.9.2.zip`。
-2. 在 NAS 的 File Station 或 Finder 打开 `docker/mne-website`，先把现有 `site` 复制到旁边留作备份，例如 `site-backup-before-1.9.2`。
+1. 在电脑解压 `mne-website-update-1.9.3.zip`。
+2. 在 NAS 的 File Station 或 Finder 打开 `docker/mne-website`，先把现有 `site` 复制到旁边留作备份，例如 `site-backup-before-1.9.3`。
 3. 打开原来的 `docker/mne-website/site`，将更新包 **`site` 里面的全部内容** 复制进去。同名文件选择替换，`assets` 文件夹选择合并并替换其中的同名文件。包里是完整静态站，不必逐个挑选改动文件。
 4. 保留原 `site` 目录本身，不把它移走或删除后重建；这是运行中容器绑定的目录。不要覆盖项目旁边的 `docker-compose.yml`、`nginx.conf`，也不用更新 `mne-api`、`.env`、数据库、证书或反向代理。
-5. 打开 https://mne.yifanovo.com/?v=1.9.2 ，浏览器强制刷新。如果仍显示旧页面，清除此站缓存后重开。静态文件挂载正常时会直接生效，**无需重新构建 Docker 镜像**。
+5. 打开 https://mne.yifanovo.com/?v=1.9.3 ，浏览器强制刷新。如果仍显示旧页面，清除此站缓存后重开。静态文件挂载正常时会直接生效，**无需重新构建 Docker 镜像**。
 
 ## 更新后查看
+
+- 06「敏捷操作」和 07「快速查重」的双栏演示在顶栏以下垂直居中，图文整体下移、底部留白减少。手机与减少动态效果的布局保留。
 
 - 宽屏左侧目录文字放大，当前章节名称再大一级、略加字重；滚动页面时强调随位置切换。目录继续支持收起和跳转。
 
