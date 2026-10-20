@@ -28,10 +28,10 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
     assert(await page.locator('.timeline-entry:not([hidden])').count()===20,'Expanded journal lost on language change');
     await page.locator('#language-toggle').click();
     await page.locator('.production-stats').scrollIntoViewIfNeeded();await page.waitForTimeout(1700);
-    assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='1,284','Counter final value incorrect');
+    assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='32,768','Counter final value incorrect');
     await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(150);
     await page.locator('.production-stats').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
-    assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()!=='1,284','Counter no longer replays');
+    assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()!=='32,768','Counter no longer replays');
     await page.emulateMedia({reducedMotion:'reduce'});await page.reload({waitUntil:'networkidle'});
     for(const [category,count] of [['ordinary',12],['themed',10],['mystery',6]]) {
       await page.locator(`[data-card-category="${category}"]`).click();

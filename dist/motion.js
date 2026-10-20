@@ -1,5 +1,7 @@
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.7.0';
-import { fragments as collection } from './fragments-data.js?v=1.7.0';
+import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.8.0';
+import {uiIcon} from './native-ui.js?v=1.8.0';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.8.0';
+import { fragments as collection } from './fragments-data.js?v=1.8.0';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -55,6 +57,8 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     el.innerHTML=`<img src="./assets/photos/${photo}.webp" alt="" loading="lazy"><span>${String(i+1).padStart(2,'0')}</span>`;
     demo.append(el);return el;
   });
+  document.querySelectorAll('[data-experience-icon]').forEach(el=>el.innerHTML=uiIcon(el.dataset.experienceIcon));
+  document.querySelector('.demo-filmstrip').innerHTML=photography.slice(0,9).map((photo,i)=>`<span class="${i===1?'active':''}"><img src="./assets/photos/${photo}.webp" alt="" loading="lazy"></span>`).join('');
   const demoPhone=document.querySelector('.demo-phone');
   const decision=document.querySelector('#demo-decision');
   const phaseLabels=[...document.querySelectorAll('.demo-phase-indicator>span')];
@@ -82,6 +86,8 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     decision.style.opacity=String(discard*(1-recover));
     decision.style.transform=`translate(-50%,${(1-discard)*15}px)`;
     decision.classList.toggle('recovering',p>.72);
+    const pending=discard*(1-recover)>.5,footer=demoPhone.querySelector('.demo-footer-pill');
+    footer.textContent=text(pending?'demoRecover':'demoSingleHint');footer.classList.toggle('pending',pending);
     const phase=p<.34?0:p<.72?1:2;
     demoPhone.dataset.phase=String(phase);
     phaseLabels.forEach((el,i)=>el.classList.toggle('active',i===phase));
@@ -91,7 +97,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     });
   }
 
-  // The three shelves follow the app: six ordinary, eight themed, and Fool + five mysteries.
+  // The three shelves follow the App: twelve ordinary, ten themed, and Fool + five mysteries.
   let fragments=collection.filter(card=>card.category==='themed');
   const viewport=document.querySelector('#fragment-viewport');
   function createFragmentCards() { return fragments.map((fragment,i)=>{
@@ -218,20 +224,9 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   },{threshold:[0,.12]});
   counterObserver.observe(document.querySelector('.app-profile-preview'));
 
-  // Fixed illustrative captures, grouped by the chosen calendar unit. Photo/video counts add to 1,284.
-  const seasonal=[38,52,44,89,66,72,136,108,84,116,74,55];
-  const yearWeights=[.48,.7,.9,1.05,1.2];
-  // Five calendar years, through the fixed illustration date 2026-10-16; no future captures.
-  const weights=Array.from({length:58},(_,i)=>seasonal[i%12]*yearWeights[Math.floor(i/12)]);
-  const weightTotal=weights.reduce((a,b)=>a+b,0);
-  const monthCounts=weights.map(v=>Math.round(v/weightTotal*1284));
-  monthCounts[57]+=1284-monthCounts.reduce((a,b)=>a+b,0);
-  const captures=monthCounts.flatMap((count,index)=>{
-    const year=2022+Math.floor(index/12),month=index%12;
-    const days=index===57?16:new Date(Date.UTC(year,month+1,0)).getUTCDate();
-    return Array.from({length:count},(_,i)=>new Date(Date.UTC(year,month,1+Math.floor(i/count*days))));
-  });
-  let period='year',chartType='bars',buckets=[],startYear=2022,endYear=2026;
+  // Ten calendar years, through the fixed illustration date 2026-10-20.
+  const captures=retainedDates;
+  let period='year',chartType='bars',buckets=[],startYear=2017,endYear=2026;
   let selectedBucket=null;
   const chart=document.querySelector('#memory-chart');
   const group=document.querySelector('#chart-shape');
@@ -265,7 +260,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     chart.dataset.type=chartType;chart.dataset.period=period;
     chart.setAttribute('aria-label',getLanguage()==='zh'?'照片与视频分布示例，非真实用户数据':'Illustrative photo and video distribution, not real user data');
     const total=buckets.reduce((a,b)=>a+b.count,0);
-    const photos=Math.round(total*1024/1284),videos=total-photos;
+    const photos=Math.round(total*retainedPhotoCount/retainedTotal),videos=total-photos;
     for(const [selector,value] of [['.production-atlas-heading [data-count]',total],['.media-counts>span:first-child [data-count]',photos],['.media-counts>span:last-child [data-count]',videos],['.resource-readout [data-count]',total/100]]) {
       const el=document.querySelector(selector);el.dataset.count=String(value);
       if(countFinished)countValue(el,1);

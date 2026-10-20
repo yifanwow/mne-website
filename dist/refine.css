@@ -1,0 +1,74 @@
+/* Design philosophy comes before the gestures it explains. */
+#design { padding-top:65px;padding-bottom:60px; }
+.design-intro { max-width:850px;margin-top:50px; }
+.design-intro h2 { font-size:clamp(30px,3.6vw,48px);line-height:1.4;margin:20px 0 25px; }
+.design-intro>p:last-child { max-width:710px;line-height:2;color:var(--muted);font-size:15px; }
+.design-card-label { display:block;margin-top:20px;font:9px monospace;letter-spacing:.1em;color:#8f759f; }
+#design .principles-grid { margin-top:46px; }
+#design .principles-grid h3 { margin-top:16px; }
+.design-closing { margin-top:35px;padding-top:22px;border-top:1px solid #c2a6fa20;font-size:15px;color:#c5afd8; }
+/* Shorter scroll runways and less empty caption space, with a larger native demonstration. */
+.scroll-story { margin-top:40px; }
+.story-pin { min-height:0;padding-block:12px;gap:45px; }
+.story-visual { max-width:510px; }
+.story-caption { min-height:0;margin-top:24px;padding-top:18px; }
+.story-steps { margin-top:12px; }
+.story-scroll-hint { margin-top:12px; }
+.story-caption h4 { font-size:21px; }
+.story-step-body { font-size:14px; }
+.duplicate-cache { opacity:.65;translate:0 0; }
+/* The farewell history is a full interactive chart beside the retained-memory atlas. */
+.farewell-section { padding-top:50px;padding-bottom:40px; }
+.farewell-layout { display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:85px;align-items:center;margin-top:45px; }
+.farewell-copy h2 { font-size:clamp(31px,3.2vw,43px);line-height:1.45;letter-spacing:-.04em;margin:22px 0 27px; }
+.farewell-copy>p:not(.atlas-component-note) { font-size:15px;color:var(--muted);line-height:2; }
+.history-panel { margin-left:auto; }
+.history-panel .farewell-native-heading strong { font-size:24px; }.history-panel .farewell-native-heading b { font-size:29px; }
+.history-panel .farewell-native-note { font-size:11px;line-height:1.8;margin:15px 0; }
+.history-panel .farewell-totals { padding:14px; }.history-panel .farewell-totals strong { font-size:20px; }.history-panel .farewell-totals small { font-size:11px; }
+.history-basis { display:flex;gap:4px;background:#100b1c;border:1px solid #c2a6fa22;border-radius:12px;padding:4px;margin-top:20px; }
+.history-basis button { flex:1;min-height:42px;font-size:12px;color:#a89ab6;border-radius:8px; }
+.history-basis button[aria-pressed=true] { background:#c2a6fa25;color:#edddff; }
+.history-panel .farewell-basis-note { font-size:11px;line-height:1.8;min-height:20px;margin:12px 0; }
+.history-recorded { display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:12px;color:#a795b7;margin-top:20px; }
+.history-recorded>strong { font-size:25px;font-weight:450;color:#d6bef1;font-variant-numeric:tabular-nums; }
+.history-media-counts { display:flex;gap:22px;font-size:11px;color:#a795b7;margin-top:9px; }.history-media-counts b { font-weight:500;color:#d6c0e7; }
+.history-panel .atlas-period { margin-top:14px; }.history-panel .atlas-period button { min-height:40px; }
+.history-panel .farewell-coverage { margin-top:18px;padding:12px;border:1px solid #c2a6fa16;background:#c2a6fa06; }
+.history-panel .farewell-coverage p { font-size:11px;line-height:1.8; }.history-panel .farewell-coverage svg { flex:none;width:15px;height:15px; }
+.history-panel .demo-data-note { font-size:10px;line-height:1.9; }
+.history-panel .chart-legend button { display:flex;align-items:center;gap:5px;min-height:36px;font-size:10px;text-align:left;color:#a994bc; }
+.history-panel .chart-legend button i { display:inline-block;width:6px;height:6px;border-radius:50%;flex:none; }.history-panel .chart-legend button b { font-weight:450;color:#cfb7e7; }
+#farewell-chart { outline-offset:5px;border-radius:6px; }
+/* Single-photo chrome follows the current App: metadata, tool capsule, badges, pill and filmstrip. */
+.demo-single-chrome { position:absolute;left:8px;right:8px;top:51px;display:flex;justify-content:space-between;gap:5px;align-items:flex-start;opacity:0;pointer-events:none;z-index:6;transition:opacity .3s; }
+.demo-metadata { background:#36283eaa;border:1px solid #c2a6fa18;border-radius:8px;padding:7px 5px;min-width:0;color:#eee7f4;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px); }
+.demo-metadata strong { display:block;font-size:6.8px;font-weight:500;white-space:nowrap; }.demo-metadata small { display:block;font-size:6.5px;white-space:nowrap;margin-top:3px;color:#bbaaC8; }
+.demo-single-tools { display:flex;align-items:center;gap:3px;flex:none;padding:5px 4px;border:1px solid #ffffff22;border-radius:22px;background:#291f3bf0; }.demo-single-tools>span { display:grid;place-items:center;width:17px;height:22px;color:#c2a6fa; }.demo-single-tools svg { width:13px;height:13px; }.demo-single-tools>i { width:1px;height:16px;background:#c2a6fa33;margin-inline:1px; }
+.demo-single-footer { position:absolute;left:13px;right:13px;bottom:81px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:7px;opacity:0;transition:opacity .3s;z-index:5; }
+.demo-single-footer>span:first-child { display:flex;gap:4px;align-items:center;color:#c2a6fa; }.demo-single-footer i svg { width:9px;height:9px; }.demo-footer-pill { background:#36283ec9;border:1px solid #c2a6fa20;border-radius:20px;padding:6px 8px;font-size:6px; }
+.demo-filmstrip { display:flex;justify-content:center;align-items:center;gap:3px;position:absolute;left:10px;right:10px;bottom:29px;height:36px;opacity:0;transition:opacity .3s; }
+.demo-filmstrip>span { width:21px;height:27px;border-radius:2px;overflow:hidden; }.demo-filmstrip>span.active { height:35px;border:1px solid #c2a6fa; }.demo-filmstrip img { width:100%;height:100%;object-fit:cover; }
+.demo-phone[data-phase="1"] .demo-single-chrome,.demo-phone[data-phase="2"] .demo-single-chrome,.demo-phone[data-phase="1"] .demo-single-footer,.demo-phone[data-phase="2"] .demo-single-footer,.demo-phone[data-phase="1"] .demo-filmstrip,.demo-phone[data-phase="2"] .demo-filmstrip { opacity:1; }
+.demo-phone:not([data-phase="0"]) .app-top,.demo-phone:not([data-phase="0"]) .demo-app-navigation { opacity:0; }
+.demo-phone .demo-focus-date { display:none; }
+.demo-phone:not([data-phase="0"]) .scroll-demo-gallery { top:108px;bottom:74px;-webkit-mask-image:none;mask-image:none; }
+.demo-phone:not([data-phase="0"]) .scroll-demo-photo img { object-fit:contain; }.demo-phone:not([data-phase="0"]) .scroll-demo-photo { background:#140e21; }
+/* The page rail occupies only the genuinely free outer gutter. */
+.section-rail { display:none;position:fixed;z-index:70;left:max(16px,calc((100vw - 1240px)/2 - 178px));top:50%;transform:translateY(-50%);width:150px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s; }
+.section-rail.is-visible { opacity:1;visibility:visible;pointer-events:auto; }
+.rail-panel { border:1px solid #c2a6fa20;background:#171020c9;border-radius:18px;padding:10px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 12px 40px #0002; }
+.rail-panel header { display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:7px; }.rail-panel header>span { font-size:9px;letter-spacing:.03em;color:#9f88af; }.rail-panel header button { width:28px;height:32px;display:grid;place-items:center;color:#bda4d1; }.rail-panel header svg { width:16px;height:16px; }
+.rail-panel nav { display:flex;flex-direction:column;gap:1px; }.rail-panel nav[hidden] { display:none; }
+.rail-panel a { display:flex;align-items:center;gap:8px;min-height:32px;padding:5px 5px;border-radius:8px;color:#8e789e;font-size:10px;line-height:1.3; }.rail-panel a small { font:8px monospace;color:#665375; }.rail-panel a[aria-current] { background:#c2a6fa1a;color:#e6d2ff; }.rail-panel a[aria-current] small { color:#c2a6fa; }.rail-panel a:hover { background:#c2a6fa0e;color:#d9c3ec; }
+.rail-progress { display:block;height:1px;background:#c2a6fa1a;margin:10px 4px 3px;overflow:hidden; }.rail-progress i { display:block;height:100%;background:#c2a6fa99;transform:scaleX(var(--rail-progress,0));transform-origin:left; }
+.section-rail.is-collapsed { width:44px; }.is-collapsed .rail-panel { padding:5px;border-radius:50%; }.is-collapsed .rail-panel header { margin:0; }.is-collapsed header>span,.is-collapsed .rail-progress { display:none; }.is-collapsed header button { width:32px;height:32px; }.is-collapsed header svg { rotate:180deg; }
+@media(min-width:1640px) { .section-rail { display:block; } }
+@media(max-width:1000px) { .farewell-layout { gap:35px;grid-template-columns:1fr 1fr; }.farewell-copy h2 { font-size:32px; }.story-pin { gap:30px; } }
+@media(max-width:850px) { .farewell-layout { grid-template-columns:1fr;gap:30px; }.farewell-copy { max-width:680px; }.history-panel { max-width:650px;margin:0 auto; }.design-intro>p:last-child { font-size:14px; } }
+@media(max-width:760px) { .story-pin { gap:16px; }.story-caption { margin-top:14px;padding-top:12px; }.story-caption h4 { font-size:17px; }.story-step-body { font-size:12px; }.story-steps { margin-top:7px; }.story-scroll-hint { margin-top:8px; }.farewell-copy h2 { font-size:30px; }.farewell-section { padding-top:30px; }.farewell-layout { margin-top:25px; }#design { padding-top:35px;padding-bottom:30px; }.design-intro { margin-top:30px; }.design-intro h2 { font-size:30px; }.design-card-label { margin-top:15px; } }
+@media(max-width:380px) { .farewell-copy h2 { font-size:27px; }.history-basis button { font-size:11px; }.history-recorded { font-size:11px; }.history-panel .farewell-native-heading strong { font-size:22px; }.story-caption h4 { font-size:16px; }.story-step-body { font-size:11px; } }
+@media(prefers-reduced-motion:reduce) { .section-rail,.demo-single-chrome,.demo-single-footer,.demo-filmstrip { transition:none; }.scroll-story { height:auto!important; }.story-pin { min-height:0; } }
+@media(min-width:851px) { .farewell-layout { align-items:start; }.farewell-copy { position:sticky;top:115px; }.atlas-copy { align-self:start;position:sticky;top:115px; }.atlas-layout { align-items:start; } }
+@media(max-width:380px) { .native-stat>strong { font-size:24px; }.production-stats .stat-readout { font-size:29px; }.native-storage-overview b { font-size:14px; } }
+.demo-footer-pill.pending { background:#c2a6fa;color:#140e21;border-color:transparent; }

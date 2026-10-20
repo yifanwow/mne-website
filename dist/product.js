@@ -1,6 +1,6 @@
-import {uiIcon,albumSamples} from './native-ui.js?v=1.7.0';
-import {statisticSVG} from './app-art.js?v=1.7.0';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=1.7.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=1.8.0';
+import {statisticSVG} from './app-art.js?v=1.8.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=1.8.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');
@@ -93,7 +93,7 @@ export function setupProduct({text}) {
  document.querySelectorAll('[data-shortcut-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.shortcutMode)));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});new ResizeObserver(()=>{layoutWaterfall();if(previewOpen)renderPreview();if(menuOpen)renderSingleMenu();}).observe(surface);
  const usage=document.querySelector('#storage-open'),storage=document.querySelector('#native-storage-content');usage.addEventListener('click',()=>{storage.hidden=!storage.hidden;usage.setAttribute('aria-expanded',String(!storage.hidden));});
- function counts(){return {reviewed:1284+seen.size,processed:328+likedRecords.size+archiveRecords.size,space:'2.6'};}
+ function counts(){return {reviewed:32768+seen.size,processed:16384+likedRecords.size+archiveRecords.size,space:'86.4'};}
  function renderStats(){
   stats.replaceChildren();const c=counts();
   for(const [kind,label,art,value] of [['reviewed','growthReviewed','reviewed',c.reviewed],['processed','growthOrganized','removed',c.processed],['space','growthReleased','space',c.space]]){
@@ -106,13 +106,13 @@ export function setupProduct({text}) {
   container.querySelector('h3').textContent=text(kind==='reviewed'?'growthReviewed':kind==='processed'?'growthOrganized':'growthReleased');
   container.querySelector('h3').id='growth-dialog-title';statDialog.setAttribute('aria-labelledby','growth-dialog-title');
   const dl=document.createElement('dl');dl.className='native-stat-breakdown';
-  const rows=kind==='processed'?[['growthDeleted',72],['growthArchived',156+archiveRecords.size],['growthLiked',100+likedRecords.size]]:kind==='space'?[['growthKnown','2.34 GB'],['growthEstimated','260 MB']]:[['growthPhotos',1024+seen.size],['growthVideos',260]];
+  const rows=kind==='processed'?[['growthDeleted',7860],['growthArchived',6460+archiveRecords.size],['growthLiked',2064+likedRecords.size]]:kind==='space'?[['growthKnown','77.76 GB'],['growthEstimated','8.64 GB']]:[['growthPhotos',27200+seen.size],['growthVideos',5568]];
   for(const [key,value] of rows){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=text(key);dd.textContent=value.toLocaleString();dl.append(dt,dd);}container.append(dl);
   if(kind==='reviewed'){
    const panels=document.createElement('div');panels.className='native-footprint-panels';
    panels.innerHTML='<article><small></small><strong></strong><p></p></article><article><small></small><strong></strong><p></p></article>';
    panels.children[0].querySelector('small').textContent=text('growthReadTime');panels.children[0].querySelector('strong').textContent=text('growthTime');panels.children[0].querySelector('p').textContent=text('growthFilm');
-   panels.children[1].querySelector('small').textContent=text('growthReadRoom');panels.children[1].querySelector('strong').textContent='≈ '+((1024+seen.size)*.1016*.1524).toFixed(2)+' m²';panels.children[1].querySelector('p').textContent=text('growthArea');container.append(panels);
+   panels.children[1].querySelector('small').textContent=text('growthReadRoom');panels.children[1].querySelector('strong').textContent='≈ '+((27200+seen.size)*.1016*.1524).toFixed(2)+' m²';panels.children[1].querySelector('p').textContent=text('growthArea');container.append(panels);
   }
   const p=document.createElement('p');p.className='native-model-note';p.hidden=true;p.textContent=text(kind==='reviewed'?'growthReviewedNote':kind==='processed'?'growthProcessedNote':'growthResourceNote');
   const info=document.createElement('button');info.type='button';info.className='native-detail-info';info.innerHTML=uiIcon('info')+'<span>info</span>';info.setAttribute('aria-expanded','false');let timer=0;

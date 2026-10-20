@@ -1,3 +1,17 @@
+# Website 1.8.0 verification · 2026-10-20
+
+- `scripts/refine-qa.mjs`: Chromium and WebKit pass Chinese/English at 1780×1000, 1440×1000, 1024×900, 768×1024, 390×844 and 320×720. Chapter order places design before Experience and interactive Farewell immediately after Atlas. No horizontal document overflow; both shortened scroll stories fit the pinned viewport.
+- Atlas defaults to 2017—2026 with ten yearly bars and total 24,680. Week/month/year and bars/trend/pie preserve totals; year subsets change the range summary independently of Farewell.
+- Farewell supports two date bases, year bounds, three periods and three charts; totals stay 6,240 across grouping and date-basis changes. A date range without deletion events returns zero with a clear empty state; crossed bounds normalize. Lifetime 7,860 is unchanged. Keyboard End reads the last bucket; pie has at most twelve entries.
+- At 1780 px the page rail highlights the current chapter, collapses/expands, preserves its preference on reload and jumps by click. It is hidden below 1640 px and does not overlap the content gutter. Test navigation explicitly disables smooth scrolling before deterministic geometry assertions.
+- Updated single-photo demonstration retains the existing phase behavior and shows separate metadata/tool chrome, fixed status/pill and nine filmstrip thumbnails. Small English screenshots of the larger capacity and growth readouts were inspected; figures fit at 320 px.
+- `scripts/stories-qa.mjs` passes both engines/languages at five widths: two five-step scenes advance and reverse, do not create activity records, support pause/resume and reduce to static/manual steps under Reduce Motion. Runways are remeasured so later card scenes retain their trigger positions.
+- The 28-card collection, both languages at 320×720, all category captions/controls, Reduced Motion, 20 expanded journal entries and repeated-entry counters reaching 32,768 pass in Chromium and WebKit.
+- Current captures are under ignored `artifacts/v12/`; desktop rail/design/history, English mobile capacity/growth and the single-photo layout were visually reviewed. Website syntax, local references, unique IDs and bilingual keys pass. No physical iPhone, iOS App tests/build, Vivaldi or NAS deployment is claimed.
+- Delivery remains a full static replacement ZIP with SHA-256 manifest, preserving existing NAS infrastructure. Local preview remains running.
+
+## Previous verification
+
 # Website 1.7.0 verification · 2026-10-20
 
 - Source snapshot confirmed against GitHub at the start and end of work: `294634c4728d928d1f179ab7de3d690d38ba47c5`, App 0.9.190 (221). Only the website is changed; no iOS tests, static checks, build, simulator, archive, account action or NAS deployment was run.

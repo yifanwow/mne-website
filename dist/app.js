@@ -1,18 +1,21 @@
-import {storiesCopy} from './stories-copy.js?v=1.7.0';
-import {setupStories} from './stories.js?v=1.7.0';
-import { motionCopy } from './motion-copy.js?v=1.7.0';
-import { initMotion } from './motion.js?v=1.7.0';
-import { setupContacts } from './contacts.js?v=1.7.0';
-import { setupDetails } from './details.js?v=1.7.0';
-import { setupAlbums } from './albums.js?v=1.7.0';
-import { setupProduct } from './product.js?v=1.7.0';
-import { productCopy } from './product-copy.js?v=1.7.0';
+import {refineCopy} from './refine-copy.js?v=1.8.0';
+import {setupFarewell} from './history.js?v=1.8.0';
+import {setupSectionRail} from './section-rail.js?v=1.8.0';
+import {storiesCopy} from './stories-copy.js?v=1.8.0';
+import {setupStories} from './stories.js?v=1.8.0';
+import { motionCopy } from './motion-copy.js?v=1.8.0';
+import { initMotion } from './motion.js?v=1.8.0';
+import { setupContacts } from './contacts.js?v=1.8.0';
+import { setupDetails } from './details.js?v=1.8.0';
+import { setupAlbums } from './albums.js?v=1.8.0';
+import { setupProduct } from './product.js?v=1.8.0';
+import { productCopy } from './product-copy.js?v=1.8.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
   zh: {
     skip:'跳到内容',navExperience:'体验',navFragments:'记忆碎片',navJournal:'开发手记',navStatus:'探索 Mne',
-    heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'照片是回忆的载体，选择你想留住的故事。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 私人内测中',phoneCount:'1,284 份回忆',floatingTitle:'少一点杂乱，多一点珍贵。',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
+    heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'照片是回忆的载体，选择你想留住的故事。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 私人内测中',phoneCount:'24,680 份回忆',floatingTitle:'少一点杂乱，多一点珍贵。',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
     storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>整理不是抹去，而是为真正重要的瞬间，留出空间。回望本身，也是人生的过程。',
     experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'让整理，像浏览一样自然。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'一划之间，做个决定。',featureGestureDescription:'左右重温，上滑暂存回收站。长按预览，横向扫选，把喜欢的瞬间加入 Mne Archive。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
@@ -24,7 +27,7 @@ const copy = {
   },
   en: {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
-    heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Photos hold our memories. Choose the stories you want to keep.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'1,284 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
+    heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Photos hold our memories. Choose the stories you want to keep.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Private beta',phoneCount:'24,680 memories',floatingTitle:'Less clutter. More meaning.',floatingSub:'MAKE ROOM FOR WHAT MATTERS',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
     storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Curating makes room for the moments that matter. Looking back is part of living.',
     experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'As natural as looking back.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'A small gesture. A clear choice.',featureGestureDescription:'Swipe to revisit. Swipe up to set a photo aside. Long press to preview, sweep to select, and add meaningful moments to Mne Archive.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
@@ -36,8 +39,8 @@ const copy = {
   }
 };
 
-Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh);
-Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en);
+Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh, refineCopy.zh);
+Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy.en);
 
 // Verified against GitHub 294634c472, 2026-10-20. Source progress is not a public release.
 const journal = [
@@ -70,6 +73,8 @@ let details = null;
 let albums = null;
 let product = null;
 let stories = null;
+let farewell = null;
+let sectionRail = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -132,6 +137,8 @@ function applyLanguage() {
   albums?.refresh();
   product?.refresh();
   stories?.refresh();
+  farewell?.refresh();
+  sectionRail?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -199,3 +206,6 @@ sceneMotion.refresh();
 updateScroll();
 
 stories = setupStories({text:key=>copy[language][key],product,reducedMotion});
+
+farewell = setupFarewell({text:key=>copy[language][key]});
+sectionRail = setupSectionRail({text:key=>copy[language][key],reducedMotion});

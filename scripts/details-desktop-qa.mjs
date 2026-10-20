@@ -47,9 +47,9 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   assert(await page.locator('.cleaning-sun').count()===1,'Cleaning icon is not SVG');
   await page.locator('button[data-period="year"]').click();
   await page.locator('[data-chart="bars"]').click();
-  assert(await page.locator('#memory-chart .bar').count()===5,'Atlas does not span five years');
+  assert(await page.locator('#memory-chart .bar').count()===10,'Atlas does not span five years');
   const yearlyLabels=await page.locator('#memory-chart .axis-label').allTextContents();
-  assert(yearlyLabels.includes('2022')&&yearlyLabels.includes('2026'),'Yearly axis omits illustration years');
+  assert(yearlyLabels.includes('2017')&&yearlyLabels.includes('2026'),'Yearly axis omits illustration years');
   await page.locator('.app-profile-preview').screenshot({path:`artifacts/v8/details/atlas-${name}.png`});
   assert((await page.locator('.version-badge').innerText()).includes('0.9.190'),'Source badge is out of date');
   assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.189 — 0.9.190 (221)'),'Latest development entry is missing');
@@ -67,13 +67,13 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   await page.locator('#atlas-start').selectOption('2023');await page.locator('#atlas-end').selectOption('2025');
   assert(await page.locator('#memory-chart .bar').count()===3,'Year range did not filter data');
   const rangeTotal=Number(await page.locator('.production-atlas-heading [data-count]').getAttribute('data-count'));
-  assert(rangeTotal>0&&rangeTotal<1284,'Range summary did not update');
+  assert(rangeTotal>0&&rangeTotal<24680,'Range summary did not update');
   await page.locator('.storage-details summary').click();
   assert(await page.locator('#storage-photos').isVisible(),'Storage breakdown did not expand');
   await page.locator('#atlas-start').selectOption('2026');
   assert(await page.locator('#atlas-end').inputValue()==='2026','Crossed date bounds not normalized');
-  await page.locator('#atlas-start').selectOption('2022');await page.locator('#atlas-end').selectOption('2026');
-  assert(Number(await page.locator('.production-atlas-heading [data-count]').getAttribute('data-count'))===1284,'Full range did not restore total');
+  await page.locator('#atlas-start').selectOption('2017');await page.locator('#atlas-end').selectOption('2026');
+  assert(Number(await page.locator('.production-atlas-heading [data-count]').getAttribute('data-count'))===24680,'Full range did not restore total');
 
   for(const width of [1440,1024,768,390,320])for(const lang of ['zh','en']) {
     await page.setViewportSize({width,height:1000});
@@ -98,7 +98,7 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
     const pin=await page.locator('.fragment-sticky').evaluate(el=>{const r=el.getBoundingClientRect();return {top:r.top,bottom:r.bottom};});
     assert(pin.bottom<=1002,name+'/'+width+'/'+lang+': card content exceeds viewport '+JSON.stringify(pin));
     if([1440,390].includes(width))await page.locator('.fragment-sticky').screenshot({path:'artifacts/v8/details/cards-'+name+'-'+lang+'-'+width+'.png'});
-    const photos=await page.locator('img[src*="assets/photos/"]').evaluateAll(els=>els.filter(el=>!el.closest('.native-screen,.native-dialog')).map(el=>el.getAttribute('src')));
+    const photos=await page.locator('img[src*="assets/photos/"]').evaluateAll(els=>els.filter(el=>!el.closest('.native-screen,.native-dialog,.demo-filmstrip')).map(el=>el.getAttribute('src')));
     assert(photos.length===31&&new Set(photos).size===31,'Editorial photograph placements repeat');
     if([1440,768,390].includes(width))await page.locator('#details').screenshot({path:`artifacts/v8/details/row-${name}-${lang}-${width}.png`});
   }

@@ -1,4 +1,4 @@
-import {uiIcon} from './native-ui.js?v=1.7.0';
+import {uiIcon} from './native-ui.js?v=1.8.0';
 const clamp=(value,min=0,max=1)=>Math.min(max,Math.max(min,value));
 
 // Page scroll drives a few bounded presentation states. There is no wheel interception,
@@ -17,30 +17,14 @@ export function setupStories({text,product,reducedMotion}) {
       });navigation.append(button);
     }
   }
-  const chart=document.querySelector('#farewell-chart');
-  for(const year of [2022,2023,2024,2025,2026]){
-    const column=document.createElement('div');column.className='farewell-bar-column';column.innerHTML=`<div><span class="farewell-bar-count"></span><i></i></div><small>${year}</small>`;chart.append(column);
-  }
   function paintDuplicate(step,progress){
-    const count=step===0?Math.round(584*clamp(progress*5)):584;
-    document.querySelector('#scan-count').textContent=`${count.toLocaleString()} / 1,284 · ${text('duplicateSkipped')} 0`;
+    const count=step===0?Math.round(11240*clamp(progress*5)):11240;
+    document.querySelector('#scan-count').textContent=`${count.toLocaleString()} / 24,680 · ${text('duplicateSkipped')} 0`;
     document.querySelector('#scan-status').textContent=text(step===4?'duplicateSaved':'duplicateScanning');
     document.querySelector('#scan-action').textContent=text(step===4?'duplicateContinue':'duplicatePause');
+    const cache=document.querySelector('.duplicate-cache');cache.querySelector('strong').textContent=text(step===4?'duplicateSaved':'duplicateCacheTitle');cache.querySelector('small').textContent=text(step===4?'duplicateSavedBody':'duplicateCacheBody');
     document.querySelector('#duplicate-selection-label').textContent=text(step>=3?'duplicateRecover':step===2?'duplicateSelectCount':'duplicateSelect');
-    document.querySelector('#duplicate-story').style.setProperty('--scan',String(count/1284));
-  }
-  function paintFarewell(step){
-    const values=step>=3?[0,0,0,0,36]:step>=2?[0,0,0,18,36]:[7,10,14,9,14];
-    const total=values.reduce((a,b)=>a+b,0);
-    document.querySelector('#farewell-recorded').textContent=String(total);
-    document.querySelector('#farewell-range').textContent=step>=3?'2026':'2022 — 2026';
-    document.querySelector('#farewell-basis-note').textContent=text(step>=2?'farewellDeleteNote':'farewellCaptureNote');
-    chart.setAttribute('aria-label',text('farewellChartLabel'));
-    [...chart.children].forEach((column,i)=>{
-      column.querySelector('.farewell-bar-count').textContent=String(values[i]);
-      column.querySelector('i').style.height=`${values[i]/36*100}px`;
-      column.dataset.empty=String(values[i]===0);column.classList.toggle('outside',step>=3&&i<4);
-    });
+    document.querySelector('#duplicate-story').style.setProperty('--scan',String(count/24680));
   }
   function paint(scene,step,progress,force=false){
     const changed=scene.step!==step||force;scene.progress=progress;
@@ -56,7 +40,7 @@ export function setupStories({text,product,reducedMotion}) {
       button.setAttribute('aria-label',text(`${scene.kind}Step${i}Title`));button.setAttribute('aria-current',String(i===step));
     });
     if(scene.kind==='shortcut')product.presentShortcut(step);
-    if(scene.kind==='farewell')paintFarewell(step);
+
   }
   function update(){
     frame=0;if(document.hidden||document.body.classList.contains('motion-paused'))return;
@@ -69,6 +53,7 @@ export function setupStories({text,product,reducedMotion}) {
   function measure(){
     if(measuring)return;measuring=true;
     measuredWidth=innerWidth;measuredHeight=innerHeight;
+    let heightChanged=false;
     for(const scene of scenes){
       const visual=scene.element.querySelector('.story-visual'),phone=visual.querySelector('.cinema-phone');
       const height=Number(visual.dataset.baseHeight),mobile=innerWidth<=760;
@@ -80,8 +65,11 @@ export function setupStories({text,product,reducedMotion}) {
       // Always reserve the longest translated caption before sizing the phone.
       caption.textContent=text(`${scene.kind}Step${Math.max(0,scene.step)}Body`);title.textContent=text(`${scene.kind}Step${Math.max(0,scene.step)}Title`);
       const room=reducedMotion.matches?height:mobile?Math.max(180,innerHeight-top-copy.offsetHeight-48):Math.max(350,innerHeight-top-75);
-      const scale=Math.min(1,visual.clientWidth/360,room/height);
+      const scale=Math.min(mobile?1:1.15,visual.clientWidth/360,room/height);
       visual.style.height=`${height*scale}px`;phone.style.setProperty('--cinema-scale',String(scale));
+      const previousHeight=scene.element.offsetHeight;
+      scene.element.style.height=reducedMotion.matches?'auto':`${scene.pin.offsetHeight+(mobile?760:840)}px`;
+      if(Math.abs(previousHeight-scene.element.offsetHeight)>1)heightChanged=true;
       const sceneTop=scene.element.getBoundingClientRect().top+scrollY;
       const titleOffset=copy.querySelector('h3').getBoundingClientRect().top-scene.pin.getBoundingClientRect().top;
       scene.start=sceneTop+titleOffset-innerHeight*.68;
@@ -89,6 +77,7 @@ export function setupStories({text,product,reducedMotion}) {
       scene.element.dataset.motionStart=String(scene.start);scene.element.dataset.motionEnd=String(scene.end);
     }
     measuring=false;update();
+    if(heightChanged)window.dispatchEvent(new Event('mne:layout'));
   }
   function refresh(){
     for(const scene of scenes){scene.element.querySelector('.story-steps').setAttribute('aria-label',text('storySelectStep'));paint(scene,Math.max(0,scene.step),scene.progress,true);}
