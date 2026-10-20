@@ -1,3 +1,11 @@
+# Website 1.9.1 visual verification · 2026-10-20
+
+- A browser smoke check in Chromium and WebKit covers Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. All 13 marketing headings from Experience through Quick Duplicate Check have a theme-purple opening phrase and a white continuation, using the existing `.lilac` token. No horizontal document overflow or page script errors.
+- Desktop Details and mobile Experience screenshots were visually reviewed under ignored `artifacts/v14/`. Copy, font sizes, natural wrapping and animation logic remain unchanged; native App UI headings keep their existing styling.
+- Website JavaScript syntax, bilingual keys, local references, unique IDs and whitespace pass. Full NAS static replacement package is 1.9.1; App source is unchanged.
+
+## Earlier verification
+
 # Website 1.9.0 verification · 2026-10-20
 
 - `scripts/experience-qa.mjs`: Chromium and WebKit pass Chinese/English at 1780×1000, 1440×1000, 768×1024, 390×844 and 320×720. The moved single-photo story advances through hold, favorite, dismissal, reopen, recent-album archive, feedback, set-aside and restore, and rewinds with native scrolling. Metadata remains fixed relative to the phone; the menu stays inside its width and clear of top chrome / filmstrip. No horizontal document overflow or site resource/runtime errors.

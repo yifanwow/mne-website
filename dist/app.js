@@ -1,15 +1,15 @@
-import {refineCopy} from './refine-copy.js?v=1.9.0';
-import {setupFarewell} from './history.js?v=1.9.0';
-import {setupSectionRail} from './section-rail.js?v=1.9.0';
-import {storiesCopy} from './stories-copy.js?v=1.9.0';
-import {setupStories} from './stories.js?v=1.9.0';
-import { motionCopy } from './motion-copy.js?v=1.9.0';
-import { initMotion } from './motion.js?v=1.9.0';
-import { setupContacts } from './contacts.js?v=1.9.0';
-import { setupDetails } from './details.js?v=1.9.0';
-import { setupAlbums } from './albums.js?v=1.9.0';
-import { setupProduct } from './product.js?v=1.9.0';
-import { productCopy } from './product-copy.js?v=1.9.0';
+import {refineCopy} from './refine-copy.js?v=1.9.1';
+import {setupFarewell} from './history.js?v=1.9.1';
+import {setupSectionRail} from './section-rail.js?v=1.9.1';
+import {storiesCopy} from './stories-copy.js?v=1.9.1';
+import {setupStories} from './stories.js?v=1.9.1';
+import { motionCopy } from './motion-copy.js?v=1.9.1';
+import { initMotion } from './motion.js?v=1.9.1';
+import { setupContacts } from './contacts.js?v=1.9.1';
+import { setupDetails } from './details.js?v=1.9.1';
+import { setupAlbums } from './albums.js?v=1.9.1';
+import { setupProduct } from './product.js?v=1.9.1';
+import { productCopy } from './product-copy.js?v=1.9.1';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -17,8 +17,8 @@ const copy = {
     skip:'跳到内容',navExperience:'体验',navFragments:'记忆碎片',navJournal:'开发手记',navStatus:'探索 Mne',
     heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'照片是回忆的载体，选择你想留住的故事。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 邀请制内测中',phoneCount:'24,680 份回忆',floatingTitle:'遇见美好，留下回忆。',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
     storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>整理不是抹去，而是为真正重要的瞬间，留出空间。回望本身，也是人生的过程。',
-    experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'回望，也可以纯粹且简单。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
-    featureBrowseTitle:'远观，或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'靠近一张照片，顺手做好。',featureGestureDescription:'单张浏览时，长按唤出触点旁的敏捷菜单。喜欢、加入最近相册，不必离开照片；上滑暂存，随时恢复。',featureRecoverTitle:'每次放下，都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
+    experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'<span class="lilac">回望，</span>也可以纯粹且简单。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
+    featureBrowseTitle:'<span class="lilac">远观，</span>或靠近。',featureBrowseDescription:'单列瀑布流、4 格、9 格与沉浸单图。App 内双指缩放，视角连续变化，始终留在那张照片附近。',featureGestureTitle:'<span class="lilac">靠近一张照片，</span>顺手做好。',featureGestureDescription:'单张浏览时，长按唤出触点旁的敏捷菜单。喜欢、加入最近相册，不必离开照片；上滑暂存，随时恢复。',featureRecoverTitle:'<span class="lilac">每次放下，</span>都有余地。',featureRecoverDescription:'暂存的照片，随时可以恢复。真正删除前，由 iOS 再次确认。让每个选择，都从容一点。',
     fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:'收集卡片，解锁成就，让整理也成为一场回到过去的历险。<br>在重温与选择之间，发现新的乐趣，也重新认识自己。',
     atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:'按周、月或年，回看记忆的起伏。选择某一年，或圈定一段岁月。照片、视频与容量估算，让回忆的轮廓更加清晰。',atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已整理',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
     privacyTitle:'照片，留在你的照片库。',privacyDescription:'照片和视频留在系统图库，不上传到 Mne 服务器。不登录也能整理；二十八张卡面随包提供。登录后可备份资料与整理记录，并发送使用概况；错误报告由你确认上传。',themeTitle:'让界面，顺应你的心情。',themeDescription:'白昼、暗夜、旧梦、青灰与 OLED nerd。五种主题与独立图标选择，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:'为 iPhone 打造。真实的系统材质、轻柔的触觉与克制的动效。支持系统减少动态效果，让节奏由你掌握。',
@@ -29,8 +29,8 @@ const copy = {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
     heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Photos hold our memories. Choose the stories you want to keep.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Invite-only beta',phoneCount:'24,680 memories',floatingTitle:'Meet beauty. Keep memories.',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
     storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Curating makes room for the moments that matter. Looking back is part of living.',
-    experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'Looking back, simply.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
-    featureBrowseTitle:'Step back. Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'Get closer. Keep it within reach.',featureGestureDescription:'In single-photo view, hold to reveal a quick menu near your touch. Favorite or add to a recent album without leaving the photo. Swipe up to set it aside, and restore it anytime.',featureRecoverTitle:'Room to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
+    experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'<span class="lilac">Looking back,</span> simply.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
+    featureBrowseTitle:'<span class="lilac">Step back.</span> Or get closer.',featureBrowseDescription:'A single column, four tiles, nine tiles, or one immersive photo. Pinch in the app to move fluidly between layouts, staying close to your focal photo.',featureGestureTitle:'<span class="lilac">Get closer.</span> Keep it within reach.',featureGestureDescription:'In single-photo view, hold to reveal a quick menu near your touch. Favorite or add to a recent album without leaving the photo. Swipe up to set it aside, and restore it anytime.',featureRecoverTitle:'<span class="lilac">Room</span> to change your mind.',featureRecoverDescription:'Restore anything you have set aside in Trash. Before a photo is truly deleted, iOS asks you to confirm. Every decision, at your own pace.',
     fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:'Collect cards and unlock achievements as you adventure through your past.<br>Find joy in revisiting your memories, and meet yourself again along the way.',
     atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:'Look back by week, month, or year. Choose one year or a span of time. Photos, videos, and storage estimates bring the shape of your memories into focus.',atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Processed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
     privacyTitle:'Your photos stay in your library.',privacyDescription:'Photos and videos stay in your system library. Curate without signing in; all twenty-eight cards are bundled. Signed-in use backs up profile/activity data and sends session summaries; error reports require your confirmation.',themeTitle:'A space that feels like you.',themeDescription:'Daylight, Midnight, Old dream, Blue sage, and OLED nerd. Five themes with independently chosen icons. Chinese and English. A familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:'Made for iPhone, with system materials, subtle haptics, and considered motion. Respects Reduce Motion, so the pace always feels right.',
