@@ -1,12 +1,12 @@
-import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.8.0';
-import {uiIcon} from './native-ui.js?v=1.8.0';
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.8.0';
-import { fragments as collection } from './fragments-data.js?v=1.8.0';
+import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.9.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=1.9.0';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.9.0';
+import { fragments as collection } from './fragments-data.js?v=1.9.0';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
 const smooth = t => { t=clamp(t); return t*t*(3-2*t); };
-const photography = ['waterfall','moon','night','autumn','fern','window','wire','amber','rainbow','cityglow','meadow','room'];
+const photography = ['waterfall','autumn','night','moon','fern','window','wire','amber','rainbow','cityglow','meadow','room'];
 
 export function initMotion({getLanguage,text,reducedMotion}) {
   let paused = false;
@@ -62,14 +62,34 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   const demoPhone=document.querySelector('.demo-phone');
   const decision=document.querySelector('#demo-decision');
   const phaseLabels=[...document.querySelectorAll('.demo-phase-indicator>span')];
+  const quickLayer=demoPhone.querySelector('.demo-quick-layer'),quickMenu=quickLayer.querySelector('.demo-quick-menu');
+  let menuLanguage='';
+  function renderDemoMenu() {
+    if(menuLanguage===getLanguage())return;
+    menuLanguage=getLanguage();
+    quickMenu.innerHTML=`<div data-demo-action="favorite">${uiIcon('heart')}<span>${text('shortcutLike')}</span></div><div>${uiIcon('add')}<span>${text('shortcutAdd')}</span></div><small>${text('shortcutRecent')}</small>${[...albumSamples,{id:'archive',key:null}].map(a=>`<div data-demo-album="${a.id}">${uiIcon('album')}<span>${a.key?text(a.key):'Mne Archive'}</span>${a.id==='main'?uiIcon('check'):''}</div>`).join('')}`;
+    quickLayer.querySelector('.demo-quick-feedback').innerHTML=uiIcon('check')+`<span>${text('shortcutAdded')} · ${text('albumName')}</span>`;
+    quickLayer.querySelector('.demo-like-feedback').innerHTML=uiIcon('heart')+`<span>${text('shortcutLiked')}</span>`;
+  }
   function demoLayout(i,columns) {
     const width=(244-(columns-1)*4)/columns;
     return {x:4+(i%columns)*(width+4),y:Math.floor(i/columns)*(width*1.777+4),w:width,h:width*1.777};
   }
   function paintDemo(progress) {
     const p=reducedMotion.matches ? 0 : progress;
-    const zoom=smooth(p/.28), close=smooth((p-.34)/.18);
-    const discard=smooth((p-.56)/.15), recover=smooth((p-.77)/.16);
+    const zoom=smooth(p/.24), close=smooth((p-.28)/.12);
+    const discard=smooth((p-.64)/.13), recover=smooth((p-.82)/.14);
+    renderDemoMenu();
+    // Long press → favorite → recent album → dismiss. Native scrolling is reversible.
+    const action=p<.40?'browse':p<.46?'open':p<.49?'favorite':p<.53?'liked':p<.56?'reopen':p<.59?'archive':p<.64?'saved':p<.82?'set-aside':'restore';
+    demoPhone.dataset.action=action;
+    demoPhone.dataset.liked=String(p>=.46);
+    const favoriteLabel=quickMenu.querySelector('[data-demo-action="favorite"] span'),favoriteText=text(p>=.46?'shortcutUnlike':'shortcutLike');
+    if(favoriteLabel.textContent!==favoriteText)favoriteLabel.textContent=favoriteText;
+    quickLayer.classList.toggle('menu-visible',['open','favorite','reopen','archive'].includes(action));
+    quickLayer.classList.toggle('saved',p>=.59&&p<.64);
+    demoPhone.querySelector('.demo-single-footer').classList.toggle('liked',p>=.46);
+    demoPhone.querySelector('.demo-single-footer').classList.toggle('archived',p>=.56);
     demoCards.forEach((el,i)=>{
       const a=demoLayout(i,3), b=demoLayout(i,2);
       const x=lerp(lerp(a.x,b.x,zoom),4,close);
@@ -85,10 +105,10 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     });
     decision.style.opacity=String(discard*(1-recover));
     decision.style.transform=`translate(-50%,${(1-discard)*15}px)`;
-    decision.classList.toggle('recovering',p>.72);
+    decision.classList.toggle('recovering',p>.80);
     const pending=discard*(1-recover)>.5,footer=demoPhone.querySelector('.demo-footer-pill');
     footer.textContent=text(pending?'demoRecover':'demoSingleHint');footer.classList.toggle('pending',pending);
-    const phase=p<.34?0:p<.72?1:2;
+    const phase=p<.28?0:p<.80?1:2;
     demoPhone.dataset.phase=String(phase);
     phaseLabels.forEach((el,i)=>el.classList.toggle('active',i===phase));
     document.querySelectorAll('.feature-chapter').forEach((el,i)=>{
@@ -460,7 +480,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     rangeStart.setAttribute('aria-label',text('atlasStart'));rangeEnd.setAttribute('aria-label',text('atlasEnd'));
     document.querySelector('.fragment-categories').setAttribute('aria-label',getLanguage()==='zh'?'成就分类':'Achievement categories');
     document.querySelector('.production-chart-controls').setAttribute('aria-label',getLanguage()==='zh'?'图表类型':'Chart type');
-    describeFragment(true);renderChart();measure();
+    describeFragment(true);renderChart();paintDemo(Math.max(0,lastDemo));measure();
     selectFragment(heldIndex);
     if(countFinished)countElements.forEach(el=>countValue(el,1));
   }

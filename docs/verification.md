@@ -1,3 +1,13 @@
+# Website 1.9.0 verification · 2026-10-20
+
+- `scripts/experience-qa.mjs`: Chromium and WebKit pass Chinese/English at 1780×1000, 1440×1000, 768×1024, 390×844 and 320×720. The moved single-photo story advances through hold, favorite, dismissal, reopen, recent-album archive, feedback, set-aside and restore, and rewinds with native scrolling. Metadata remains fixed relative to the phone; the menu stays inside its width and clear of top chrome / filmstrip. No horizontal document overflow or site resource/runtime errors.
+- Hero and Experience copy use the requested new wording in both languages. At 1780 px, the unobtrusive rail has a transparent panel and at least 100 px clear space before the content. Collapse/expand works; smaller viewports hide the rail. Its unchanged persistence/jump implementation was covered in 1.8.0.
+- `scripts/stories-qa.mjs`: both engines/languages at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720 pass the two five-step stories forward and backward. Quick actions remains in waterfall mode throughout, showing the preview for steps 1–3 and dismissing it at step 4; the old single overlay remains hidden. Pause/resume, Reduced Motion manual steps, fit within the sticky viewport and unchanged cumulative activity totals pass.
+- Desktop and narrow mobile screenshots were visually reviewed under ignored `artifacts/v13/`, including Chinese 390 px and English 320 px. All website/maintenance JavaScript syntax, static asset references, bilingual keys, unique IDs and whitespace checks pass.
+- This is website-only verification, not a physical device / Vivaldi or iOS build claim. App source is unchanged at 0.9.190 (221). Deliver a full static ZIP with SHA-256 manifest; no NAS access or server configuration changes. Local preview remains running.
+
+## Earlier verification
+
 # Website 1.8.0 verification · 2026-10-20
 
 - `scripts/refine-qa.mjs`: Chromium and WebKit pass Chinese/English at 1780×1000, 1440×1000, 1024×900, 768×1024, 390×844 and 320×720. Chapter order places design before Experience and interactive Farewell immediately after Atlas. No horizontal document overflow; both shortened scroll stories fit the pinned viewport.

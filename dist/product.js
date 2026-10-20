@@ -1,6 +1,6 @@
-import {uiIcon,albumSamples} from './native-ui.js?v=1.8.0';
-import {statisticSVG} from './app-art.js?v=1.8.0';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=1.8.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=1.9.0';
+import {statisticSVG} from './app-art.js?v=1.9.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=1.9.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');
@@ -124,14 +124,14 @@ export function setupProduct({text}) {
  function presentShortcut(step) {
   // Deterministic presentation state: reversing the page scroll reverses the demonstration.
   // Scroll illustrations never create activity records or change the user's album edit demo.
-  close();selected=0;mode=step>=3?'single':'grid';surface.dataset.mode=mode;
+  close();selected=0;mode='grid';surface.dataset.mode=mode;
   const id=current().id;favorite.delete(id);members.get(id).clear();
-  if(step>=2){favorite.add(id);members.get(id).add('main');}
-  if(step===1||step===2){previewOpen=true;preview.hidden=false;}
-  if(step===3){menuOpen=true;singleOverlay.hidden=false;point={x:surface.clientWidth*.6,y:surface.clientHeight*.55};}
+  if(step>=2)favorite.add(id);
+  if(step>=3)members.get(id).add('main');
+  if(step>=1&&step<=3){previewOpen=true;preview.hidden=false;}
   renderPhoto();
   const touch=surface.querySelector('.cinema-touch');touch.hidden=step===4;
-  const target=step===2?bubble.querySelector('[data-preview-album="main"]'):step===1?previewPhoto:step===0?grid.firstElementChild:null;
+  const target=step===3?bubble.querySelector('[data-preview-album="main"]'):step===2?strip.querySelector('[data-preview-action="favorite"]'):step===1?previewPhoto:step===0?grid.firstElementChild:null;
   const frame=surface.getBoundingClientRect(),targetFrame=target?.getBoundingClientRect();
   touch.style.left=(targetFrame?(targetFrame.x+targetFrame.width/2-frame.x)/frame.width*100:60)+'%';
   touch.style.top=(targetFrame?(targetFrame.y+targetFrame.height/2-frame.y)/frame.height*100:55)+'%';

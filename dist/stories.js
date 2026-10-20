@@ -1,4 +1,4 @@
-import {uiIcon} from './native-ui.js?v=1.8.0';
+import {uiIcon} from './native-ui.js?v=1.9.0';
 const clamp=(value,min=0,max=1)=>Math.min(max,Math.max(min,value));
 
 // Page scroll drives a few bounded presentation states. There is no wheel interception,
