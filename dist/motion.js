@@ -1,12 +1,12 @@
-import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.9.3';
-import {uiIcon,albumSamples} from './native-ui.js?v=1.9.3';
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.9.3';
-import { fragments as collection } from './fragments-data.js?v=1.9.3';
+import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.9.4';
+import {uiIcon,albumSamples} from './native-ui.js?v=1.9.4';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.9.4';
+import { fragments as collection } from './fragments-data.js?v=1.9.4';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
 const smooth = t => { t=clamp(t); return t*t*(3-2*t); };
-const photography = ['waterfall','autumn','night','moon','fern','window','wire','amber','rainbow','cityglow','meadow','room'];
+const photography = ['waterfall','moon','night','autumn','fern','window','wire','amber','rainbow','cityglow','meadow','room'];
 
 export function initMotion({getLanguage,text,reducedMotion}) {
   let paused = false;

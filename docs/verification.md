@@ -1,3 +1,11 @@
+# Website 1.9.4 photo verification · 2026-10-20
+
+- Chromium and WebKit pass a photo smoke check at 1440×1000 and 390×844. The selected single-photo image and active filmstrip image both use the author's existing `moon.webp`; it loads correctly, remains visible in the close-view phase and returns after the recovery animation. No page errors. Static references, bilingual copy, unique IDs, syntax of modified motion code, and whitespace checks pass.
+- The change swaps Moon and Autumn in the same demonstration array, preserving unique assets and existing transitions. Other sections retain their current layout. Screenshots are under ignored `artifacts/v17/`.
+- NAS update uses `scripts/sync-nas.mjs`, targeting the existing SMB-mounted `/Volumes/docker/mne-website`. The script backs up the old project first, preserves the live `site` directory, writes the new index last, and preserves Docker/Nginx configuration. Post-sync file manifest and production checks are recorded in the task; no iOS source is modified.
+
+## Earlier verification
+
 # Website 1.9.3 layout verification · 2026-10-20
 
 - Chromium and WebKit pass a geometry smoke check of Quick Actions and Quick Duplicate Check in Chinese/English at 1710×1000, 1920×1200, 1440×900, 1024×768 and 768×1024. While pinned, the combined text/visual content is vertically centered below the fixed header: upper/lower clear-space difference stays within 25px and pinned content fits within the viewport.

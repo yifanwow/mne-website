@@ -1,15 +1,15 @@
-import {refineCopy} from './refine-copy.js?v=1.9.3';
-import {setupFarewell} from './history.js?v=1.9.3';
-import {setupSectionRail} from './section-rail.js?v=1.9.3';
-import {storiesCopy} from './stories-copy.js?v=1.9.3';
-import {setupStories} from './stories.js?v=1.9.3';
-import { motionCopy } from './motion-copy.js?v=1.9.3';
-import { initMotion } from './motion.js?v=1.9.3';
-import { setupContacts } from './contacts.js?v=1.9.3';
-import { setupDetails } from './details.js?v=1.9.3';
-import { setupAlbums } from './albums.js?v=1.9.3';
-import { setupProduct } from './product.js?v=1.9.3';
-import { productCopy } from './product-copy.js?v=1.9.3';
+import {refineCopy} from './refine-copy.js?v=1.9.4';
+import {setupFarewell} from './history.js?v=1.9.4';
+import {setupSectionRail} from './section-rail.js?v=1.9.4';
+import {storiesCopy} from './stories-copy.js?v=1.9.4';
+import {setupStories} from './stories.js?v=1.9.4';
+import { motionCopy } from './motion-copy.js?v=1.9.4';
+import { initMotion } from './motion.js?v=1.9.4';
+import { setupContacts } from './contacts.js?v=1.9.4';
+import { setupDetails } from './details.js?v=1.9.4';
+import { setupAlbums } from './albums.js?v=1.9.4';
+import { setupProduct } from './product.js?v=1.9.4';
+import { productCopy } from './product-copy.js?v=1.9.4';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
