@@ -4,7 +4,7 @@ const assert=(x,m)=>{if(!x)throw new Error(m);};await fs.mkdir('artifacts/v10',{
 for(const [engineName,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
  const browser=await engine.launch({headless:true}),page=await browser.newPage({viewport:{width:1440,height:1000},locale:'zh-CN'}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()}: ${r.url()}`);});
- await page.goto('http://127.0.0.1:4173/?v=1.6.0',{waitUntil:'networkidle'});
+ await page.goto('http://127.0.0.1:4173/?v=1.7.0',{waitUntil:'networkidle'});
  await page.evaluate(()=>document.documentElement.style.scrollBehavior='auto');
  assert(!errors.length,errors.join('\n'));
  const albums=await page.locator('.native-album-row').evaluateAll(rows=>rows.map(row=>[...row.querySelectorAll('img')].map(img=>img.getAttribute('src'))));
@@ -23,23 +23,11 @@ for(const [engineName,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
  await page.locator('.native-album-tool').first().click();await page.locator('[data-album-action="rename"]').click();await page.locator('#album-name').fill('A quiet story');await page.locator('#album-dialog-save').click();
  assert((await page.locator('.native-album-meta strong').first().innerText())==='A quiet story','Rename not retained');
  await page.locator('#album-studio').screenshot({path:`artifacts/v10/${engineName}-albums-edit.png`});
- await page.locator('#shortcut-surface').evaluate(el=>scrollTo(0,el.getBoundingClientRect().top+scrollY-140));await page.waitForTimeout(700);await page.keyboard.press('Escape');await page.waitForTimeout(450);const photo=await page.locator('[data-shortcut-photo="0"]').boundingBox();await page.mouse.move(5,5);await page.mouse.move(photo.x+photo.width/2,photo.y+photo.height/2);await page.waitForTimeout(100);assert(await page.locator('#native-preview').isVisible(),'Grid did not show preview');
- assert(await page.locator('[data-preview-action="trash"]').isVisible(),'Grid horizontal Trash action missing');
- assert(await page.locator('[data-preview-album]').count()===5,'Recent bubble is not five albums');
- await page.locator('[data-preview-action="favorite"]').click();
- await page.locator('[data-preview-album="sea"]').click();assert(await page.locator('[data-preview-action="removeMode"]').isVisible(),'Removal action missing');
- await page.locator('[data-preview-action="removeMode"]').click();assert(await page.locator('[data-preview-album]').count()===1,'Removal bubble does not show actual memberships');
- await page.locator('#shortcut-studio').screenshot({path:`artifacts/v10/${engineName}-grid-preview.png`});
- await page.locator('[data-shortcut-mode="single"]').click();await page.locator('#shortcut-open').click({position:{x:50,y:240}});
- assert(await page.locator('#native-single-overlay').isVisible(),'Single mode menu missing');
- const menu=await page.locator('#shortcut-menu').boundingBox(),surface=await page.locator('#shortcut-surface').boundingBox();assert(menu.width<=272.1&&menu.x>=surface.x+11&&menu.y>=surface.y+11,'Single geometry differs from source clamps');
- assert(await page.locator('[data-single-action="removeMode"]').count()===1,'Single membership state lost');
- await page.locator('[data-single-action="removeMode"]').click();assert(await page.locator('[data-single-album]').count()===1,'Single expanded removal contains recent albums');
- await page.locator('[data-single-album="sea"]').click();assert(!await page.locator('#native-single-overlay').isVisible(),'Single action failed to dismiss');
+ // Scroll-driven photo demonstrations are covered by stories-qa.mjs.
  await page.locator('[data-growth-kind="processed"]').click();assert(await page.locator('#growth-dialog').isVisible(),'Stats detail missing');assert((await page.locator('#growth-dialog-content').innerText()).includes('归档'),'Stats detail does not show archive count');await page.locator('#growth-done').click();
  for(const [width,height] of [[1440,1000],[1024,900],[768,1024],[390,844],[320,720]])for(const lang of ['zh','en']) {
   await page.setViewportSize({width,height});if((await page.locator('html').getAttribute('lang')).startsWith('en')!==(lang==='en'))await page.locator('#language-toggle').click();
-  for(const selector of ['#album-studio','#shortcut-studio','#insights']){await page.locator(selector).scrollIntoViewIfNeeded();await page.waitForTimeout(700);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${engineName}/${width}/${lang}: overflow`);if([1440,390,320].includes(width))await page.locator(selector).screenshot({path:`artifacts/v10/${engineName}-${width}-${lang}-${selector.slice(1)}.png`});}
+  for(const selector of ['#album-studio','#shortcut-studio','#insights']){await page.locator(selector).scrollIntoViewIfNeeded();await page.waitForTimeout(700);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${engineName}/${width}/${lang}: overflow`);if([1440,390,320].includes(width))await page.locator(selector==='#shortcut-studio'?'#shortcut-studio .story-pin':selector).screenshot({path:`artifacts/v10/${engineName}-${width}-${lang}-${selector.slice(1)}.png`});}
  }
- assert(!errors.length,errors.join('\n'));console.log(JSON.stringify({engine:engineName,status:'passed',albums:4,uniquePhotos:28,drag:'passed',menus:'two source layouts',layouts:10}));await browser.close();
+ assert(!errors.length,errors.join('\n'));console.log(JSON.stringify({engine:engineName,status:'passed',albums:4,uniquePhotos:28,drag:'passed',menus:'covered by scroll stories',layouts:10}));await browser.close();
 }

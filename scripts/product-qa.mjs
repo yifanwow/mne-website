@@ -1,2 +1,3 @@
-// The native-component regression replaces the 1.5 marketing-card implementation checks.
+// Website product checks: native album editing plus scroll-led feature stories.
 import './native-ui-qa.mjs';
+import './stories-qa.mjs';

@@ -1,4 +1,4 @@
-// GitHub cf56cac2ce · MemorySeal / AppLanguage · 0.9.127 (158).
+// GitHub 294634c472 · MemorySeal / AppLanguage · 0.9.190 (221).
 // Public previews show stories, never unlock conditions. Mysteries keep their names veiled.
 export const fragments = [
   {id:'fool',name:{zh:'愚者',en:'The Fool'},story:{zh:'一次小小的告别。新的旅程，从留下的空白开始。',en:'One small farewell. A new journey begins in the space you leave behind.'}},
@@ -26,3 +26,15 @@ for(const id of ['magician','high-priestess','empress','wheel-of-fortune','lover
   name:{zh:'待发现的碎片',en:'An undiscovered fragment'},
   story:{zh:'名字与故事，留给你在回忆里亲自遇见。',en:'A name and a story, waiting for you to discover in your memories.'}
 });
+
+const latest = [
+ ['seven-stars','ordinary','七星','Seven stars','为回忆点起一盏盏灯。','There is light ahead.'],
+ ['everlasting-light','ordinary','长明','Everlasting light','回忆的灯不曾熄灭。','The light kindled for memories has never gone out.'],
+ ['letter-from-past','ordinary','旧日来信','Letter from the past','人面不知何处去，桃花依旧笑春风。','Where has that familiar face gone? Peach blossoms still smile in the spring breeze.'],
+ ['mist','ordinary','迷雾','Mist','莫把湖面倒影，当作夜空繁星。','Do not mistake a reflection on the lake for stars in the night sky.'],
+ ['brotherhood','ordinary','结义','Brotherhood','长路亦有同行人。','Even the longest road has fellow travelers.'],
+ ['passing-spark','ordinary','星火相传','Passing the spark','你我共筑回忆的长河。','Together, we build a river of memories.'],
+ ['legend','themed','传说','Legend','你又在寻找着哪一种故事的结局。','Which ending are you searching for this time?'],
+ ['eternity','themed','永恒','Eternity','总有一些痕迹是无法抹去的。','Some traces can never be erased.']
+];
+fragments.push(...latest.map(([id,category,zh,en,storyZH,storyEN])=>({id,category,asset:`${id}.webp`,name:{zh,en},story:{zh:storyZH,en:storyEN}})));

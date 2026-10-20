@@ -1,6 +1,6 @@
-import {uiIcon,albumSamples} from './native-ui.js?v=1.6.0';
-import {statisticSVG} from './app-art.js?v=1.6.0';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=1.6.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=1.7.0';
+import {statisticSVG} from './app-art.js?v=1.7.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=1.7.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');
@@ -15,6 +15,7 @@ export function setupProduct({text}) {
  function close(){const wasOpen=previewOpen||menuOpen;previewOpen=false;menuOpen=false;removing=false;preview.hidden=true;singleOverlay.hidden=true;open.setAttribute('aria-expanded','false');if(wasOpen)hoverUntil=performance.now()+400;}
  function setMode(value){mode=value;surface.dataset.mode=mode;close();document.querySelectorAll('[data-shortcut-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shortcutMode===mode)));if(mode==='single')recordView();renderPhoto();}
  function renderPhoto(){
+  surface.dataset.preview=String(previewOpen);
   const p=current();surface.style.setProperty('--active-photo',`url('./assets/photos/${p.id}.webp')`);
   document.querySelector('#shortcut-resolution').textContent=`${p.width} × ${p.height}`;
   document.querySelector('#shortcut-membership').textContent=memberships().size?[...memberships()].map(id=>name(recent.find(a=>a.id===id))).join(' · '):text('shortcutEmptyAlbum');
@@ -120,5 +121,20 @@ export function setupProduct({text}) {
  document.querySelector('#growth-done').addEventListener('click',()=>statDialog.close());
  for(const dialog of [picker,statDialog])dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close();});
  function refresh(){renderPhoto();renderStats();if(statDialog.open)renderStatDetail();document.querySelectorAll('.product-modes')[0]?.setAttribute('aria-label',text('shortcutModesLabel'));previewPhoto.setAttribute('aria-label',text('shortcutSingle'));document.querySelector('#native-preview-close').setAttribute('aria-label',text('shortcutClose'));document.querySelector('#native-menu-close').setAttribute('aria-label',text('shortcutClose'));document.querySelector('#shortcut-picker-close').setAttribute('aria-label',text('shortcutClose'));status.textContent=text(notice||'shortcutHint');}
- refresh();return {refresh};
+ function presentShortcut(step) {
+  // Deterministic presentation state: reversing the page scroll reverses the demonstration.
+  // Scroll illustrations never create activity records or change the user's album edit demo.
+  close();selected=0;mode=step>=3?'single':'grid';surface.dataset.mode=mode;
+  const id=current().id;favorite.delete(id);members.get(id).clear();
+  if(step>=2){favorite.add(id);members.get(id).add('main');}
+  if(step===1||step===2){previewOpen=true;preview.hidden=false;}
+  if(step===3){menuOpen=true;singleOverlay.hidden=false;point={x:surface.clientWidth*.6,y:surface.clientHeight*.55};}
+  renderPhoto();
+  const touch=surface.querySelector('.cinema-touch');touch.hidden=step===4;
+  const target=step===2?bubble.querySelector('[data-preview-album="main"]'):step===1?previewPhoto:step===0?grid.firstElementChild:null;
+  const frame=surface.getBoundingClientRect(),targetFrame=target?.getBoundingClientRect();
+  touch.style.left=(targetFrame?(targetFrame.x+targetFrame.width/2-frame.x)/frame.width*100:60)+'%';
+  touch.style.top=(targetFrame?(targetFrame.y+targetFrame.height/2-frame.y)/frame.height*100:55)+'%';
+ }
+ refresh();return {refresh,presentShortcut};
 }

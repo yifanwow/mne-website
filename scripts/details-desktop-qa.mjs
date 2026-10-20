@@ -51,11 +51,11 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
   const yearlyLabels=await page.locator('#memory-chart .axis-label').allTextContents();
   assert(yearlyLabels.includes('2022')&&yearlyLabels.includes('2026'),'Yearly axis omits illustration years');
   await page.locator('.app-profile-preview').screenshot({path:`artifacts/v8/details/atlas-${name}.png`});
-  assert((await page.locator('.version-badge').innerText()).includes('0.9.127'),'Source badge is out of date');
-  assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.127 (158)'),'Latest development entry is missing');
+  assert((await page.locator('.version-badge').innerText()).includes('0.9.190'),'Source badge is out of date');
+  assert((await page.locator('.timeline-entry').first().innerText()).includes('0.9.189 — 0.9.190 (221)'),'Latest development entry is missing');
 
   // Native albums and both photo menus are covered by native-ui-qa.mjs.
-  for(const [category,count] of [['ordinary',6],['themed',8],['mystery',6]]) {
+  for(const [category,count] of [['ordinary',12],['themed',10],['mystery',6]]) {
     await page.locator('[data-card-category="'+category+'"]').click();
     assert(await page.locator('.fragment-tile').count()===count,'Card shelf count mismatch');
     if(category==='mystery')assert(await page.locator('.fragment-tile.veiled').count()===5,'Mysteries are not veiled');

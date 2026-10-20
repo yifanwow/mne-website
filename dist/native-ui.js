@@ -16,6 +16,9 @@ const paths={
   info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-11v1"/>',
   back:'<path d="m15 5-7 7 7 7"/>',
   share:'<path d="M8 8H5v13h14V8h-3M12 15V2m-4 4 4-4 4 4"/>',
+  scan:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7 8h3M7 12h10M14 16h3"/>',
+  pause:'<path d="M9 5v14M15 5v14"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
   plus:'<path d="M12 4v16M4 12h16"/>'
 };
 export function uiIcon(name){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.album}</svg>`;}

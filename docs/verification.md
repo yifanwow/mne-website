@@ -1,3 +1,16 @@
+# Website 1.7.0 verification · 2026-10-20
+
+- Source snapshot confirmed against GitHub at the start and end of work: `294634c4728d928d1f179ab7de3d690d38ba47c5`, App 0.9.190 (221). Only the website is changed; no iOS tests, static checks, build, simulator, archive, account action or NAS deployment was run.
+- `scripts/stories-qa.mjs`: Chromium and WebKit, Chinese and English at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720. All three five-step stories advance and reverse with page scroll, fit their sticky viewport and contain complete native demonstration surfaces without horizontal document overflow. Shortcut preview/single menus and Farewell range counts match the presented step. Scrolling does not add to cumulative growth.
+- Both engines pass Reduce Motion's static/manual chapter navigation and removal of long scroll runways, plus pause/freeze/resume. Final small-English copy and explicit bounded-grid frosting were checked again in both engines after visual refinements.
+- `scripts/native-ui-qa.mjs`: four seven-photo albums with 28 distinct photos, real pointer-following drag/reorder, seven cover slots/candidates, pinned covers, rename retention and growth details pass in Chromium/WebKit; both languages at the same five sizes remain free of horizontal overflow. Default Chinese album names are four two-character titles.
+- `scripts/product-touch-qa.mjs`: Chinese/English at 390×844, native Chromium touch drag, WebKit tap/keyboard flows, cover changes, capacity disclosures and growth dialogs pass. These are browser-engine checks, not physical iPhone or Vivaldi verification.
+- `scripts/collection-qa.mjs`: every one of the 28 card captions/navigation states, category counts 12/10/6, Reduced Motion galleries, repeated-entry counters and all 20 expanded journal entries pass in both engines and languages at 320×720. Mysteries remain veiled; cards show stories, not unlock conditions.
+- All website/maintenance JavaScript syntax, direct asset paths, unique IDs, bilingual keys and whitespace pass. Screenshots under ignored `artifacts/v11/` were visually reviewed, including desktop and narrow English mobile. Previous album/card check suites retain their existing ignored screenshot folders.
+- Full static replacement ZIP includes updated instructions and a per-file SHA-256 manifest, excluding Docker/Nginx/server configuration. Local preview remains running at the user's request.
+
+## Earlier verification
+
 # Website 1.6.0 verification · 2026-10-17
 
 - Chromium and WebKit pass Chinese and English at 1440×1000, 1024×900, 768×1024, 390×844 and 320×720 without horizontal document overflow or site errors. Current screenshots are under ignored `artifacts/v10/`; final viewport captures were reviewed separately to avoid fixed-header and entrance-transition capture artifacts.
