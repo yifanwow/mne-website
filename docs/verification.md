@@ -1,3 +1,11 @@
+# Website 1.9.2 navigation verification · 2026-10-20
+
+- Chromium and WebKit smoke checks pass Chinese/English at 1640×900, 1710×1000, 1920×1080 and 1640×600. Directory text computes to 12px and the current chapter to 14px; active state follows Experience, Farewell and Insights. The active entry remains within the scrollable directory in short windows.
+- The rail fits below the site header and within the viewport, with at least 45px clear space before main content (54px at the minimum supported width), no horizontal overflow or page errors. Collapse/expand and a chapter jump under Reduced Motion pass; the rail stays hidden at 1440px. Desktop Chinese and English screenshots under ignored `artifacts/v15/` were visually reviewed after transitions settled.
+- Static reference, bilingual copy, unique ID, whitespace and modified JavaScript syntax checks pass. Delivery is full static website 1.9.2; no App changes or NAS deployment.
+
+## Earlier verification
+
 # Website 1.9.1 visual verification · 2026-10-20
 
 - A browser smoke check in Chromium and WebKit covers Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. All 13 marketing headings from Experience through Quick Duplicate Check have a theme-purple opening phrase and a white continuation, using the existing `.lilac` token. No horizontal document overflow or page script errors.
