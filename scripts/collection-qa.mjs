@@ -23,9 +23,9 @@ for(const [name,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
       }
     }
     await page.locator('#timeline-expand').click();
-    assert(await page.locator('.timeline-entry:not([hidden])').count()===20,'Development history incomplete');
+    assert(await page.locator('.timeline-entry:not([hidden])').count()===22,'Development history incomplete');
     await page.locator('#language-toggle').click();
-    assert(await page.locator('.timeline-entry:not([hidden])').count()===20,'Expanded journal lost on language change');
+    assert(await page.locator('.timeline-entry:not([hidden])').count()===22,'Expanded journal lost on language change');
     await page.locator('#language-toggle').click();
     await page.locator('.production-stats').scrollIntoViewIfNeeded();await page.waitForTimeout(1700);
     assert(await page.locator('[data-stat="reviewed"] [data-count]').innerText()==='32,768','Counter final value incorrect');

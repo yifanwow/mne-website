@@ -1,7 +1,7 @@
-import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=1.9.4';
-import {uiIcon,albumSamples} from './native-ui.js?v=1.9.4';
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=1.9.4';
-import { fragments as collection } from './fragments-data.js?v=1.9.4';
+import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=2.0.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=2.0.0';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=2.0.0';
+import { fragments as collection } from './fragments-data.js?v=2.0.0';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -401,7 +401,7 @@ export function initMotion({getLanguage,text,reducedMotion}) {
     if(!reducedMotion.matches) {
       const pin=document.querySelector('.fragment-sticky');
       const otherHeight=['.fragment-heading','.fragment-categories','.fragment-story','.fragment-navigation','.fragment-hint'].reduce((total,selector)=>total+pin.querySelector(selector).offsetHeight,0);
-      const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,170,650);
+      const budget=clamp(innerHeight-(parseFloat(getComputedStyle(pin).top)||0)-otherHeight-68,140,650);
       viewport.style.height=`${budget}px`;
       fragmentCards.forEach(card=>card.style.width=`${Math.min(mobile?280:400,(budget-46)/1.4)}px`);
     } else {

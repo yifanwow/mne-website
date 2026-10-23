@@ -1,4 +1,4 @@
-const chapters=[['story','railStory'],['design','railDesign'],['experience','railExperience'],['details','railDetails'],['album-studio','railAlbums'],['shortcut-studio','railQuick'],['duplicate-story','railDuplicates'],['fragments','railFragments'],['atlas','railAtlas'],['farewell-history','railFarewell'],['insights','railInsights'],['journal','railJournal']];
+const chapters=[['story','railStory'],['design','railDesign'],['experience','railExperience'],['details','railDetails'],['album-studio','railAlbums'],['shortcut-studio','railQuick'],['duplicate-story','railDuplicates'],['subject-studio','railSubjects'],['fragments','railFragments'],['atlas','railAtlas'],['farewell-history','railFarewell'],['insights','railInsights'],['journal','railJournal']];
 export function setupSectionRail({text,reducedMotion}) {
  const rail=document.querySelector('#section-rail'),links=rail.querySelector('nav'),toggle=rail.querySelector('button');let collapsed=false,frame=0,positions=[],lastCurrent=null;
  try{collapsed=localStorage.getItem('mne-section-nav-collapsed')==='true';}catch{}

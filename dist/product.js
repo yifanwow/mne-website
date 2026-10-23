@@ -1,6 +1,6 @@
-import {uiIcon,albumSamples} from './native-ui.js?v=1.9.4';
-import {statisticSVG} from './app-art.js?v=1.9.4';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=1.9.4';
+import {uiIcon,albumSamples} from './native-ui.js?v=2.0.0';
+import {statisticSVG} from './app-art.js?v=2.0.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=2.0.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');

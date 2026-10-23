@@ -7,13 +7,6 @@ export function setupDetails({text}) {
     document.querySelector('#filter-count').textContent=hidden?'2':'3';
   });
 
-  const info=document.querySelector('#photo-info-toggle');
-  info.addEventListener('click',()=>{
-    const expanded=info.getAttribute('aria-expanded')!=='true';
-    info.setAttribute('aria-expanded',String(expanded));document.querySelector('#detail-info').classList.toggle('show-info',expanded);
-    info.lastElementChild.textContent=text(expanded?'detailInfoClose':'detailInfoAction');
-  });
-
   const quick=document.querySelector('#quick-photo'),menu=document.querySelector('#quick-menu'),toast=document.querySelector('#quick-toast');
   let holdTimer=0,held=false,pinned=false,saved=null,pressStart=null;
   function showMenu(open) {menu.hidden=!open;quick.setAttribute('aria-expanded',String(open));}
@@ -69,7 +62,6 @@ export function setupDetails({text}) {
   function refresh() {
     document.querySelector('.aspect-controls').setAttribute('aria-label',text('detailAspectLabel'));
     quick.setAttribute('aria-label',text('detailPress'));
-    info.lastElementChild.textContent=text(info.getAttribute('aria-expanded')==='true'?'detailInfoClose':'detailInfoAction');
     if(saved)toast.textContent=text(saved==='archive'?'detailSavedArchive':'detailSavedRecent');
     layoutAspect();
   }

@@ -26,7 +26,7 @@ async function walk(directory,prefix='') {
 const files=await Promise.all((await walk(target)).map(async name=>({path:name,sha256:crypto.createHash('sha256').update(await fs.readFile(path.join(target,name))).digest('hex')})));
 await fs.writeFile(path.join(target,'release.json'),JSON.stringify({
   version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
-  appVersion:'0.9.190 (221)',appSourceCommit:'294634c4728d928d1f179ab7de3d690d38ba47c5',
+  appVersion:'0.9.320 (351)',appSourceCommit:'b0c33bc8942a2926530920e35ee044d6042b3986',appSourceType:'local-source-not-public-release',
   stagedAt:new Date().toISOString(),domain:'mne.yifanovo.com',type:'static-site-update',files
 },null,2)+'\n');
 execFileSync('/usr/bin/zip',['-q','-r','-X',archive,label],{cwd:releases});

@@ -1,3 +1,14 @@
+# Website 2.0.0 verification · 2026-10-23
+
+- `scripts/latest-qa.mjs` passes Chromium and WebKit, Chinese/English, at 1780×1000, 1440×1000, 1024×900, 768×1024, 390×844 and 320×720. Five metadata fields are visible without a button. Theme examples switch, archive/video filters stay independent of the main photo filter, media preference survives a theme change, six chooser entries fit inside the phone, and Escape dismisses the chooser. Three unsupported photographic previews remain explicitly unavailable rather than displaying invented examples. No page/resource errors or horizontal overflow.
+- Main feature prose computes to at least 16px; responsive edits simplify copy instead of reducing core reading sizes. Desktop/mobile screenshots were reviewed under ignored `artifacts/v18/`, including 320px English metadata and the final desktop theme layout. The enlarged mobile header stays on one line.
+- `scripts/stories-qa.mjs` passes both engines/languages at five sizes. Both five-step stories advance/reverse correctly, fit the pinned viewport, preserve counts, pause/resume, and offer manual steps under Reduce Motion.
+- `scripts/collection-qa.mjs` passes all 28 cards across three categories in both engines/languages at 320×720, with visible controls. Category switching, reduced motion, repeated-entry counters and all 22 expanded journal entries pass. A concise short-screen introduction and content-dependent artwork budget preserve larger card prose.
+- All website/maintenance JavaScript syntax, static references, bilingual keys, unique IDs and whitespace pass. These checks apply only to the website; no iOS build, App tests, device operation, backend change or NAS deployment was performed. Local App source snapshot is 0.9.320 (351), not a public-release claim.
+- Delivery is a full static 2.0.0 ZIP with per-file hashes. Local preview is retained for review; the website source is backed up separately from the private App repository.
+
+## Earlier verification
+
 # Website 1.9.4 photo verification · 2026-10-20
 
 - Chromium and WebKit pass a photo smoke check at 1440×1000 and 390×844. The selected single-photo image and active filmstrip image both use the author's existing `moon.webp`; it loads correctly, remains visible in the close-view phase and returns after the recovery animation. No page errors. Static references, bilingual copy, unique IDs, syntax of modified motion code, and whitespace checks pass.

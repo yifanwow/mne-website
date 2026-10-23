@@ -1,0 +1,44 @@
+/* A consistent reading scale. Diagram labels remain inside their native UI coordinate space. */
+.eyebrow { font-size:13px;line-height:1.65;letter-spacing:.07em; }
+.section-index { font-size:12px;line-height:1.7; }.detail-number,.design-card-label { font-size:11px;line-height:1.7;letter-spacing:.08em; }
+.site-header nav,.header-cta,.language-toggle { font-size:14px; }
+.hero-description { font-size:20px;line-height:1.8; }.hero-footnote { font-size:13px; }.logo-caption p { font-size:14px; }.hero-contacts>a,.wechat-contact>button { font-size:13px; }
+.story-bottom p,.memory-box-story p,.design-intro>p:last-child { font-size:18px;line-height:1.85;max-width:52ch; }.box-story-label { font-size:14px; }.box-study-hint { font-size:12px; }
+.principles-grid p,.design-closing { font-size:16px;line-height:1.8; }.principles-grid h3 { font-size:22px; }
+.section-heading>p,.details-heading>p:last-child,.discovery-heading>p:last-child { font-size:17px;line-height:1.8; }
+.feature-chapter p { font-size:18px;line-height:1.85;max-width:34em; }.feature-tag,.demo-note { font-size:11px; }.demo-phase-indicator>span { font-size:13px; }
+.detail-copy p { font-size:16px;line-height:1.8; }.detail-copy h3 { font-size:24px;line-height:1.45; }.detail-copy { padding:24px 20px 28px; }.details-heading h2 { font-size:clamp(32px,3.5vw,48px); }
+.detail-note,.product-footnote { font-size:12px;line-height:1.8; }
+.demo-switch,.press-hint,.aspect-controls button { font-size:12px; }.demo-switch { min-height:42px; }
+.mini-photo-info { right:16px;left:16px;bottom:20px;max-width:none;padding:18px;gap:10px;transform:none!important;background:#231a32e8; }
+.mini-photo-info .info-date { font-size:12px;letter-spacing:.03em; }.mini-photo-info #detail-resolution { font-size:18px;line-height:1.4;font-variant-numeric:tabular-nums; }
+.info-facts { display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0; }.info-facts dt { font-size:11px;letter-spacing:.04em;color:#b7a6c8; }.info-facts dd { font-size:14px;margin:4px 0 0; }
+#detail-info .info-album { max-height:none;opacity:1;overflow:visible;font-size:13px;line-height:1.5;padding-top:9px;border-top:1px solid #c2a6fa30; }.info-album svg { flex:none; }
+.album-copy>p,.album-steps p,.product-copy>p { font-size:17px;line-height:1.8; }.album-copy h3 { font-size:clamp(32px,3vw,42px);line-height:1.45; }.album-steps strong { font-size:15px; }.album-caption { font-size:14px!important; }.album-steps li { margin-bottom:16px; }
+.story-copy h3 { font-size:clamp(34px,3.2vw,46px);line-height:1.4; }.story-intro { font-size:17px;line-height:1.8;max-width:34em; }.story-caption h4 { font-size:24px;line-height:1.5; }.story-step-body { font-size:17px;line-height:1.8; }.story-step-number { font-size:12px; }.story-steps button,.story-scroll-hint,.experimental-label { font-size:12px; }
+.fragment-sticky .fragment-heading>p:last-child { font-size:16px;line-height:1.8;max-width:42em;margin-inline:auto; }.fragment-heading .eyebrow { font-size:13px; }.fragment-story p { font-size:16px;line-height:1.8; }.fragment-story h3 { font-size:26px; }.fragment-hint,.fragment-growing { font-size:12px; }
+.atlas-copy>p,.farewell-copy>p:not(.atlas-component-note) { font-size:18px;line-height:1.8;max-width:34em; }.atlas-tags { font-size:14px; }.atlas-component-note { font-size:13px!important; }.atlas-tags span { font-size:13px; }
+.insight-heading>p,.native-growth-demo>p { font-size:17px;line-height:1.8; }.native-hint { font-size:13px;line-height:1.7; }.timeline p { font-size:16px;line-height:1.8;max-width:58ch; }.timeline h3 { font-size:24px;line-height:1.5; }.timeline time,.timeline .timeline-version,.timeline .timeline-tag { font-size:13px; }.timeline-expand { font-size:15px; }
+.access-description { font-size:18px;line-height:1.8; }.access-status,.footer-content { font-size:13px; }.credits-dialog p { font-size:17px;line-height:1.8; }
+@media(max-width:1000px) { .feature-chapter p { font-size:16px; }.story-intro { font-size:16px; }.story-copy h3 { font-size:34px; }.story-caption h4 { font-size:22px; }.story-step-body { font-size:16px; }.album-copy>p,.album-steps p { font-size:16px; } }
+@media(max-width:850px) { .hero-description { font-size:18px; }.story-bottom p,.memory-box-story p,.design-intro>p:last-child,.atlas-copy>p,.farewell-copy>p:not(.atlas-component-note) { font-size:16px;line-height:1.8; }.fragment-sticky .fragment-heading>p:last-child { font-size:16px;text-align:left; }.fragment-story p { font-size:16px; }.hero-copy .eyebrow { font-size:13px; }.hero-footnote { font-size:12px; }.principles-grid p { font-size:16px; }.feature-tag { display:none; } }
+@media(max-width:760px) {
+ .section-index { font-size:11px; }.eyebrow,.experience-pinned .section-heading .eyebrow { font-size:12px;letter-spacing:.025em; }
+ .logo-caption p { font-size:13px; }.experience-pinned .section-heading h2 { font-size:28px;line-height:1.4; }.experience-pinned .section-heading>p { font-size:13px; }
+ .feature-chapter h3 { font-size:24px;line-height:1.4; }.feature-chapter p { font-size:16px;line-height:1.7; }.demo-note { font-size:10px; }
+ .detail-copy h3 { font-size:25px; }.detail-copy p { font-size:16px; }.details-heading>p:last-child { font-size:16px; }
+ .story-copy h3 { font-size:28px;line-height:1.35; }.story-intro { display:none; }.story-caption h4 { font-size:20px; }.story-step-body { font-size:16px;line-height:1.7; }.story-caption { margin-top:12px;padding-top:12px; }.story-scroll-hint { display:none; }.story-step-number { font-size:11px;margin-bottom:7px; }.story-steps { margin-top:7px; }.experimental-label { margin-top:8px; }
+ .fragment-sticky .fragment-heading .eyebrow { font-size:12px; }.fragment-sticky .fragment-heading h2,html[lang=en] .fragment-sticky .fragment-heading h2 { font-size:30px; }.fragment-story h3 { font-size:24px; }.fragment-hint { font-size:11px; }
+ .discovery-heading h2,.design-intro h2 { font-size:32px; }.discovery-heading>p:last-child,.design-intro>p:last-child { font-size:16px; }
+ .timeline h3 { font-size:22px; }.timeline p { font-size:16px; }.access-description { font-size:16px; }.album-copy h3 { font-size:30px; }
+}
+@media(max-width:380px) { .experience-pinned .section-heading h2 { font-size:26px; }.feature-chapter h3 { font-size:22px; }.feature-chapter p { font-size:15px; }.story-copy h3 { font-size:26px; }.story-caption h4 { font-size:19px; }.story-step-body { font-size:15px; }.fragment-sticky .fragment-heading h2,html[lang=en] .fragment-sticky .fragment-heading h2 { font-size:28px; }.fragment-story p { font-size:15px; }.detail-copy h3 { font-size:24px; } }
+
+/* Keep the mobile masthead on one line at the larger reading scale. */
+@media(max-width:600px) {
+ .site-header .brand { flex-shrink:0;white-space:nowrap; }
+ .header-actions { gap:10px; }.header-cta { white-space:nowrap;font-size:12px;padding-inline:15px 28px; }.language-toggle { font-size:12px; }
+}
+
+.fragment-brief { display:none; }
+@media(max-width:600px) and (max-height:760px) { .fragment-full { display:none; }.fragment-brief { display:inline; } }
