@@ -4,7 +4,7 @@ const assert=(x,m)=>{if(!x)throw new Error(m);};await fs.mkdir('artifacts/v10',{
 for(const [engineName,engine] of [['Chromium',chromium],['WebKit',webkit]]) {
  const browser=await engine.launch({headless:true}),page=await browser.newPage({viewport:{width:1440,height:1000},locale:'zh-CN'}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()}: ${r.url()}`);});
- await page.goto('http://127.0.0.1:4173/?v=1.7.0',{waitUntil:'networkidle'});
+ await page.goto('http://127.0.0.1:4173/?v=2.1.0',{waitUntil:'networkidle'});
  await page.evaluate(()=>document.documentElement.style.scrollBehavior='auto');
  assert(!errors.length,errors.join('\n'));
  const albums=await page.locator('.native-album-row').evaluateAll(rows=>rows.map(row=>[...row.querySelectorAll('img')].map(img=>img.getAttribute('src'))));

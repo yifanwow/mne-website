@@ -1,0 +1,31 @@
+/* Shared album symbols and the App's three-column, immediately-applied picker. */
+.web-album-glyph{display:inline-block;position:relative;width:24px;height:24px;flex:none;vertical-align:middle;color:inherit}
+.web-album-glyph>svg{display:block!important;width:100%!important;height:100%!important}
+.web-album-glyph>i{position:absolute;right:-4px;bottom:-4px;display:grid;place-items:center;width:12px;height:12px;border-radius:50%;background:#2a223b;font:500 12px/1 sans-serif;font-style:normal}
+.native-album-bubble .web-album-glyph{width:20px;height:20px;overflow:visible}
+.native-quick-menu .web-album-glyph{width:22px;height:22px;overflow:visible}
+.demo-quick-menu .web-album-glyph{width:12px;height:12px;flex:none}
+#album-studio .native-album-row[data-custom-icon="true"] .native-album-symbol{width:24px;opacity:1;flex:none}
+#album-studio .native-album-row[data-custom-icon="true"] .native-album-heading{gap:8px}
+.album-icon-callout{display:flex;gap:18px;align-items:center;margin-top:28px;padding-top:24px;border-top:1px solid #c2a6fa24}
+.album-icon-callout>span{display:grid;place-items:center;width:54px;height:54px;flex:none;border:1px solid #c2a6fa30;border-radius:16px;background:#c2a6fa08;color:#c2a6fa}
+.album-icon-callout>span>svg{width:28px;height:28px}
+.album-icon-callout strong{display:block;font-size:18px;font-weight:500;line-height:1.65;color:#e5ddef}
+#album-icon-try{display:block;min-height:44px;padding:6px 0;text-align:left;font:inherit;font-size:16px;line-height:1.5;color:#c2a6fa;background:none;border:0;cursor:pointer}
+#album-icon-try:hover{color:#eee5ff}
+#album-icon-try:focus-visible,.native-icon-grid button:focus-visible,.native-icon-default:focus-visible{outline:2px solid #c2a6fa;outline-offset:4px}
+#album-dialog[data-mode="icons"]{overflow:hidden}
+#album-dialog[data-mode="icons"] #album-dialog-body{max-height:calc(88dvh - 104px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:0 3px 8px}
+.native-icon-album-name{font-size:18px;line-height:1.5;margin:0 0 18px;font-weight:500}
+.native-icon-default{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:12px;border:1px solid #c2a6fa28;border-radius:16px;background:#c2a6fa08;color:#c2a6fa;font:inherit;font-size:14px;text-align:left;cursor:pointer}
+.native-icon-default>span{flex:1}
+.native-icon-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.native-icon-grid button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-width:0;min-height:100px;padding:14px 2px;border:1px solid #c2a6fa20;border-radius:18px;background:#c2a6fa08;color:#c2a6fa;font:inherit;font-size:13px;line-height:1.4;text-align:center;cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.native-icon-grid button:hover{background:#c2a6fa18}
+.native-icon-grid button>span{max-width:100%;overflow-wrap:anywhere;hyphens:auto}
+.native-icon-grid button[aria-pressed="true"],.native-icon-default[aria-pressed="true"]{background:#c2a6fa24;border-color:#c2a6fa}
+.native-icon-grid button>svg{width:30px;height:30px}
+.native-icon-grid button>i{position:absolute;right:6px;top:6px}
+.native-icon-grid button>i>svg{width:13px;height:13px}
+@media(max-width:600px){.album-icon-callout{margin-top:22px;gap:14px}.album-icon-callout strong{font-size:17px}.native-icon-grid button{min-height:96px}}
+@media(prefers-reduced-motion:reduce){.native-icon-grid button{transition:none}}

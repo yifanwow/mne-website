@@ -1,7 +1,8 @@
-import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=2.0.0';
-import {uiIcon,albumSamples} from './native-ui.js?v=2.0.0';
-import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=2.0.0';
-import { fragments as collection } from './fragments-data.js?v=2.0.0';
+import {albumSymbol} from './album-icons.js?v=2.1.0';
+import {retainedDates,retainedTotal,retainedPhotoCount} from './sample-memory.js?v=2.1.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=2.1.0';
+import { memoryBoxSVG, logoLengths, statisticSVG } from './app-art.js?v=2.1.0';
+import { fragments as collection } from './fragments-data.js?v=2.1.0';
 
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min,v));
 const lerp = (a,b,t) => a+(b-a)*t;
@@ -62,12 +63,13 @@ export function initMotion({getLanguage,text,reducedMotion}) {
   const demoPhone=document.querySelector('.demo-phone');
   const decision=document.querySelector('#demo-decision');
   const phaseLabels=[...document.querySelectorAll('.demo-phase-indicator>span')];
+  addEventListener('mne:album-icon',()=>{menuLanguage='';renderDemoMenu();});
   const quickLayer=demoPhone.querySelector('.demo-quick-layer'),quickMenu=quickLayer.querySelector('.demo-quick-menu');
   let menuLanguage='';
   function renderDemoMenu() {
     if(menuLanguage===getLanguage())return;
     menuLanguage=getLanguage();
-    quickMenu.innerHTML=`<div data-demo-action="favorite">${uiIcon('heart')}<span>${text('shortcutLike')}</span></div><div>${uiIcon('add')}<span>${text('shortcutAdd')}</span></div><small>${text('shortcutRecent')}</small>${[...albumSamples,{id:'archive',key:null}].map(a=>`<div data-demo-album="${a.id}">${uiIcon('album')}<span>${a.key?text(a.key):'Mne Archive'}</span>${a.id==='main'?uiIcon('check'):''}</div>`).join('')}`;
+    quickMenu.innerHTML=`<div data-demo-action="favorite">${uiIcon('heart')}<span>${text('shortcutLike')}</span></div><div>${uiIcon('add')}<span>${text('shortcutAdd')}</span></div><small>${text('shortcutRecent')}</small>${[...albumSamples,{id:'archive',key:null}].map(a=>`<div data-demo-album="${a.id}">${albumSymbol(a.id)}<span>${a.key?text(a.key):'Mne Archive'}</span>${a.id==='main'?uiIcon('check'):''}</div>`).join('')}`;
     quickLayer.querySelector('.demo-quick-feedback').innerHTML=uiIcon('check')+`<span>${text('shortcutAdded')} · ${text('albumName')}</span>`;
     quickLayer.querySelector('.demo-like-feedback').innerHTML=uiIcon('heart')+`<span>${text('shortcutLiked')}</span>`;
   }

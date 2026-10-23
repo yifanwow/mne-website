@@ -88,3 +88,7 @@ The duplicate illustration adds `photos/reverie.webp`, `reverie-small.webp` and 
 ## Similar Themes demo · 2.0.0
 
 The three photographic previews reuse the author's existing plant, bird and architecture works as views over the same demo library. The App supports six themes; cat, dog and food previews are intentionally unavailable on the website because matching owner photographs were not supplied. Video badges are UI illustrations over still-photo posters, explicitly labelled as demo content. No new third-party photography or generated animal/food photographs were added.
+
+## Album icons and theme scope · 2.1.0
+
+The preview now uses only plant and architecture photography, at the owner's request. Bird photography remains elsewhere in the demo library but is no longer a selectable theme preview. All six App themes are still described. The album picker uses code-native SVG counterparts for the App's 21 icon categories and the existing memory-box geometry; no emoji or new third-party image assets are added.

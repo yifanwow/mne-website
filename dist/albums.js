@@ -1,4 +1,5 @@
-import {albumSamples,uiIcon} from './native-ui.js?v=2.0.0';
+import {albumIconChoices,albumIconSVG,albumSymbol,selectedAlbumIcon,setAlbumIcon,resetAlbumIcons} from './album-icons.js?v=2.1.0';
+import {albumSamples,uiIcon} from './native-ui.js?v=2.1.0';
 // AlbumPreviewLayout + AlbumEditingPhase from the App, expressed in DOM coordinates.
 export function setupAlbums({text}) {
  const studio=document.querySelector('#album-studio'),list=document.querySelector('#album-list'),scroll=document.querySelector('#album-scroll');
@@ -18,8 +19,8 @@ export function setupAlbums({text}) {
  }
  function announce(key){status.textContent=text(key);}
  function makeRow(a){
-  const row=document.createElement('article');row.className='native-album-row';row.dataset.album=a.id;if(a.id==='main')row.id='album-stack';
-  row.innerHTML=`<div class="native-album-heading"><span class="native-album-symbol">${uiIcon('album')}</span><div class="native-album-meta"><strong></strong><small></small></div></div><div class="native-album-fan"></div><div class="native-album-controls"><button type="button" class="native-album-tool">${uiIcon('wrench')}</button><button type="button" class="native-album-handle" aria-keyshortcuts="ArrowUp ArrowDown">${uiIcon('grip')}</button></div>`;
+  const row=document.createElement('article');row.className='native-album-row';row.dataset.album=a.id;row.dataset.customIcon=String(Boolean(selectedAlbumIcon(a.id)));if(a.id==='main')row.id='album-stack';
+  row.innerHTML=`<div class="native-album-heading"><span class="native-album-symbol">${albumSymbol(a.id)}</span><div class="native-album-meta"><strong></strong><small></small></div></div><div class="native-album-fan"></div><div class="native-album-controls"><button type="button" class="native-album-tool">${uiIcon('wrench')}</button><button type="button" class="native-album-handle" aria-keyshortcuts="ArrowUp ArrowDown">${uiIcon('grip')}</button></div>`;
   row.querySelector('strong').textContent=title(a);row.querySelector('small').textContent=`7 ${text('insightCount')}`;
   const fan=row.querySelector('.native-album-fan');
   photos(a).forEach((p,i)=>{const tile=document.createElement('span');tile.className='native-cover';tile.style.setProperty('--i',i);tile.style.zIndex=7-i;tile.innerHTML=`<img src="./assets/photos/${p}.webp" width="66" height="66" alt="" loading="lazy" draggable="false">`;fan.append(tile);});
@@ -87,17 +88,24 @@ export function setupAlbums({text}) {
  }
  function showMenu(a,button){
   active=a;menu.replaceChildren();
-  for(const [action,key,icon] of [['covers','albumChooseCovers','photo'],['rename','albumRename','wrench'],['pin','albumMoveTop','pin'],['delete','albumDelete','trash']]){
+  for(const [action,key,icon] of [['icons','albumIconTitle','album'],['covers','albumChooseCovers','photo'],['rename','albumRename','wrench'],['pin','albumMoveTop','pin'],['delete','albumDelete','trash']]){
    const b=document.createElement('button');b.type='button';b.dataset.albumAction=action;b.innerHTML=`${uiIcon(icon)}<span></span>`;b.querySelector('span').textContent=text(key);if(action==='delete')b.className='destructive';
    b.addEventListener('click',()=>{menu.hidden=true;if(action==='pin'){const before=positions();albums=albums.filter(v=>v!==a);albums.unshift(a);reorderDOM();animateRows(before);announce('albumReordered');}else openDialog(action);});menu.append(b);
   }
   menu.hidden=false;const r=button.getBoundingClientRect(),width=Math.min(250,innerWidth-24);menu.style.width=width+'px';menu.style.left=Math.max(12,Math.min(r.right-width,innerWidth-width-12))+'px';menu.style.top=Math.max(12,Math.min(r.bottom+7,innerHeight-menu.offsetHeight-12))+'px';
  }
- function openDialog(mode){dialogMode=mode;picked=[...active.pins];renderDialog();dialog.showModal();}
+ function openDialog(mode){dialogMode=mode;dialog.dataset.mode=mode;picked=[...active.pins];renderDialog();dialog.showModal();body.scrollTop=0;}
  function renderDialog(){
-  document.querySelector('#album-dialog-title').textContent=dialogMode==='covers'?text('albumChooseCovers'):dialogMode==='rename'?text('albumRename'):text('albumDelete');
+  document.querySelector('#album-dialog-save').textContent=text(dialogMode==='icons'?'albumDone':'albumSave');
+  document.querySelector('#album-dialog-title').textContent=dialogMode==='icons'?text('albumIconTitle'):dialogMode==='covers'?text('albumChooseCovers'):dialogMode==='rename'?text('albumRename'):text('albumDelete');
   body.replaceChildren();
-  if(dialogMode==='rename'){
+  if(dialogMode==='icons'){
+   const name=document.createElement('h4');name.className='native-icon-album-name';name.textContent=title(active);body.append(name);
+   const pick=icon=>{setAlbumIcon(active.id,icon);dialog.close();render();announce('albumIconChanged');};
+   const defaultButton=document.createElement('button');defaultButton.type='button';defaultButton.className='native-icon-default';defaultButton.dataset.albumIcon='default';defaultButton.setAttribute('aria-pressed',String(!selectedAlbumIcon(active.id)));defaultButton.innerHTML=uiIcon('album')+'<span></span>'+(!selectedAlbumIcon(active.id)?uiIcon('check'):'');defaultButton.querySelector('span').textContent=text('albumIconDefault');defaultButton.addEventListener('click',()=>pick(null));body.append(defaultButton);
+   const grid=document.createElement('div');grid.className='native-icon-grid';
+   for(const icon of albumIconChoices){const b=document.createElement('button');b.type='button';b.dataset.albumIcon=icon.id;const chosen=selectedAlbumIcon(active.id)===icon.id;b.setAttribute('aria-pressed',String(chosen));b.setAttribute('aria-label',text(icon.key));b.innerHTML=albumIconSVG(icon.id)+'<span></span>'+(chosen?'<i>'+uiIcon('check')+'</i>':'');b.querySelector('span').textContent=text(icon.key);b.addEventListener('click',()=>pick(icon.id));grid.append(b);}body.append(grid);
+  } else if(dialogMode==='rename'){
    const input=document.createElement('input');input.id='album-name';input.value=title(active);input.maxLength=40;input.setAttribute('aria-label',text('albumNameLabel'));body.append(input);requestAnimationFrame(()=>input.select());
   } else if(dialogMode==='delete'){
    const p=document.createElement('p');p.textContent=text('albumDeleteNote');body.append(p);
@@ -112,6 +120,7 @@ export function setupAlbums({text}) {
   }
  }
  document.querySelector('#album-dialog-save').addEventListener('click',()=>{
+  if(dialogMode==='icons'){dialog.close();return;}
   if(dialogMode==='covers')active.pins=[...picked];
   else if(dialogMode==='rename'){const name=body.querySelector('input').value.trim();if(!name){body.querySelector('input').focus();return;}active.custom=name;}
   else albums=albums.filter(a=>a!==active);
@@ -123,7 +132,8 @@ export function setupAlbums({text}) {
  document.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.hidden=true;if(drag)endDrag(true);}});
  scroll.addEventListener('scroll',()=>menu.hidden=true,{passive:true});
  edit.addEventListener('click',toggleEdit);
- document.querySelector('#album-reset').addEventListener('click',()=>{if(busy)return;if(drag)endDrag(true);albums=albumSamples.map(a=>({...a,photos:[...a.photos],pins:[],custom:''}));menu.hidden=true;render();announce('albumBrowseHint');});
+ document.querySelector('#album-icon-try').addEventListener('click',()=>{if(busy)return;active=albums.find(a=>a.id==='main')||albums[0];if(active)openDialog('icons');});
+ document.querySelector('#album-reset').addEventListener('click',()=>{if(busy)return;if(drag)endDrag(true);resetAlbumIcons();albums=albumSamples.map(a=>({...a,photos:[...a.photos],pins:[],custom:''}));menu.hidden=true;render();announce('albumBrowseHint');});
  function refresh(){
   document.querySelector('#album-title').textContent=text(editing?'albumEditHeading':'albumBrowseHeading');edit.textContent=text(editing?'albumDone':'albumEdit');edit.setAttribute('aria-pressed',String(editing));
   for(const a of albums){const row=list.querySelector(`[data-album="${a.id}"]`);if(!row)continue;row.querySelector('strong').textContent=title(a);row.querySelector('small').textContent=`7 ${text('insightCount')}`;row.querySelector('.native-album-tool').disabled=!editing||busy;row.querySelector('.native-album-handle').disabled=!editing||busy;row.querySelector('.native-album-tool').setAttribute('aria-label',`${text('albumTools')}: ${title(a)}`);row.querySelector('.native-album-handle').setAttribute('aria-label',`${text('albumDrag')}: ${title(a)}`);}

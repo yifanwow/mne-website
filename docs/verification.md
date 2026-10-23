@@ -1,3 +1,13 @@
+# Website 2.1.0 verification · 2026-10-23
+
+- `scripts/album-icons-qa.mjs` passes Chromium and WebKit in Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. Default plus 21 icon options use three columns; modal bounds and labels fit. Selection applies immediately, persists through cancel/Done and language changes, and can restore default. Done does not delete an album. Cover selection, rename, keyboard reorder and reset retain the intended icon state. Row, quick-archive bubble and 02A menu share the chosen symbol without incrementing growth counts or duplicating SVG IDs.
+- A focused Chromium smoke run selects every one of the 21 options, reopens the picker and verifies its selected state. Desktop and narrow English picker screenshots are visually reviewed under ignored `artifacts/v19/`; icon labels wrap within tiles and the scrolling body retains a fixed header. Memory-box SVG keeps its production geometry with a tighter icon viewBox.
+- `scripts/native-ui-qa.mjs` passes both engines, 10 layouts each: four albums, seven different photos per album (28 total), pointer-following drag/reorder, cover selection, rename and growth detail opening. No document overflow, page errors or failed resource requests.
+- `scripts/latest-qa.mjs` passes both engines, 12 layouts each: passive metadata, plant/building previews, independent archive/video filters, six App theme choices with four unavailable web previews, Escape and reduced motion. `scripts/stories-qa.mjs` passes both engines, 10 layouts each: two stories advance/reverse, fit their viewport, pause/resume and retain manual steps under Reduce Motion. Scroll demonstrations do not record growth activity.
+- Website syntax, static assets, unique HTML IDs, bilingual keys and whitespace pass. No iOS engineering or NAS deployment is part of this update. Browser emulation does not replace physical-device testing. Delivery is a full static 2.1.0 ZIP; preview remains available locally.
+
+## Earlier verification
+
 # Website 2.0.0 verification · 2026-10-23
 
 - `scripts/latest-qa.mjs` passes Chromium and WebKit, Chinese/English, at 1780×1000, 1440×1000, 1024×900, 768×1024, 390×844 and 320×720. Five metadata fields are visible without a button. Theme examples switch, archive/video filters stay independent of the main photo filter, media preference survives a theme change, six chooser entries fit inside the phone, and Escape dismisses the chooser. Three unsupported photographic previews remain explicitly unavailable rather than displaying invented examples. No page/resource errors or horizontal overflow.

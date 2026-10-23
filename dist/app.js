@@ -1,17 +1,17 @@
-import {latestCopy} from './latest-copy.js?v=2.0.0';
-import {setupSubjects} from './subjects.js?v=2.0.0';
-import {refineCopy} from './refine-copy.js?v=2.0.0';
-import {setupFarewell} from './history.js?v=2.0.0';
-import {setupSectionRail} from './section-rail.js?v=2.0.0';
-import {storiesCopy} from './stories-copy.js?v=2.0.0';
-import {setupStories} from './stories.js?v=2.0.0';
-import { motionCopy } from './motion-copy.js?v=2.0.0';
-import { initMotion } from './motion.js?v=2.0.0';
-import { setupContacts } from './contacts.js?v=2.0.0';
-import { setupDetails } from './details.js?v=2.0.0';
-import { setupAlbums } from './albums.js?v=2.0.0';
-import { setupProduct } from './product.js?v=2.0.0';
-import { productCopy } from './product-copy.js?v=2.0.0';
+import {latestCopy} from './latest-copy.js?v=2.1.0';
+import {setupSubjects} from './subjects.js?v=2.1.0';
+import {refineCopy} from './refine-copy.js?v=2.1.0';
+import {setupFarewell} from './history.js?v=2.1.0';
+import {setupSectionRail} from './section-rail.js?v=2.1.0';
+import {storiesCopy} from './stories-copy.js?v=2.1.0';
+import {setupStories} from './stories.js?v=2.1.0';
+import { motionCopy } from './motion-copy.js?v=2.1.0';
+import { initMotion } from './motion.js?v=2.1.0';
+import { setupContacts } from './contacts.js?v=2.1.0';
+import { setupDetails } from './details.js?v=2.1.0';
+import { setupAlbums } from './albums.js?v=2.1.0';
+import { setupProduct } from './product.js?v=2.1.0';
+import { productCopy } from './product-copy.js?v=2.1.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -46,7 +46,7 @@ Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy
 
 // Read from local source b0c33bc and the current release notes, 2026-10-23. Source is not a public release.
 const journal = [
-  {date:'2026-10-23',version:'0.9.317 — 0.9.320 (351)',tag:{zh:'照片编辑',en:'Photo editing'},title:{zh:'给回忆，补上时间与地点。',en:'Give a memory its time and place.'},body:{zh:'裁剪、拍摄日期、地点与 Live 播放设置汇入同一编辑页。相册支持自定义图标，连接入口可自动择优；当前为本地源码进展。',en:'Crop, capture date, location and Live settings come together in one editor. Personal album icons and automatic connection routes are also in the local source; this is not a public-release announcement.'}},
+  {date:'2026-10-23',version:'0.9.317 — 0.9.320 (351)',tag:{zh:'照片编辑',en:'Photo editing'},title:{zh:'给回忆，补上时间与地点。',en:'Give a memory its time and place.'},body:{zh:'裁剪、拍摄日期、地点与 Live 设置汇入同一编辑页。相册可选 21 款图标，常用归档入口也能一眼认得；当前为本地源码进展。',en:'Crop, capture date, location and Live settings come together in one editor. Choose from 21 album icons, also visible in quick archive menus. Local source progress; not a public-release announcement.'}},
   {date:'2026-10-21',version:'0.9.191 — 0.9.251',tag:{zh:'相似主题',en:'Similar themes'},title:{zh:'同一种喜欢，散落在不同的日子。',en:'The things you love, across different days.'},body:{zh:'六类主题在本机查找照片与视频。结果复用熟悉的浏览与归档，可独立筛选已归档和视频；告别图表也能对照当前图库。',en:'Six themes find photos and videos on device. Browse and archive results with independent archive and video filters. Farewell charts can also compare records with the current library.'}},
 
   {"date": "2026-10-20", "version": "0.9.189 — 0.9.190 (221)", "tag": {"zh": "卡面更新", "en": "Artwork update"}, "title": {"zh": "七星照见来路，星火汇成回忆。", "en": "Seven stars. A spark passed on."}, "body": {"zh": "七星与星火相传换上最新完整透明卡画，保留既有收藏记录；白昼主题的柔光与轮廓继续打磨。当前源码 0.9.190（221），App 内更新日志截至 0.9.185；当前构建未确认发布。", "en": "New original transparent artwork for Seven stars and Passing the spark, preserving existing collection records. Refined light and contours in Daylight. Current source is 0.9.190 (221); in-app notes cover through 0.9.185. This source build is not confirmed released."}},

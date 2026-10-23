@@ -1,8 +1,8 @@
-import {uiIcon} from './native-ui.js?v=2.0.0';
+import {uiIcon} from './native-ui.js?v=2.1.0';
 const themeData=[
  {id:'cats',key:'subjectCats',icon:'M5 9 4 3l6 4h4l6-4-1 6a8 8 0 1 1-14 0ZM8 13h.01M16 13h.01M10 17l2 1 2-1'},
  {id:'dogs',key:'subjectDogs',icon:'M7 8 3 5 2 13l5 2m10-7 4-3 1 8-5 2M7 7h10v10a5 5 0 0 1-10 0ZM9 12h.01M15 12h.01M10 16h4l-2 2Z'},
- {id:'birds',key:'subjectBirds',icon:'M4 15c0-6 8-3 9-8a4 4 0 0 1 7 3l2 2-3 1c-1 6-9 8-15 2Zm1 0-3 4m10-6-5 2m9-7h.01',photos:['wildbird','bird'],video:1},
+ {id:'birds',key:'subjectBirds',icon:'M4 15c0-6 8-3 9-8a4 4 0 0 1 7 3l2 2-3 1c-1 6-9 8-15 2Zm1 0-3 4m10-6-5 2m9-7h.01'},
  {id:'plants',key:'subjectPlants',icon:'M20 3C7 2 2 8 5 16s17 6 15-13ZM4 21 15 10',photos:['garden','fern','flowerfield','forest','meadow','blossom'],video:4},
  {id:'food',key:'subjectFood',icon:'M4 3v6a3 3 0 0 0 6 0V3M7 3v18M18 3c-4 3-4 8 0 9h2M20 3v18'},
  {id:'buildings',key:'subjectBuildings',icon:'M3 21V8l8-4v17m0-11h10v11M6 10h2m-2 4h2m-2 4h2m7-5h2m-2 4h2M1 21h22',photos:['city','station','roof','skyline','window','harbor'],video:5}

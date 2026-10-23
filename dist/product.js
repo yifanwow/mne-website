@@ -1,6 +1,7 @@
-import {uiIcon,albumSamples} from './native-ui.js?v=2.0.0';
-import {statisticSVG} from './app-art.js?v=2.0.0';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=2.0.0';
+import {albumSymbol} from './album-icons.js?v=2.1.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=2.1.0';
+import {statisticSVG} from './app-art.js?v=2.1.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=2.1.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');
@@ -48,7 +49,7 @@ export function setupProduct({text}) {
   const width=p.width*scale*1.05,height=p.height*scale*1.05;
   previewPhoto.style.cssText=`background-image:url('./assets/photos/${p.id}.webp');width:${width}px;height:${height}px;left:${(w-width)/2}px;top:${Math.max(20,h*.4-height/2)}px;`;
   bubble.replaceChildren();const targets=removing?recent.filter(a=>memberships().has(a.id)):recent;
-  bubble.hidden=!targets.length;for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.previewAlbum=a.id;b.innerHTML=`${uiIcon(removing?'remove':'add')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));bubble.append(b);}
+  bubble.hidden=!targets.length;for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.previewAlbum=a.id;b.innerHTML=`${albumSymbol(a.id,removing?'remove':'add')}<span></span>`;b.lastElementChild.textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));bubble.append(b);}
   strip.replaceChildren();const actions=[['favorite',favorite.has(p.id)?'shortcutUnlike':'shortcutLike','heart'],['picker','shortcutAdd','add']];
   if(memberships().size)actions.push(['removeMode','shortcutRemove','remove']);actions.push(['trash',pending.has(p.id)?'shortcutRestore':'shortcutTrash',pending.has(p.id)?'restore':'trash']);
   for(const [action,key,icon] of actions){const b=document.createElement('button');b.type='button';b.dataset.previewAction=action;b.innerHTML=`${uiIcon(icon)}<span></span>`;b.querySelector('span').textContent=text(key);b.setAttribute('aria-pressed',String(action==='favorite'?favorite.has(p.id):action==='removeMode'&&removing));if(action==='trash'&&!pending.has(p.id))b.className='destructive';b.addEventListener('click',()=>act(action));strip.append(b);}
@@ -62,7 +63,7 @@ export function setupProduct({text}) {
   for(const [action,key,icon] of rows){const b=document.createElement('button');b.type='button';b.dataset.singleAction=action;b.innerHTML=`${uiIcon(icon)}<span></span>`;b.querySelector('span').textContent=text(key);b.addEventListener('click',()=>act(action));menu.append(b);}
   const title=document.createElement('small');title.textContent=text(removing?'shortcutRemove':'shortcutRecent');menu.append(title);
   const targets=removing?recent.filter(a=>memberships().has(a.id)):recent;
-  for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.singleAlbum=a.id;b.innerHTML=`${uiIcon(removing?'remove':'album')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));menu.append(b);}
+  for(const a of targets){const b=document.createElement('button');b.type='button';b.dataset.singleAlbum=a.id;b.innerHTML=`${albumSymbol(a.id,removing?'remove':undefined)}<span></span>`;b.lastElementChild.textContent=name(a);b.addEventListener('click',()=>commit(removing?'remove':'album',a.id));menu.append(b);}
   // Same bounding and above/below preference as PhotoQuickMenuGeometry.frame.
   const w=surface.clientWidth,h=surface.clientHeight,width=Math.min(272,w-24),count=rows.length+targets.length,height=Math.min(count*44+(count>2?42:2),h-24);
   const x=Math.max(12,Math.min(point.x-width/2,w-width-12)),preferred=point.y+height+26<=h?point.y+14:point.y-height-14;
@@ -82,7 +83,7 @@ export function setupProduct({text}) {
   if(mode==='single')close();renderPhoto();renderStats();status.textContent=text(notice);
  }
  function openPicker(){
-  document.querySelector('#shortcut-picker-list').replaceChildren(...recent.map(a=>{const b=document.createElement('button');b.type='button';b.innerHTML=`${uiIcon('album')}<span></span>`;b.querySelector('span').textContent=name(a);b.addEventListener('click',()=>{commit('album',a.id);picker.close();});return b;}));picker.showModal();
+  document.querySelector('#shortcut-picker-list').replaceChildren(...recent.map(a=>{const b=document.createElement('button');b.type='button';b.innerHTML=`${albumSymbol(a.id)}<span></span>`;b.lastElementChild.textContent=name(a);b.addEventListener('click',()=>{commit('album',a.id);picker.close();});return b;}));picker.showModal();
  }
  grid.replaceChildren(...photos.map((p,i)=>photoButton(p,i)));document.querySelector('#native-filmstrip').replaceChildren(...photos.map((p,i)=>photoButton(p,i,true)));
  open.addEventListener('pointerdown',e=>beginPress(e,()=>showSingle(e)));open.addEventListener('pointermove',movePress);for(const event of ['pointerup','pointercancel','pointerleave'])open.addEventListener(event,()=>clearTimeout(hold));
@@ -136,5 +137,6 @@ export function setupProduct({text}) {
   touch.style.left=(targetFrame?(targetFrame.x+targetFrame.width/2-frame.x)/frame.width*100:60)+'%';
   touch.style.top=(targetFrame?(targetFrame.y+targetFrame.height/2-frame.y)/frame.height*100:55)+'%';
  }
+ addEventListener('mne:album-icon',renderPhoto);
  refresh();return {refresh,presentShortcut};
 }

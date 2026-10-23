@@ -6,7 +6,7 @@ await fs.mkdir('artifacts/v11',{recursive:true});
 for(const [engineName,engine] of [['Chromium',chromium],['WebKit',webkit]].filter(([name])=>!process.env.QA_ENGINE||name===process.env.QA_ENGINE)) {
  const browser=await engine.launch({headless:true}),page=await browser.newPage({locale:'zh-CN'}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
- await page.goto('http://127.0.0.1:4173/?v=2.0.0',{waitUntil:'networkidle'});await page.evaluate(()=>document.documentElement.style.scrollBehavior='auto');
+ await page.goto('http://127.0.0.1:4173/?v=2.1.0',{waitUntil:'networkidle'});await page.evaluate(()=>document.documentElement.style.scrollBehavior='auto');
  const names=await page.locator('.native-album-meta strong').allTextContents();assert(names.length===4&&names.every(x=>x.length===2),'Album names are not four two-character names');
  assert((await page.locator('.version-badge').innerText()).includes('0.9.320'),'Outdated source badge');
  for(const [width,height] of [[1440,1000],[1024,900],[768,1024],[390,844],[320,720]])for(const lang of ['zh','en']) {
