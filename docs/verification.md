@@ -1,3 +1,11 @@
+# Website 2.1.1 verification · 2026-10-23
+
+- Focused Chromium and WebKit browser checks pass Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. DOM order is Experience → Photo editing → Small things, with one editing overview and all five tools. Introductory copy and language-specific sharing metadata update correctly, with no horizontal overflow, page errors or failed resource requests.
+- Experience scroll progresses through browsing, close view and recovery, and reverses back to browsing after the content move. Editing overview remains visible under Reduce Motion. Screenshots under ignored `artifacts/v20/` were reviewed for desktop and phone copy and editing layout.
+- JavaScript syntax, local assets, unique IDs, anchors, bilingual keys and whitespace checks pass. This is a website copy/layout update; no App or NAS operations were performed. Delivery is a complete static 2.1.1 ZIP; local preview remains running.
+
+## Earlier verification
+
 # Website 2.1.0 verification · 2026-10-23
 
 - `scripts/album-icons-qa.mjs` passes Chromium and WebKit in Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. Default plus 21 icon options use three columns; modal bounds and labels fit. Selection applies immediately, persists through cancel/Done and language changes, and can restore default. Done does not delete an album. Cover selection, rename, keyboard reorder and reset retain the intended icon state. Row, quick-archive bubble and 02A menu share the chosen symbol without incrementing growth counts or duplicating SVG IDs.

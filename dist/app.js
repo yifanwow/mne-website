@@ -1,24 +1,24 @@
-import {latestCopy} from './latest-copy.js?v=2.1.0';
-import {setupSubjects} from './subjects.js?v=2.1.0';
-import {refineCopy} from './refine-copy.js?v=2.1.0';
-import {setupFarewell} from './history.js?v=2.1.0';
-import {setupSectionRail} from './section-rail.js?v=2.1.0';
-import {storiesCopy} from './stories-copy.js?v=2.1.0';
-import {setupStories} from './stories.js?v=2.1.0';
-import { motionCopy } from './motion-copy.js?v=2.1.0';
-import { initMotion } from './motion.js?v=2.1.0';
-import { setupContacts } from './contacts.js?v=2.1.0';
-import { setupDetails } from './details.js?v=2.1.0';
-import { setupAlbums } from './albums.js?v=2.1.0';
-import { setupProduct } from './product.js?v=2.1.0';
-import { productCopy } from './product-copy.js?v=2.1.0';
+import {latestCopy} from './latest-copy.js?v=2.1.1';
+import {setupSubjects} from './subjects.js?v=2.1.1';
+import {refineCopy} from './refine-copy.js?v=2.1.1';
+import {setupFarewell} from './history.js?v=2.1.1';
+import {setupSectionRail} from './section-rail.js?v=2.1.1';
+import {storiesCopy} from './stories-copy.js?v=2.1.1';
+import {setupStories} from './stories.js?v=2.1.1';
+import { motionCopy } from './motion-copy.js?v=2.1.1';
+import { initMotion } from './motion.js?v=2.1.1';
+import { setupContacts } from './contacts.js?v=2.1.1';
+import { setupDetails } from './details.js?v=2.1.1';
+import { setupAlbums } from './albums.js?v=2.1.1';
+import { setupProduct } from './product.js?v=2.1.1';
+import { productCopy } from './product-copy.js?v=2.1.1';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
   zh: {
     skip:'跳到内容',navExperience:'体验',navFragments:'记忆碎片',navJournal:'开发手记',navStatus:'探索 Mne',
-    heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'照片是回忆的载体，选择你想留住的故事。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 邀请制内测中',phoneCount:'24,680 份回忆',floatingTitle:'遇见美好，留下回忆。',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
-    storyEyebrow:'关于去留，你比任何算法都懂。',storyLine1:'不是每张照片都要留下。',storyLine2:'但每一份记忆，都值得被认真对待。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>整理不是抹去，而是为真正重要的瞬间，留出空间。回望本身，也是人生的过程。',
+    heroEyebrow:'新的旅程从留下的空白开始。',heroLine1:'记忆碎片，',heroLine2:'掌指之间。',heroDescription:'按自己的节奏回望照片，让整理也成为一段值得享受的时光。',discover:'认识 Mne',whyMne:'为什么是 Mne',platform:'为 iPhone 而生 · iOS 18+ · 邀请制内测中',phoneCount:'24,680 份回忆',floatingTitle:'遇见美好，留下回忆。',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'界面示意 · 照片与数字为展示内容',scrollExplore:'向下探索',
+    storyEyebrow:'相册堆了很久，想整理，又怕误删。',storyLine1:'整理不该是负担。',storyLine2:'而该是一次回望。',storyDescription:'Mne，取名自记忆女神 Mnemosyne。<br>从一张照片开始，慢慢决定去留。暂存与恢复留出余地，卡片与成长记录回应每一次整理。',
     experienceIndex:'顺着直觉，回到记忆',experienceEyebrow:'少一点操作，多一点感受。',experienceTitle:'<span class="lilac">回望，</span>也可以纯粹且简单。',experienceDescription:'从一整片回忆，到某一个瞬间。<br>找到舒服的节奏，剩下的交给手指。',
     featureBrowseTitle:'<span class="lilac">远观，</span>或靠近。',featureBrowseDescription:"从瀑布流到单张，双指缩放，自然靠近一份回忆。",featureGestureTitle:'<span class="lilac">靠近一张照片，</span>顺手做好。',featureGestureDescription:"长按，喜欢或加入最近相册。上滑暂存，随时恢复。",featureRecoverTitle:'<span class="lilac">每次放下，</span>都有余地。',featureRecoverDescription:"暂存后仍能取回。真正删除前，再由系统确认。",
     fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:"<span class=\"fragment-full\">收集卡片，解锁成就。<br>让整理成为一场回到过去的历险。</span><span class=\"fragment-brief\">收集碎片，重返过去。</span>",
@@ -29,8 +29,8 @@ const copy = {
   },
   en: {
     skip:'Skip to content',navExperience:'Experience',navFragments:'Fragments',navJournal:'Journal',navStatus:'Explore Mne',
-    heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Photos hold our memories. Choose the stories you want to keep.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Invite-only beta',phoneCount:'24,680 memories',floatingTitle:'Meet beauty. Keep memories.',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
-    storyEyebrow:'YOU KNOW WHAT MATTERS. BETTER THAN ANY ALGORITHM.',storyLine1:'Not every photo needs to stay.',storyLine2:'Every memory deserves a moment of care.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Curating makes room for the moments that matter. Looking back is part of living.',
+    heroEyebrow:'A NEW JOURNEY BEGINS WITH THE SPACE YOU LEAVE.',heroLine1:'Fragments of memory,',heroLine2:'at your fingertips.',heroDescription:'Revisit your photos at your own pace. Make curating feel as good as remembering.',discover:'Discover Mne',whyMne:'Why Mne',platform:'Made for iPhone · iOS 18+ · Invite-only beta',phoneCount:'24,680 memories',floatingTitle:'Meet beauty. Keep memories.',floatingSub:'MEET BEAUTY. KEEP MEMORIES.',illustrationLabel:'Interface illustration · Demo photos and numbers',scrollExplore:'SCROLL TO EXPLORE',
+    storyEyebrow:'A GROWING LIBRARY. A LITTLE HESITATION.',storyLine1:'Less of a chore.',storyLine2:'More of a journey back.',storyDescription:'Mne takes its name from Mnemosyne, the goddess of memory.<br>Start with one photo. Set it aside or bring it back. Cards and a record of your growth make each small choice feel rewarding.',
     experienceIndex:'FOLLOW YOUR INTUITION',experienceEyebrow:'LESS DOING. MORE FEELING.',experienceTitle:'<span class="lilac">Looking back,</span> simply.',experienceDescription:'From a whole world of memories to a single moment.<br>Find your rhythm. Let your fingers take it from there.',
     featureBrowseTitle:'<span class="lilac">Step back.</span> Or get closer.',featureBrowseDescription:"Pinch from the waterfall into a single moment. Keep your place as you get closer.",featureGestureTitle:'<span class="lilac">Get closer.</span> Keep it within reach.',featureGestureDescription:"Hold to favorite or add to a recent album. Swipe up to set aside; restore anytime.",featureRecoverTitle:'<span class="lilac">Room</span> to change your mind.',featureRecoverDescription:"Set aside with room to reconsider. iOS confirms before anything is deleted.",
     fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:"<span class=\"fragment-full\">Collect cards.<br>Unlock a journey into your past.</span><span class=\"fragment-brief\">Collect cards. Look back.</span>",
@@ -126,7 +126,7 @@ function applyLanguage() {
   document.querySelector('.lang-en').classList.toggle('active', language === 'en');
   document.querySelector('#language-toggle').setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换到中文');
   document.title = language === 'zh' ? 'Mne — 记忆碎片，掌指之间。' : 'Mne — Fragments of memory, at your fingertips.';
-  const description = language === 'zh' ? 'Mne，一款安静的 iPhone 照片整理 App。由你决定每张照片的去留，让真正的记忆更闪耀。' : 'Mne is a quiet, intuitive iPhone app for curating your photo library. Your photos. Your decisions. Room for what matters.';
+  const description = language === 'zh' ? 'Mne，一款为 iPhone 而生的照片整理 App。按自己的节奏回望照片，让整理成为一段有回应的旅程。' : 'Mne is an iPhone app for curating photos at your own pace. Revisit your stories and see small choices become growth.';
   document.querySelector('meta[name="description"]').content = description;
   document.querySelector('meta[property="og:title"]').content = document.title;
   document.querySelector('meta[property="og:description"]').content = description;

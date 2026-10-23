@@ -1,6 +1,6 @@
 {
   "name": "mne-website",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "description": "The bilingual public website for Mne, a considered way to curate your photo library.",
   "type": "module",
