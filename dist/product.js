@@ -1,7 +1,7 @@
-import {albumSymbol} from './album-icons.js?v=2.1.1';
-import {uiIcon,albumSamples} from './native-ui.js?v=2.1.1';
-import {statisticSVG} from './app-art.js?v=2.1.1';
-import {shortcutPhotos as photos} from './photo-catalog.js?v=2.1.1';
+import {albumSymbol} from './album-icons.js?v=2.3.0';
+import {uiIcon,albumSamples} from './native-ui.js?v=2.3.0';
+import {statisticSVG} from './app-art.js?v=2.3.0';
+import {shortcutPhotos as photos} from './photo-catalog.js?v=2.3.0';
 // Adapted from PhotoPreviewActions, PhotoQuickMenuGeometry, and ProfileStatisticDetailContent.
 export function setupProduct({text}) {
  const surface=document.querySelector('#shortcut-surface'),grid=document.querySelector('#native-waterfall'),open=document.querySelector('#shortcut-open');

@@ -92,3 +92,7 @@ The three photographic previews reuse the author's existing plant, bird and arch
 ## Album icons and theme scope · 2.1.0
 
 The preview now uses only plant and architecture photography, at the owner's request. Bird photography remains elsewhere in the demo library but is no longer a selectable theme preview. All six App themes are still described. The album picker uses code-native SVG counterparts for the App's 21 icon categories and the existing memory-box geometry; no emoji or new third-party image assets are added.
+
+## Journey Review, appearance and collection · 2.3.0
+
+Clarity and In Tune are copied byte-for-byte from the current App's AchievementClarity and AchievementInTune imagesets. Their public descriptions follow current MemorySeal and AppLanguage, rather than the earlier design proposal. Echoes remains a separate candidate and is not advertised as shipped. Eight app-icon PNGs are copied from the corresponding current AppIcon asset catalogs, including the working-tree Mist icon. AppTheme canvas, surface, accent and secondary values inform the isolated preview. No new third-party or generated photography was added. Journey groups and routes are fictional arrangements of the author's already-authorized photo library, not real photo-location metadata.

@@ -1,5 +1,5 @@
-import {farewellEvents} from './sample-memory.js?v=2.1.1';
-import {uiIcon} from './native-ui.js?v=2.1.1';
+import {farewellEvents} from './sample-memory.js?v=2.3.0';
+import {uiIcon} from './native-ui.js?v=2.3.0';
 const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));
 const palette=['#c2a6fa','#a17ddb','#dec2fa','#8a73ba','#bab0e8','#daa4da','#9794d6','#6e6191'];
 

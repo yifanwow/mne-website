@@ -1,4 +1,4 @@
-// GitHub 294634c472 · MemorySeal / AppLanguage · 0.9.190 (221).
+// Local MemorySeal / AppLanguage · 0.9.385 (416), reviewed 2026-10-25.
 // Public previews show stories, never unlock conditions. Mysteries keep their names veiled.
 export const fragments = [
   {id:'fool',name:{zh:'愚者',en:'The Fool'},story:{zh:'一次小小的告别。新的旅程，从留下的空白开始。',en:'One small farewell. A new journey begins in the space you leave behind.'}},
@@ -38,3 +38,8 @@ const latest = [
  ['eternity','themed','永恒','Eternity','总有一些痕迹是无法抹去的。','Some traces can never be erased.']
 ];
 fragments.push(...latest.map(([id,category,zh,en,storyZH,storyEN])=>({id,category,asset:`${id}.webp`,name:{zh,en},story:{zh:storyZH,en:storyEN}})));
+
+fragments.push(
+ {id:'clarity',category:'ordinary',asset:'clarity.png',name:{zh:'澄明',en:'Clarity'},story:{zh:'相似的光影之间，留下难忘的一刻。',en:'Among similar light and shadow, keep the moment you will never forget.'}},
+ {id:'in-tune',category:'ordinary',asset:'in-tune.png',name:{zh:'同调',en:'In Tune'},story:{zh:'散落在不同日子里的同一种心动。',en:'The same spark of joy, scattered across different days.'}}
+);

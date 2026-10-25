@@ -1,3 +1,15 @@
+# Website 2.3.0 verification · 2026-10-25
+
+- `scripts/evolution-qa.mjs` passes Chromium and WebKit, Chinese/English at 1780×1000, 1440×1000, 768×1024, 390×844 and 320×720. Two seven-cover journey groups open; unchecking a tentative photo changes the draft count; confirming review, renaming, rejecting a blank name, creating and restarting work. Entered markup remains text. Demo actions leave growth records unchanged.
+- Eight palettes and eight original App icons are independently selectable; changing palette retains the icon and keyboard focus. Five editor tools render; date/place suggestions stay in the draft until the illustrated save, and save does not reset Live preferences. Screenshots were reviewed at desktop and narrow phone widths under ignored `artifacts/update-2026-10-25/`.
+- Entry sequence pause/resume and Reduce Motion pass both engines. A timer callback guard checks motion preference, visibility and manual takeover before advancing. Page exceptions, failed local-resource requests and horizontal overflow are absent in the covered layouts.
+- `scripts/collection-qa.mjs` passes both engines/languages at 320×720 for all 30 cards, forward keyboard navigation, three categories, reduced-motion stories, re-entry counters and all 24 expanded journal entries. `scripts/stories-qa.mjs` passes Chromium at 10 layouts for existing scroll stories, pause/resume and manual reduced-motion steps.
+- Privacy HTML aliases, CSS and JS retain their exact opening hashes; `/privacy`, `/privacy/` and `/privacy.html` return 200 locally. Ten new App artwork/icon files match their source bytes. Public asset permissions are readable. Syntax, local assets, bilingual keys, unique IDs, anchors and the new diff whitespace checks pass. Existing font-license text is preserved verbatim.
+- The prior temporary WebKit cache could launch but lacked window resources and could not create a page. A complete temporary WebKit 26.5 install at `/private/tmp/mne-webkit-check-20261025` supplied the passing WebKit runs; Chromium used `/private/tmp/mne-playwright`. QA_ENGINE selects each engine for the new and collection suites. No iOS checks, build, simulator, backend operation, or NAS synchronization occurred. Browser emulation does not replace physical-device testing.
+- Website snapshot: 2.3.0. App reference: local 0.9.385 (416), commit 55b6e09 plus working changes, not a release receipt. Existing 2.2.1 privacy work is backed up separately before this feature update. Full static ZIP includes the preserved privacy pages and excludes infrastructure configuration.
+
+## Earlier verification
+
 # Website 2.1.1 verification · 2026-10-23
 
 - Focused Chromium and WebKit browser checks pass Chinese/English at 1440×1000, 768×1024, 390×844 and 320×720. DOM order is Experience → Photo editing → Small things, with one editing overview and all five tools. Introductory copy and language-specific sharing metadata update correctly, with no horizontal overflow, page errors or failed resource requests.

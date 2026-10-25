@@ -1,17 +1,19 @@
-import {latestCopy} from './latest-copy.js?v=2.1.1';
-import {setupSubjects} from './subjects.js?v=2.1.1';
-import {refineCopy} from './refine-copy.js?v=2.1.1';
-import {setupFarewell} from './history.js?v=2.1.1';
-import {setupSectionRail} from './section-rail.js?v=2.1.1';
-import {storiesCopy} from './stories-copy.js?v=2.1.1';
-import {setupStories} from './stories.js?v=2.1.1';
-import { motionCopy } from './motion-copy.js?v=2.1.1';
-import { initMotion } from './motion.js?v=2.1.1';
-import { setupContacts } from './contacts.js?v=2.1.1';
-import { setupDetails } from './details.js?v=2.1.1';
-import { setupAlbums } from './albums.js?v=2.1.1';
-import { setupProduct } from './product.js?v=2.1.1';
-import { productCopy } from './product-copy.js?v=2.1.1';
+import {evolutionCopy} from './evolution-copy.js?v=2.3.0';
+import {setupEvolution} from './evolution.js?v=2.3.0';
+import {latestCopy} from './latest-copy.js?v=2.3.0';
+import {setupSubjects} from './subjects.js?v=2.3.0';
+import {refineCopy} from './refine-copy.js?v=2.3.0';
+import {setupFarewell} from './history.js?v=2.3.0';
+import {setupSectionRail} from './section-rail.js?v=2.3.0';
+import {storiesCopy} from './stories-copy.js?v=2.3.0';
+import {setupStories} from './stories.js?v=2.3.0';
+import { motionCopy } from './motion-copy.js?v=2.3.0';
+import { initMotion } from './motion.js?v=2.3.0';
+import { setupContacts } from './contacts.js?v=2.3.0';
+import { setupDetails } from './details.js?v=2.3.0';
+import { setupAlbums } from './albums.js?v=2.3.0';
+import { setupProduct } from './product.js?v=2.3.0';
+import { productCopy } from './product-copy.js?v=2.3.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -23,7 +25,7 @@ const copy = {
     featureBrowseTitle:'<span class="lilac">远观，</span>或靠近。',featureBrowseDescription:"从瀑布流到单张，双指缩放，自然靠近一份回忆。",featureGestureTitle:'<span class="lilac">靠近一张照片，</span>顺手做好。',featureGestureDescription:"长按，喜欢或加入最近相册。上滑暂存，随时恢复。",featureRecoverTitle:'<span class="lilac">每次放下，</span>都有余地。',featureRecoverDescription:"暂存后仍能取回。真正删除前，再由系统确认。",
     fragmentEyebrow:'回忆，是铸就我们人生的碎片。',fragmentLine1:'整理过去。',fragmentLine2:'重新认识自己。',fragmentDescription:"<span class=\"fragment-full\">收集卡片，解锁成就。<br>让整理成为一场回到过去的历险。</span><span class=\"fragment-brief\">收集碎片，重返过去。</span>",
     atlasIndex:'看看记忆的形状',atlasEyebrow:'时间留下轨迹，你留下故事。',atlasLine1:'让回忆，',atlasLine2:'有迹可循。',atlasDescription:"按周、月或年，看看记忆的起伏。圈定一段岁月，重温那时的自己。",atlasTag1:'周 / 月 / 年',atlasTag2:'趋势 / 柱形 / 饼图',atlasPanelEyebrow:'回忆图谱',chartTrend:'趋势',chartBars:'柱形',statReviewed:'已检查',statRemoved:'已整理',statReleased:'估算腾出空间',atlasDisclaimer:'图表与统计为示例数据；实际空间释放取决于 iOS 与 iCloud。',
-    privacyTitle:'照片，留在你的照片库。',privacyDescription:"照片库原件留在系统图库。账号、头像与使用统计涉及联网，详见隐私政策。",themeTitle:'让界面，顺应你的心情。',themeDescription:'白昼、暗夜、旧梦、青灰与 OLED nerd。五种主题与独立图标选择，中文与英文。一个始终熟悉的整理空间。',nativeTitle:'原生的，恰好的。',nativeDescription:"原生 iPhone 体验，轻柔触感与恰好的动效。支持系统减少动态效果。",
+    privacyTitle:'照片，留在你的照片库。',privacyDescription:"照片库原件留在系统图库。账号、头像与使用统计涉及联网，详见隐私政策。",themeTitle:'让界面，顺应你的心情。',themeDescription:'八种主题，图标独立选择，也能跟随系统。让回望顺应你的心情。',nativeTitle:'原生的，恰好的。',nativeDescription:"原生 iPhone 体验，轻柔触感与恰好的动效。支持系统减少动态效果。",
     journalIndex:'持续生长，慢慢打磨',journalEyebrow:'一个关于记忆的 App，也有自己的记忆。',journalTitle:'Mne 的开发手记。',sourceLabel:'当前源码',journalMore:'回看更早的故事',journalLess:'收起早期手记',
     accessLine1:'给照片一点空间。',accessLine2:'也给自己一点。',accessDescription:'Mne 正在邀请制内测中。<br>从浏览开始，把回忆慢慢整理成喜欢的样子。',accessCta:'看看最新进展',accessStatus:'邀请制 TestFlight 内测 · 暂无公开下载',footerTagline:'精简照片，是为了让真正的记忆更闪耀。',footerMade:'用心整理，用心创造。',creditsButton:'了解更多',creditsTitle:'在 Mne 之外，继续相遇。',backTop:'回到顶部 ↑'
   },
@@ -35,17 +37,20 @@ const copy = {
     featureBrowseTitle:'<span class="lilac">Step back.</span> Or get closer.',featureBrowseDescription:"Pinch from the waterfall into a single moment. Keep your place as you get closer.",featureGestureTitle:'<span class="lilac">Get closer.</span> Keep it within reach.',featureGestureDescription:"Hold to favorite or add to a recent album. Swipe up to set aside; restore anytime.",featureRecoverTitle:'<span class="lilac">Room</span> to change your mind.',featureRecoverDescription:"Set aside with room to reconsider. iOS confirms before anything is deleted.",
     fragmentEyebrow:'MEMORIES ARE THE FRAGMENTS WE ARE MADE OF.',fragmentLine1:'Revisit your memories.',fragmentLine2:'Meet yourself again.',fragmentDescription:"<span class=\"fragment-full\">Collect cards.<br>Unlock a journey into your past.</span><span class=\"fragment-brief\">Collect cards. Look back.</span>",
     atlasIndex:'THE SHAPE OF YOUR MEMORIES',atlasEyebrow:'TIME LEAVES A TRACE. YOU LEAVE A STORY.',atlasLine1:'Your memories,',atlasLine2:'in perspective.',atlasDescription:"See your memories by week, month or year. Choose a span of time. Revisit who you were.",atlasTag1:'Week / Month / Year',atlasTag2:'Trend / Bars / Pie',atlasPanelEyebrow:'Memory atlas',chartTrend:'Trend',chartBars:'Bars',statReviewed:'Reviewed',statRemoved:'Processed',statReleased:'Est. released',atlasDisclaimer:'Illustrative data. Actual storage release depends on iOS and iCloud.',
-    privacyTitle:'Your photos stay in your library.',privacyDescription:"Library originals stay in Photos. Accounts, avatars and usage statistics involve online services; see the Privacy Policy.",themeTitle:'A space that feels like you.',themeDescription:'Daylight, Midnight, Old dream, Blue sage, and OLED nerd. Five themes with independently chosen icons. Chinese and English. A familiar space for your memories.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:"Native on iPhone. Gentle haptics and considered motion, with support for Reduce Motion.",
+    privacyTitle:'Your photos stay in your library.',privacyDescription:"Library originals stay in Photos. Accounts, avatars and usage statistics involve online services; see the Privacy Policy.",themeTitle:'A space that feels like you.',themeDescription:'Eight themes, independently chosen icons, and system appearance support. A familiar space for every mood.',nativeTitle:'Native. Thoughtfully so.',nativeDescription:"Native on iPhone. Gentle haptics and considered motion, with support for Reduce Motion.",
     journalIndex:'GROWING, ONE DETAIL AT A TIME',journalEyebrow:'AN APP ABOUT MEMORIES HAS MEMORIES OF ITS OWN.',journalTitle:'The Mne journal.',sourceLabel:'Latest source',journalMore:'Look back a little further',journalLess:'Show fewer entries',
     accessLine1:'Make room for your photos.',accessLine2:'And for yourself.',accessDescription:'Mne is currently in invite-only beta.<br>Start by looking back. Shape your memories into something you love.',accessCta:'Follow our progress',accessStatus:'Invite-only TestFlight beta · No public download yet',footerTagline:'Less in your library. More in your memories.',footerMade:'Made with care.',creditsButton:'Beyond Mne',creditsTitle:'Meet me beyond Mne.',backTop:'Back to top ↑'
   }
 };
 
-Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh, refineCopy.zh, latestCopy.zh);
-Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy.en, latestCopy.en);
+Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh, refineCopy.zh, latestCopy.zh, evolutionCopy.zh);
+Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy.en, latestCopy.en, evolutionCopy.en);
 
-// Read from local source b0c33bc and the current release notes, 2026-10-23. Source is not a public release.
+// Local source 55b6e09 plus the 0.9.385 (416) working-tree updates, reviewed 2026-10-25. Not a public release.
 const journal = [
+  {date:'2026-10-24',version:'0.9.368 — 0.9.385 (416)',tag:{zh:'旅途回望',en:'Journey Review'},title:{zh:'走过的路，重新相聚。',en:'The roads you took, back together.'},body:{zh:'时间与地点把照片聚成旅途。浏览、拆分、合并，确认待定的照片，再收进自己的相册。新增旅途实验入口与地名线索；当前为本地源码进展。',en:'Time and place gather photos into journeys. Browse, split, merge, review tentative matches, then create an album. New journey tools and place-name clues are in the local source, not a public-release announcement.'}},
+  {date:'2026-10-24',version:'0.9.321 — 0.9.367',tag:{zh:'主题与收藏',en:'Appearance & collection'},title:{zh:'不同的心情，同样熟悉的回忆。',en:'A different mood. The same familiar memories.'},body:{zh:'亮色主题与独立图标继续丰富。澄明、同调加入收藏，共三十张卡；照片编辑补上日期地点建议，单张模式可展开镜头与曝光等媒体详情。',en:'More light themes and independent icons. Clarity and In Tune bring the collection to 30 cards. Editing gains date and place suggestions; single view offers lens, exposure and other media details.'}},
+
   {date:'2026-10-23',version:'0.9.317 — 0.9.320 (351)',tag:{zh:'照片编辑',en:'Photo editing'},title:{zh:'给回忆，补上时间与地点。',en:'Give a memory its time and place.'},body:{zh:'裁剪、拍摄日期、地点与 Live 设置汇入同一编辑页。相册可选 21 款图标，常用归档入口也能一眼认得；当前为本地源码进展。',en:'Crop, capture date, location and Live settings come together in one editor. Choose from 21 album icons, also visible in quick archive menus. Local source progress; not a public-release announcement.'}},
   {date:'2026-10-21',version:'0.9.191 — 0.9.251',tag:{zh:'相似主题',en:'Similar themes'},title:{zh:'同一种喜欢，散落在不同的日子。',en:'The things you love, across different days.'},body:{zh:'六类主题在本机查找照片与视频。结果复用熟悉的浏览与归档，可独立筛选已归档和视频；告别图表也能对照当前图库。',en:'Six themes find photos and videos on device. Browse and archive results with independent archive and video filters. Farewell charts can also compare records with the current library.'}},
 
@@ -81,6 +86,7 @@ let stories = null;
 let farewell = null;
 let sectionRail = null;
 let subjects = null;
+let evolution = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -146,6 +152,7 @@ function applyLanguage() {
   farewell?.refresh();
   sectionRail?.refresh();
   subjects?.refresh();
+  evolution?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -218,3 +225,5 @@ farewell = setupFarewell({text:key=>copy[language][key]});
 sectionRail = setupSectionRail({text:key=>copy[language][key],reducedMotion});
 
 subjects = setupSubjects({text:key=>copy[language][key],reducedMotion});
+
+evolution = setupEvolution({text:key=>copy[language][key],reducedMotion});
