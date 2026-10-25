@@ -4,7 +4,7 @@
 
 「给回忆，补上时间与地点」恢复为标题、简短说明与五枚 SVG 图标，位置仍在浏览体验之后。旅途回望、主题与图标、30 张卡片及其他 2.3.0 内容保留。
 
-本地预览 `http://127.0.0.1:4173/?v=2.3.1#photo-editing`。完整替换包为 `releases/mne-website-update-2.3.1.zip`；本轮未同步 NAS。
+本地预览 `http://127.0.0.1:4173/?v=2.3.1#photo-editing`。完整替换包为 `releases/mne-website-update-2.3.1.zip`。现已按用户要求同步 SMB 网站目录，公开域名验证通过，见 [部署记录](docs/nas-deployment-2.3.1.md)。
 
 ## 2.3.0 · 旅途回望与新的收藏
 
