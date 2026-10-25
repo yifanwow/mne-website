@@ -1,14 +1,41 @@
-# Mne 网站 2.1.1 · NAS 文件替换
+# Mne 网站 2.2.1 · NAS 文件替换
 
-这个包是现有网站的静态文件更新，不包含 Docker 配置。网站依据 2026-10-23 本地 Mne 0.9.320 (351) 源码整理；源码版本不代表已公开发布。
+这个包是现有网站的完整静态文件更新，不包含 Docker 配置。本次隐私政策核对自 2026-10-24 本地 Mne 0.9.384 (415) 工作副本与后端源码，含未提交修改；不代表已发布 App 或已部署服务。首页此前功能记录的来源保留原有说明。
 
-1. 在电脑解压 `mne-website-update-2.1.1.zip`。
-2. 在 NAS 的 File Station 或 Finder 打开 `docker/mne-website`，先把现有 `site` 复制到旁边留作备份，例如 `site-backup-before-2.1.1`。
+联系邮箱为 yifanovo@gmail.com，生效日期为 2026-10-24。开发者已确认服务商、访问日志、不出售与无额外用途，并授权部署官网。本轮 NAS 配置检查和重载已成功；详见仓库 `docs/privacy-deployment-2026-10-24.md`。送审构建未确定，App 清单/隐私标签、独立备份删除及访客删除流程仍需在送审前核对，见仓库 `docs/privacy-audit.md`。
+
+1. 在电脑解压 `mne-website-update-2.2.1.zip`。
+2. 在 NAS 的 File Station 或 Finder 打开 `docker/mne-website`，先把现有 `site` 复制到旁边留作备份，例如 `site-backup-before-2.2.1`。
 3. 打开原来的 `docker/mne-website/site`，将更新包 **`site` 里面的全部内容** 复制进去。同名文件选择替换，`assets` 文件夹选择合并并替换其中的同名文件。包里是完整静态站，不必逐个挑选改动文件。
-4. 保留原 `site` 目录本身，不把它移走或删除后重建；这是运行中容器绑定的目录。不要覆盖项目旁边的 `docker-compose.yml`、`nginx.conf`，也不用更新 `mne-api`、`.env`、数据库、证书或反向代理。
-5. 打开 https://mne.yifanovo.com/?v=2.1.1 ，浏览器强制刷新。如果仍显示旧页面，清除此站缓存后重开。静态文件挂载正常时会直接生效，**无需重新构建 Docker 镜像**。
+4. 保留原 `site` 目录本身，不把它移走或删除后重建；这是运行中容器绑定的目录。不要用仓库整份配置覆盖 NAS 的专用 `docker-compose.yml` 或 `nginx.conf`，也不用更新 `mne-api`、`.env`、数据库、证书或反向代理。首次安装隐私页时，按下面说明在现有 nginx 中补两条精确路由。
+5. 打开 https://mne.yifanovo.com/?v=2.2.1 ，浏览器强制刷新。如果仍显示旧页面，清除此站缓存后重开。静态文件挂载正常时会直接生效，**无需重新构建 Docker 镜像**。本次路由配置需验证并重载 nginx；之后只更新页面内容则无需重载。
+
+## 首次新增隐私路由（本轮 NAS 已应用）
+
+当前站点 nginx 的 `server` 内、`location /` 之前加入以下两块。原本会把 `/privacy` 当目录，可能按容器内部 HTTP 协议生成绝对跳转；精确路由直接返回 HTML，避免这类 HTTPS 代理问题。仓库 `deploy/nginx.conf` 已加入，更新包仍不携带或自动覆盖基础设施配置。
+
+```nginx
+location = /privacy {
+    default_type text/html;
+    try_files /privacy.html =404;
+}
+location = /privacy/ {
+    default_type text/html;
+    try_files /privacy.html =404;
+}
+```
+
+现有 `add_header Cache-Control "no-cache" always;` 也需调整为 `add_header Cache-Control "no-cache, no-transform" always;`，阻止代理自动改写 HTML 并注入网站统计脚本。它不关闭网络服务商自身的边缘请求处理，也不更改 App 的使用统计。本站 HTML 内还保留 Cloudflare 的 `email_off` 标记，保证联系方式无需脚本即可读取。
+
+保留现有域名、端口、证书、挂载与其他 location。本轮已对实际 `mne-website` 容器检查 `nginx -t`，通过后执行 `nginx -s reload`，没有重建镜像。配置文件为单文件绑定挂载，修改时保留原文件本身；不要通过改名替换导致运行中容器继续读取旧文件。
+
+部署后分别从外网 HTTPS 验证 `/privacy`、`/privacy/`、`/privacy.html`：应为 200、`Content-Type: text/html`，且无需登录。未启用精确路由时不能把本地预览结果当线上路由验证。
 
 ## 更新后查看
+
+- 隐私政策：`https://mne.yifanovo.com/privacy`，以及 `/privacy/`、`/privacy.html`。应用上述精确路由后，三个入口均直接返回 HTML，无需重建容器。
+- 页面中文/English 切换、禁 JavaScript 时的双语正文、联系邮箱及首页页脚链接。禁 JavaScript 时两种语言上下排列。
+- 更新包必须复制整个 `site` 内部内容，包含新的 `privacy` 子目录、`privacy.html`、`privacy.css`、`privacy.js` 与 `assets/fonts`。
 
 - 开篇强调「整理不该是负担，而该是一次回望」，介绍暂存恢复、卡片和成长反馈，中英文同步。
 - NEW / PHOTO EDITING 现在位于 02A 浏览体验之后、02B 功能卡片之前。

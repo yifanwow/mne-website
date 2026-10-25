@@ -1,5 +1,21 @@
 # Mne website
 
+## 2.2.1 · 确认服务商与隐私说明 · 2026-10-24
+
+按开发者本轮确认，补充 Cloudflare、腾讯云、不持久保存 IP/HTTP 访问日志、不出售数据及无额外用途说明。与源码中的默认使用统计、账号事件及主动错误报告分别说明。产品不另设最低使用年龄，保留监护人阅读提示；商店年龄分级另行核对，送审版本尚未确定。
+
+三个隐私地址在 NAS 检查配置并重载后直接返回 HTTPS HTML。政策邮箱加入 Cloudflare 官方保留标记，使禁用 JavaScript 时仍能阅读联系方式；响应头增加 `no-transform`，阻止代理自动注入网站统计脚本。发布记录、备份位置与线上验收见 [部署记录](docs/privacy-deployment-2026-10-24.md)。本地预览 http://127.0.0.1:4173/privacy ，完整静态包为 `releases/mne-website-update-2.2.1.zip`。
+
+## 2.2.0 · 隐私政策 · 2026-10-24
+
+新增中英双语隐私政策，纯 HTML 包含两种语言的全部正文；JavaScript 仅切换显示并沿用首页语言偏好。深紫单栏，正文桌面 17px、手机 16px，本地托管 Inter / Noto Sans SC 字体与许可证。首页页脚新增「隐私政策 / Privacy Policy」，隐私介绍校准账号、头像与统计联网事实。
+
+本次隐私核对基于本地 Mne **0.9.384 (415)** 工作副本与后端源码（HEAD `55b6e0943c60c1f89f22e9e5d524eeb786a0defa`，含用户未提交修改），不代表送审包或线上服务。源码存在默认访客统计、账号/头像同步及手动诊断上传，不能申报“不收集数据”。发布前待确认项见 [核对记录](docs/privacy-audit.md)，[App Store 隐私问卷建议](docs/app-store-privacy.md) 列出类别和清单差异。联系邮箱已确认为 yifanovo@gmail.com。
+
+本地预览 [隐私政策](http://127.0.0.1:4173/privacy)。`/privacy`、`/privacy/` 与 `/privacy.html` 在更新后的配置下均直接返回 HTML（200）。本地 `deploy/nginx.conf` 增加两条精确路由，避免 HTTPS 代理前补斜杠的 HTTP 跳转。更新包仍是完整静态包，需在确认发布时按说明补两条 location 并验证/重载 nginx，不覆盖整份 NAS 配置。以 `dist/privacy/index.html` 为正文源，更新时同步 `dist/privacy.html`；打包前会检查两者一致。
+
+NAS 完整更新包：`releases/mne-website-update-2.2.0.zip`。沿用 [原更新流程](docs/nas-update.md)，没有覆盖线上 NAS；本轮不改或测试 iOS 工程。生效日期暂按 2026-10-24，发布前需确认。网页验证见 [验收记录](docs/privacy-verification.md)。
+
 ## 2.1.1 · 让整理成为一次回望
 
 照片编辑概览移到 02A 浏览体验之后、02B 功能卡片之前。开篇从「想整理，又怕误删」的犹豫切入，强调自己的节奏、暂存恢复、卡片与成长反馈；首页、设计理念和分享摘要中英文同步。
