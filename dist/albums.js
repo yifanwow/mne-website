@@ -1,5 +1,5 @@
-import {albumIconChoices,albumIconSVG,albumSymbol,selectedAlbumIcon,setAlbumIcon,resetAlbumIcons} from './album-icons.js?v=2.3.0';
-import {albumSamples,uiIcon} from './native-ui.js?v=2.3.0';
+import {albumIconChoices,albumIconSVG,albumSymbol,selectedAlbumIcon,setAlbumIcon,resetAlbumIcons} from './album-icons.js?v=2.3.1';
+import {albumSamples,uiIcon} from './native-ui.js?v=2.3.1';
 // AlbumPreviewLayout + AlbumEditingPhase from the App, expressed in DOM coordinates.
 export function setupAlbums({text}) {
  const studio=document.querySelector('#album-studio'),list=document.querySelector('#album-list'),scroll=document.querySelector('#album-scroll');

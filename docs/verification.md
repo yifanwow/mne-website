@@ -1,3 +1,9 @@
+# Website 2.3.1 verification · 2026-10-25
+
+- Restored the exact compact photo-editing section from 2.2.1: five SVG icon tiles, bilingual heading and short description, between Experience and Small things. Removed the replaced editor state, handlers, styles and unused copy. All other page content matches 2.3.0 after ignoring cache version changes.
+- Updated `scripts/evolution-qa.mjs` passes Chromium and WebKit at five widths (1780, 1440, 768, 390 and 320), both languages: five static tiles, section order, no overflow, page exceptions or failed resources. Journey review/create, independent theme/icon selection, pause/resume and Reduce Motion remain functional. Desktop and 320px phone screenshots reviewed.
+- Syntax/assets/copy checks pass. The four privacy files retain their opening hashes. This is a website-only update; NAS has not been synchronized.
+
 # Website 2.3.0 verification · 2026-10-25
 
 - `scripts/evolution-qa.mjs` passes Chromium and WebKit, Chinese/English at 1780×1000, 1440×1000, 768×1024, 390×844 and 320×720. Two seven-cover journey groups open; unchecking a tentative photo changes the draft count; confirming review, renaming, rejecting a blank name, creating and restarting work. Entered markup remains text. Demo actions leave growth records unchanged.

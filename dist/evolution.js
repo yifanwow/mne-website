@@ -1,4 +1,4 @@
-import {uiIcon} from './native-ui.js?v=2.3.0';
+import {uiIcon} from './native-ui.js?v=2.3.1';
 
 // Bounded, fictional groups illustrate JourneyGroupCard → JourneyGroupEditor → album draft.
 // No library, coordinates, network lookup or real success records are accessed by this demo.
@@ -20,7 +20,7 @@ const palettes=[
 export function setupEvolution({text,reducedMotion}){
  const root=document.querySelector('#journey-studio'),content=document.querySelector('#journey-content');
  const states=journeys.map(group=>({name:'',selected:new Set(group.photos),reviewed:false,created:false}));
- let step=0,active=0,manual=false,visible=false,played=false,timer=0,palette='dreamPurple',icon='dreamPurple',tool='crop',suggested=false,saved=false,liveAuto=true,liveSound=true;
+ let step=0,active=0,manual=false,visible=false,played=false,timer=0,palette='dreamPurple',icon='dreamPurple';
  const state=()=>states[active],group=()=>journeys[active],groupName=()=>state().name||text(group().name);
  const image=(photo,extra='')=>`<img src="./assets/photos/${photo}.webp" alt="" loading="lazy" draggable="false" ${extra}>`;
  function stop(){clearInterval(timer);timer=0;}
@@ -76,19 +76,7 @@ export function setupEvolution({text,reducedMotion}){
   });
   document.querySelector('#theme-options').setAttribute('aria-label',text('themePaletteLabel'));document.querySelector('#theme-icons').setAttribute('aria-label',text('themeIconLabel'));
  }
- function renderEditor(){
-  const demo=document.querySelector('.editor-preview'),inspector=document.querySelector('#editor-inspector');demo.dataset.tool=tool;
-  document.querySelectorAll('[data-editor-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.editorTool===tool)));inspector.replaceChildren();
-  if(tool==='crop'){inspector.innerHTML=`<div class="editor-ratios"><span>${text('editorOriginal')}</span><span>4:5</span><span>9:16</span></div>`;}
-  else if(tool==='date'||tool==='place'){
-   inspector.innerHTML=`<small>${text(tool==='date'?'editorCapture':'editorLocation')}</small><strong>${tool==='date'?(suggested?'2024 / 04 / 06 · 09:41':'2024 / 04 / 07 · 09:41'):(suggested?text('editorPreviewPlace'):text('editorNoPlace'))}</strong><button type="button" id="editor-use-suggestion" class="editor-suggestion">${uiIcon('scan')}<span>${text(suggested?'editorDraft':'editorUse')}</span></button><small class="editor-clue">${text('editorReference')}</small>`;
-   inspector.querySelector('button').addEventListener('click',()=>{suggested=true;saved=false;renderEditor();});
-  }else{const label=document.createElement('label');label.className='editor-toggle';label.innerHTML=`<span>${text(tool==='live'?'editorLiveAuto':'editorLiveSound')}</span><input type="checkbox">`;const check=label.querySelector('input');check.checked=tool==='live'?liveAuto:liveSound;check.addEventListener('change',()=>{if(tool==='live')liveAuto=check.checked;else liveSound=check.checked;saved=false;document.querySelector('#editor-status').textContent=text('editorDemo');});inspector.append(label);const p=document.createElement('p');p.textContent=text('editorLiveNote');inspector.append(p);}
-  document.querySelector('#editor-status').textContent=text(saved?'editorSaved':'editorDemo');
- }
- document.querySelectorAll('[data-editor-tool]').forEach(b=>b.addEventListener('click',()=>{tool=b.dataset.editorTool;suggested=false;saved=false;renderEditor();}));
- document.querySelector('#editor-save').addEventListener('click',()=>{saved=true;renderEditor();});
  document.querySelectorAll('[data-evolution-icon]').forEach(el=>el.innerHTML=uiIcon(el.dataset.evolutionIcon));
- function refresh(){root.querySelector('.journey-steps').setAttribute('aria-label',text('journeyViewLabel'));document.querySelector('.editor-mini-tools').setAttribute('aria-label',text('editorPreview'));renderJourney();renderThemes();renderEditor();}
+ function refresh(){root.querySelector('.journey-steps').setAttribute('aria-label',text('journeyViewLabel'));renderJourney();renderThemes();}
  refresh();return {refresh};
 }

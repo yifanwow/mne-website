@@ -1,4 +1,4 @@
-import {uiIcon} from './native-ui.js?v=2.3.0';
+import {uiIcon} from './native-ui.js?v=2.3.1';
 const themeData=[
  {id:'cats',key:'subjectCats',icon:'M5 9 4 3l6 4h4l6-4-1 6a8 8 0 1 1-14 0ZM8 13h.01M16 13h.01M10 17l2 1 2-1'},
  {id:'dogs',key:'subjectDogs',icon:'M7 8 3 5 2 13l5 2m10-7 4-3 1 8-5 2M7 7h10v10a5 5 0 0 1-10 0ZM9 12h.01M15 12h.01M10 16h4l-2 2Z'},
