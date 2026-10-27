@@ -2,7 +2,7 @@
 
 这个包是现有网站的完整静态文件更新，不包含 Docker 配置。本次隐私政策核对自 2026-10-24 本地 Mne 0.9.384 (415) 工作副本与后端源码，含未提交修改；不代表已发布 App 或已部署服务。首页新增功能依据 2026-10-27 本地已提交 App 0.9.478 (509) 基线更新，不代表 App 发布。保留原有栏目与政策正文；工作区 0.9.479 的未提交后端足迹改动未纳入本次功能介绍。
 
-2.4.1 已获用户本轮明确授权通过 SMB 同步，部署结果见 `docs/nas-deployment-2.4.1.md`。此前 2.3.1 的同步记录见 `docs/nas-deployment-2.3.1.md`。联系邮箱为 yifanovo@gmail.com，生效日期为 2026-10-24。开发者已确认服务商、访问日志、不出售与无额外用途，并授权部署官网。此前 2.2.1 隐私页部署的 NAS 配置检查和重载已成功；详见仓库 `docs/privacy-deployment-2026-10-24.md`。送审构建未确定，App 清单/隐私标签、独立备份删除及访客删除流程仍需在送审前核对，见仓库 `docs/privacy-audit.md`。
+2.4.1 已按用户本轮明确授权通过 SMB 同步并完成线上验证，部署结果见 `docs/nas-deployment-2.4.1.md`。此前 2.3.1 的同步记录见 `docs/nas-deployment-2.3.1.md`。联系邮箱为 yifanovo@gmail.com，生效日期为 2026-10-24。开发者已确认服务商、访问日志、不出售与无额外用途，并授权部署官网。此前 2.2.1 隐私页部署的 NAS 配置检查和重载已成功；详见仓库 `docs/privacy-deployment-2026-10-24.md`。送审构建未确定，App 清单/隐私标签、独立备份删除及访客删除流程仍需在送审前核对，见仓库 `docs/privacy-audit.md`。
 
 1. 在电脑解压 `mne-website-update-2.4.1.zip`。
 2. 在 NAS 的 File Station 或 Finder 打开 `docker/mne-website`，先把现有 `site` 复制到旁边留作备份，例如 `site-backup-before-2.4.1`。

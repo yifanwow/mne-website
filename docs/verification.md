@@ -2,7 +2,7 @@
 
 - Removed the entire New Tools section, its section-rail entry, event handlers, copy and scoped styles. After removing that exact block from 2.4.0 HTML and normalizing only cache queries, the remaining HTML matches exactly. Original privacy files, card data and editing copy are byte-identical.
 - Updated `scripts/whats-new-qa.mjs` passes Chromium and WebKit, both languages and five viewport widths. It confirms section/navigation absence, working globe controls and four new cards, unchanged growth totals, pause/resume, offscreen suspension, Reduce Motion and no resource/page errors or horizontal overflow.
-- Syntax, assets, IDs, anchor, bilingual and diff checks pass. NAS synchronization was explicitly authorized in this turn; the deployment record reports the resulting state separately. No iOS or backend changes.
+- Syntax, assets, IDs, anchor, bilingual and diff checks pass. NAS synchronization was explicitly authorized and completed: 133 static files match local bytes, 136 manifest hashes pass, 14 HTTPS responses match local files, and public browser interaction checks pass. See the deployment record for backup and recovery. No iOS or backend changes.
 
 # Website 2.4.0 verification · 2026-10-27
 
