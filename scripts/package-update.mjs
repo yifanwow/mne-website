@@ -30,7 +30,7 @@ async function walk(directory,prefix='') {
 const files=await Promise.all((await walk(target)).map(async name=>({path:name,sha256:crypto.createHash('sha256').update(await fs.readFile(path.join(target,name))).digest('hex')})));
 await fs.writeFile(path.join(target,'release.json'),JSON.stringify({
   version,sourceCommit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
-  appVersion:'0.9.385 (416)',appSourceCommit:'55b6e0943c60c1f89f22e9e5d524eeb786a0defa',appSourceIncludesUncommittedChanges:true,appSourceReviewedOn:'2026-10-25',appSourceType:'local-source-not-public-release',appSourceScope:'homepage-feature-copy',
+  appVersion:'0.9.478 (509)',appSourceCommit:'5464db440fe3805d4081d0c210b231b00a2e9784',appSourceIncludesUncommittedChanges:false,appWorkingTreeVersionObserved:'0.9.479 (510)',appSourceReviewedOn:'2026-10-27',appSourceType:'local-source-not-public-release',appSourceScope:'homepage-feature-copy',
   privacyAudit:{date:'2026-10-24',appVersion:'0.9.384 (415)',appSourceCommit:'55b6e0943c60c1f89f22e9e5d524eeb786a0defa',includesUncommittedChanges:true,productionVerified:false,privacyRouteConfigChangeRequired:true,submissionBuild:null,developerConfirmedProviders:['Cloudflare','Tencent Cloud'],developerConfirmedNoSale:true},
   sourceIncludesUncommittedChanges:execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim().length>0,
   stagedAt:new Date().toISOString(),domain:'mne.yifanovo.com',type:'static-site-update',files

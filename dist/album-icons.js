@@ -1,5 +1,5 @@
-import {uiIcon} from './native-ui.js?v=2.3.1';
-import {memoryBoxSVG} from './app-art.js?v=2.3.1';
+import {uiIcon} from './native-ui.js?v=2.4.0';
+import {memoryBoxSVG} from './app-art.js?v=2.4.0';
 // Same order as AlbumIcon.allCases. SVG counterparts avoid platform emoji substitutions.
 export const albumIconChoices=[
  ['cat','albumGlyphCat','M5 9 4 3l6 4h4l6-4-1 6a8 8 0 1 1-14 0ZM8 13h.01M16 13h.01M10 17l2 1 2-1'],

@@ -1,19 +1,21 @@
-import {evolutionCopy} from './evolution-copy.js?v=2.3.1';
-import {setupEvolution} from './evolution.js?v=2.3.1';
-import {latestCopy} from './latest-copy.js?v=2.3.1';
-import {setupSubjects} from './subjects.js?v=2.3.1';
-import {refineCopy} from './refine-copy.js?v=2.3.1';
-import {setupFarewell} from './history.js?v=2.3.1';
-import {setupSectionRail} from './section-rail.js?v=2.3.1';
-import {storiesCopy} from './stories-copy.js?v=2.3.1';
-import {setupStories} from './stories.js?v=2.3.1';
-import { motionCopy } from './motion-copy.js?v=2.3.1';
-import { initMotion } from './motion.js?v=2.3.1';
-import { setupContacts } from './contacts.js?v=2.3.1';
-import { setupDetails } from './details.js?v=2.3.1';
-import { setupAlbums } from './albums.js?v=2.3.1';
-import { setupProduct } from './product.js?v=2.3.1';
-import { productCopy } from './product-copy.js?v=2.3.1';
+import {whatsNewCopy} from './whats-new-copy.js?v=2.4.0';
+import {setupWhatsNew} from './whats-new.js?v=2.4.0';
+import {evolutionCopy} from './evolution-copy.js?v=2.4.0';
+import {setupEvolution} from './evolution.js?v=2.4.0';
+import {latestCopy} from './latest-copy.js?v=2.4.0';
+import {setupSubjects} from './subjects.js?v=2.4.0';
+import {refineCopy} from './refine-copy.js?v=2.4.0';
+import {setupFarewell} from './history.js?v=2.4.0';
+import {setupSectionRail} from './section-rail.js?v=2.4.0';
+import {storiesCopy} from './stories-copy.js?v=2.4.0';
+import {setupStories} from './stories.js?v=2.4.0';
+import { motionCopy } from './motion-copy.js?v=2.4.0';
+import { initMotion } from './motion.js?v=2.4.0';
+import { setupContacts } from './contacts.js?v=2.4.0';
+import { setupDetails } from './details.js?v=2.4.0';
+import { setupAlbums } from './albums.js?v=2.4.0';
+import { setupProduct } from './product.js?v=2.4.0';
+import { productCopy } from './product-copy.js?v=2.4.0';
 
 // Public copy only. App services, credentials and photo-library data are never used here.
 const copy = {
@@ -43,11 +45,14 @@ const copy = {
   }
 };
 
-Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh, refineCopy.zh, latestCopy.zh, evolutionCopy.zh);
-Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy.en, latestCopy.en, evolutionCopy.en);
+Object.assign(copy.zh, motionCopy.zh, productCopy.zh, storiesCopy.zh, refineCopy.zh, latestCopy.zh, evolutionCopy.zh, whatsNewCopy.zh);
+Object.assign(copy.en, motionCopy.en, productCopy.en, storiesCopy.en, refineCopy.en, latestCopy.en, evolutionCopy.en, whatsNewCopy.en);
 
 // Local source 55b6e09 plus the 0.9.385 (416) working-tree updates, reviewed 2026-10-25. Not a public release.
 const journal = [
+  {date:'2026-10-27',version:'0.9.459 — 0.9.478 (509)',tag:{zh:'地图与回望',en:'Places & revisits'},title:{zh:'去过的地方，在掌心重新亮起。',en:'The places you have been, lighting up again.'},body:{zh:'旅途地球可旋转、近看，地点气泡串起到访月份与跨年足迹，轻点换一组照片；地点可移出本机地图，并在设置恢复。多选中也能长按预览，上滑暂存、下滑切换勾选。当前为已提交源码进展。',en:'Rotate and zoom the journey globe. Place bubbles gather visits across years, with photographs you can reshuffle. Remove a place from this device’s map and restore it in Settings. Long-press while selecting, swipe up to stage or down to toggle selection. Committed source progress; not a release announcement.'}},
+  {date:'2026-10-26',version:'0.9.406 — 0.9.458',tag:{zh:'更多喜欢',en:'More to discover'},title:{zh:'更多心动，更少重复寻找。',en:'More of what moves you. Less repeated work.'},body:{zh:'相似主题扩展至十二类，本机标签缓存减少重复识别。新增日语与文字大小设置，分享尽量保留当前媒体格式和文件名；四枚新卡片补上新的故事。',en:'Twelve Similar Themes and persistent on-device labels reduce repeated recognition. Japanese, text-size preferences, sharing that preserves the current media format and name where possible, and four new achievement stories.'}},
+  {date:'2026-10-25',version:'0.9.386 — 0.9.405',tag:{zh:'一路成长',en:'Growing together'},title:{zh:'每一步认真，都有自己的痕迹。',en:'Every moment of care leaves a trace.'},body:{zh:'个人资料与头像编辑更清晰，整理天数可回看连续记录与最忙的一天。好友列表汇合一路同行的人；旅途的待确认、拆分与相册创建继续打磨。',en:'Clearer profile and avatar editing, with cleaning days showing streaks and your busiest day. A combined friends list, and refinements to tentative journeys, splitting and album creation.'}},
   {date:'2026-10-24',version:'0.9.368 — 0.9.385 (416)',tag:{zh:'旅途回望',en:'Journey Review'},title:{zh:'走过的路，重新相聚。',en:'The roads you took, back together.'},body:{zh:'时间与地点把照片聚成旅途。浏览、拆分、合并，确认待定的照片，再收进自己的相册。新增旅途实验入口与地名线索；当前为本地源码进展。',en:'Time and place gather photos into journeys. Browse, split, merge, review tentative matches, then create an album. New journey tools and place-name clues are in the local source, not a public-release announcement.'}},
   {date:'2026-10-24',version:'0.9.321 — 0.9.367',tag:{zh:'主题与收藏',en:'Appearance & collection'},title:{zh:'不同的心情，同样熟悉的回忆。',en:'A different mood. The same familiar memories.'},body:{zh:'亮色主题与独立图标继续丰富。澄明、同调加入收藏，共三十张卡；照片编辑补上日期地点建议，单张模式可展开镜头与曝光等媒体详情。',en:'More light themes and independent icons. Clarity and In Tune bring the collection to 30 cards. Editing gains date and place suggestions; single view offers lens, exposure and other media details.'}},
 
@@ -87,6 +92,7 @@ let farewell = null;
 let sectionRail = null;
 let subjects = null;
 let evolution = null;
+let whatsNew = null;
 let language = 'zh';
 let expanded = false;
 try { language = localStorage.getItem('mne-site-language') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); } catch { /* Storage may be disabled; browsing still works. */ }
@@ -153,6 +159,7 @@ function applyLanguage() {
   sectionRail?.refresh();
   subjects?.refresh();
   evolution?.refresh();
+  whatsNew?.refresh();
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -227,3 +234,5 @@ sectionRail = setupSectionRail({text:key=>copy[language][key],reducedMotion});
 subjects = setupSubjects({text:key=>copy[language][key],reducedMotion});
 
 evolution = setupEvolution({text:key=>copy[language][key],reducedMotion});
+
+whatsNew = setupWhatsNew({text:key=>copy[language][key],reducedMotion});
