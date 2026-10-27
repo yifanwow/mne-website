@@ -1,3 +1,9 @@
+# Website 2.4.1 verification · 2026-10-27
+
+- Removed the entire New Tools section, its section-rail entry, event handlers, copy and scoped styles. After removing that exact block from 2.4.0 HTML and normalizing only cache queries, the remaining HTML matches exactly. Original privacy files, card data and editing copy are byte-identical.
+- Updated `scripts/whats-new-qa.mjs` passes Chromium and WebKit, both languages and five viewport widths. It confirms section/navigation absence, working globe controls and four new cards, unchanged growth totals, pause/resume, offscreen suspension, Reduce Motion and no resource/page errors or horizontal overflow.
+- Syntax, assets, IDs, anchor, bilingual and diff checks pass. NAS synchronization was explicitly authorized in this turn; the deployment record reports the resulting state separately. No iOS or backend changes.
+
 # Website 2.4.0 verification · 2026-10-27
 
 - `scripts/whats-new-qa.mjs` passes Chromium and WebKit for Chinese/English at 1780×1000, 1440×1000, 768×1024, 390×844 and 320×720. Globe place switching, three-photo reshuffle, remove/restore, count, zoom and keyboard rotation work. Visible rotation stops for global Pause, offscreen and Reduce Motion, and resumes after Pause. No page exceptions, missing resources or horizontal overflow occurred in those layouts.

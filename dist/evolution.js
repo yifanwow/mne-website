@@ -1,4 +1,4 @@
-import {uiIcon} from './native-ui.js?v=2.4.0';
+import {uiIcon} from './native-ui.js?v=2.4.1';
 
 // Bounded, fictional groups illustrate JourneyGroupCard → JourneyGroupEditor → album draft.
 // No library, coordinates, network lookup or real success records are accessed by this demo.
